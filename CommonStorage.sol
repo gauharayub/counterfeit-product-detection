@@ -1,10 +1,11 @@
+// SPDX-License-Identifier: MIT
 pragma solidity >=0.7.0;
 
-import "./ownable.sol";
+import "./Ownable.sol";
 
 ///@dev file for common methods inherited by other contracts
 
-contract CommonQuery is Ownable{
+contract CommonStorage is Ownable{
 
     struct Product{
         uint productId;
@@ -14,19 +15,18 @@ contract CommonQuery is Ownable{
         bool isSold;
     }
 
-    Product[] internal products;
+    Product[] public products;
 
     //tells who is the owner of product 
     mapping (uint => address) public productToOwner;
 
     //maps product id to array index
-    mapping(uint => uint) productIdToProductIndex;
+    mapping (uint => uint) public productIdToProductIndex;
     
     //maps secretId to product array index
-    mapping(uint => uint) secretIdToProductIndex;
-
+    mapping (uint => uint) public secretIdToProductIndex;
 
     //who owns how many product 
-    mapping (address => uint) productOwnerCount;
+    mapping (address => uint) public productOwnerCount;
 
 }
