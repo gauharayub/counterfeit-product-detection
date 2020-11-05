@@ -1,73 +1,81 @@
-pragma solidity >=0.7.0;
+// SPDX-License-Identifier: MIT
+pragma solidity >= 0.7.0;
 
-import "./commonQuery.sol";
+import "./Ownable.sol";
+import "./CommonStorage.sol";
 
-///@dev file for seller methods inherited by other contracts
+/// @dev file for seller methods inherited by other contracts
 
-contract Seller is CommonQuery{
+contract Seller is Ownable{
 
-    struct Seller {
+    // Contract composition
+    CommonStorage Store;
+
+    // set Store object to the address of already deployed contract...
+    constructor (address _store) public {
+        Store  = CommonStorage(_store);
+    }
+
+    struct sellerDetails {
         uint id;
-        uint reports;
+        uint reportCount;
         string name;
         string details;
     }
     
-    Seller[] internal sellers;
+    sellerDetails[] public sellers;
 
-    mapping (address => uint) sellerIdToSellerIndex;
-
-    modifier sellerCheck(uint _productId){
-        require (msg.sender == productToOwner[_productId]);
+    modifier sellerCheck(uint _productId) {
+        // check if the seller owns the product or not...
+        address productOwner = Store.productToOwner[_productId];
+        require(msg.sender == productOwner);
         _;
     }
 
-    modifier soldCheck(uint _productId){
-        //finding product index
-        uint productIndex = productIdToProductIndex[_productId];
+    modifier soldCheck(uint _productId) {
+        // finding product index
+        uint productIndex = Store.productIdToProductIndex[_productId];
 
-        //finding product from index
-        Product currentProduct = products[productIndex];
-        require(currentProduct.isSold == false);
-
+        // finding product from index
+        bool isSold = Store.products[productIndex].isSold;
+        require(isSold == false);
         _;
     }
-    //should be called by consumers
+
+    // should be called by consumers
     function buyProduct(uint _secretId) external returns(bool) {
-        //finding product index
-        uint productIndex = secretIdToProductIndex[_secretId];
+        // finding product index using secret id from the in the common storage...
+        uint productIndex = Store.secretIdToProductIndex[_secretId];
         
-        //finding product from index
-        Product currentProduct = products[productIndex];
-        
-        //productId from product
-        uint productId = currentProduct.productId;
+        // productId from product
+        uint productId = Store.products[productIndex].productId;
 
-        //product current owner from productId 
-        address productOwner = productToOwner[productId];
+        // product current owner from productId 
+        address productOwner = Store.productToOwner[productId];
 
-        require(productOwnerCount[productOwner]>0);
+        require(Store.productOwnerCount[productOwner] > 0);
 
-        //marking product as soldi i.e. bought by consumer
-        currentProduct.isSold = true;
+        // marking product as soldi i.e. bought by consumer
+        Store.products[productIndex].isSold = true;
 
-        //reducing owner count
-        productOwnerCount[productOwner]--;
+        // reducing owner count
+        Store.productOwnerCount[productOwner]--;
 
         return true;
     }
 
-    //should be called for reselling
-    function sellProduct(uint _productId, address _buyerAddress) external sellerCheck(_productId) soldCheck(_productId) returns(bool){
-        //checking for limit
-        require(productOwnerCount[msg.sender]>0);
+    // should be called for reselling
+    function sellProduct(uint _productId, address _buyerAddress) external sellerCheck(_productId)
+    soldCheck(_productId) returns(bool) {
+        // checking for limit
+        require(Store.productOwnerCount[msg.sender] > 0);
 
-        //changing owner of product here
-        productToOwner[_productId] = _buyerAddress;
+        // changing owner of product here
+        Store.productToOwner[_productId] = _buyerAddress;
 
-        //changing limit
-        productOwnerCount[msg.sender]--;
-        productOwnerCount[_buyerAddress]++;
+        // changing limit
+        Store.productOwnerCount[msg.sender]--;
+        Store.productOwnerCount[_buyerAddress]++;
         
         return true;
     }
