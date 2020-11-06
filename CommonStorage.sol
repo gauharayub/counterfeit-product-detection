@@ -5,7 +5,7 @@ import "./Ownable.sol";
 
 ///@dev file for common methods inherited by other contracts
 
-contract CommonStorage is Ownable{
+contract CommonStorage is Ownable {
 
     struct Product{
         uint productId;

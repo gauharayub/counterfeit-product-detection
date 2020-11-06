@@ -6,22 +6,24 @@ import "./CommonStorage.sol";
 
 ///@dev file for owner query methods inherited by other contracts
 
-contract ProductOwner is Ownable{
+contract ProductOwner is Ownable {
 
      // Contract composition
     CommonStorage Store;
 
     // set Store object to the address of already deployed CommonStorage contract...
-    constructor (address _store) public {
+    constructor (address _store) {
         Store  = CommonStorage(_store);
     }
+
+    event ProductAdded(address productOwner);
   
     function addProduct(uint _productId, uint _secretId, uint _price, string memory _name, 
     string memory _details) onlyOwner external returns(bool) {
 
-        //checking that both product and secret ids are not used before
-        require(Store.productIdToProductIndex[_productId] == 0);
-        require(Store.secretIdToProductIndex[_secretId] == 0);
+        // checking that both product and secret ids are not used before
+        require(Store.productIdToProductIndex(_productId) == 0);
+        require(Store.secretIdToProductIndex(_secretId) == 0);
         
         //assigning owner to the one who initiated the call...
         Store.productToOwner[_productId] = msg.sender;
@@ -34,6 +36,8 @@ contract ProductOwner is Ownable{
         //setting index in mappings
         Store.productIdToProductIndex[_productId] = index;
         Store.secretIdToProductIndex[_secretId] = index;
+
+        emit ProductAdded(msg.sender);
 
         return true;
     }
