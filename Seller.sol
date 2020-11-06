@@ -6,7 +6,7 @@ import "./CommonStorage.sol";
 
 /// @dev file for seller methods inherited by other contracts
 
-contract Seller is Ownable{
+contract Seller is Ownable {
 
     uint sellerId = 1000;
     uint reportThreshold = 100;
@@ -16,7 +16,7 @@ contract Seller is Ownable{
     CommonStorage Store;
 
     // set Store object to the address of already deployed contract...
-    constructor (address _store) public {
+    constructor (address _store) {
         Store  = CommonStorage(_store);
     }
 
@@ -38,17 +38,19 @@ contract Seller is Ownable{
 
     modifier sellerCheck(uint _productId) {
         // check if the seller owns the product or not...
-        address productOwner = Store.productToOwner[_productId];
+        // solidity provides automatic getters for mappings...
+        address productOwner = Store.productToOwner(_productId);
         require(msg.sender == productOwner);
         _;
     }
 
     modifier soldCheck(uint _productId) {
         // finding product index
-        uint productIndex = Store.productIdToProductIndex[_productId];
+        uint productIndex = Store.productIdToProductIndex(_productId);
 
         // finding product from index
-        bool isSold = Store.products[productIndex].isSold;
+        bool isSold = Store.products(productIndex).isSold;
+
         require(isSold == false);
         _;
     }
@@ -62,8 +64,8 @@ contract Seller is Ownable{
     function returnSellerIndex(address _sellerAddress) internal returns(uint){
         require(sellerAddressToSellerId[msg.sender] != 0);
 
-        uint sellerId = sellerAddressToSellerId[_sellerAddress];
-        return sellerIdToSellerIndex[sellerId];
+        uint seller_Id = sellerAddressToSellerId[_sellerAddress];
+        return sellerIdToSellerIndex[seller_Id];
     }
 
     function registerSeller (string memory _name, string memory _details) external {
