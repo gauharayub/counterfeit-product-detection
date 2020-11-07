@@ -4,7 +4,7 @@ pragma solidity >=0.7.0;
 import "./Ownable.sol";
 
 
-contract Counterfiet is Ownable {
+contract Counterfeit is Ownable {
 
     event ProductAdded(address productOwner);
     event SellerReported(address productOwner);
