@@ -155,6 +155,7 @@ contract Counterfeit is Ownable {
 
         //assingning index for future search
         sellerIdToSellerIndex[sellerId] = sellerIndex;
+        sellerAddressToSellerId[msg.sender] = sellerId;
 
         emit sellerRegistered(msg.sender);
     }
@@ -193,6 +194,7 @@ contract Counterfeit is Ownable {
         //not able to sell if blocked
         uint sellerIndex = returnSellerIndex(productOwner);
         require(sellers[sellerIndex].reportCount < reportThreshold);
+        require(products[productIndex].isSold == false);
 
         // marking product as soldi i.e. bought by consumer
         products[productIndex].isSold = true;
@@ -209,6 +211,8 @@ contract Counterfeit is Ownable {
     function sellProduct(uint _productId, address _buyerAddress) external sellerCheck(_productId)
     soldCheck(_productId) returns(bool) {
         // checking for limit
+        //cannot sell to himself
+        require(msg.sender != _buyerAddress);
         require(ownerProductCount[msg.sender] > 0);
 
         //buyer must be registered
@@ -249,6 +253,17 @@ contract Counterfeit is Ownable {
         uint index = products.length - 1;
 
         //setting index in mappings
+
+var cf = await Counterfeit.deployed()
+
+var accounts;
+web3.eth.getAccounts(function(err,res) { accounts = res; });
+
+var second = accounts[1]
+
+cf.addProduct(1,1,20,'first','first')
+
+cf.registerSeller('gak','marwadi',{from:second})
         productIdToProductIndex[_productId] = index;
         secretIdToProductIndex[_secretId] = index;
 
