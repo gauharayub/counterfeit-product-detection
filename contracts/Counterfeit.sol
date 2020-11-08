@@ -6,9 +6,16 @@ import "./Ownable.sol";
 
 contract Counterfeit is Ownable {
 
-    event ProductAdded(address productOwner);
-    event SellerReported(address productOwner);
+    //---------------------------------------//
+    //----------------Events----------------//
+    //--------------------------------------//
 
+    event productAdded(address productOwner);
+    event sellerReported(address sellerAddress);
+    event sellerUnblocked(address sellerAddress);
+    event productPurchased(address buyerAddress);
+    event productSold(address sellerAddress);
+    event sellerRegistered(address sellerAddress);
 
     //------------------------------------//
     //------------Variables---------------//
@@ -113,6 +120,7 @@ contract Counterfeit is Ownable {
     function unblockSeller (address _sellerAddress) onlyOwner external returns (bool){
         uint sellerIndex = returnSellerIndex(_sellerAddress);
         sellers[sellerIndex].reportCount = 0;
+        emit sellerUnblocked(_sellerAddress);
         return true; 
     }
 
@@ -138,6 +146,8 @@ contract Counterfeit is Ownable {
 
         //assingning index for future search
         sellerIdToSellerIndex[sellerId] = sellerIndex;
+
+        emit sellerRegistered(msg.sender);
     }
 
     function registerReport(uint _productId) external returns(bool) {
@@ -151,7 +161,10 @@ contract Counterfeit is Ownable {
         sellers[sellerIndex].reportCount++;
 
         productIdUsedForReport[_productId] = true;
-        emit SellerReported(productOwner);
+
+        emit sellerReported(productOwner);
+
+        return true;
 
     }
 
@@ -178,6 +191,8 @@ contract Counterfeit is Ownable {
         // reducing owner count
         ownerProductCount[productOwner]--;
 
+        emit productPurchased(msg.sender);
+
         return true;
     }
 
@@ -200,6 +215,8 @@ contract Counterfeit is Ownable {
         // changing limit
         ownerProductCount[msg.sender]--;
         ownerProductCount[_buyerAddress]++;
+
+        emit productSold(msg.sender);
         
         return true;
     }
@@ -226,7 +243,7 @@ contract Counterfeit is Ownable {
         productIdToProductIndex[_productId] = index;
         secretIdToProductIndex[_secretId] = index;
 
-        emit ProductAdded(msg.sender);
+        emit productAdded(msg.sender);
 
         return true;
     }
