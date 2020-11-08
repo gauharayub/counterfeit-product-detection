@@ -253,17 +253,6 @@ contract Counterfeit is Ownable {
         uint index = products.length - 1;
 
         //setting index in mappings
-
-var cf = await Counterfeit.deployed()
-
-var accounts;
-web3.eth.getAccounts(function(err,res) { accounts = res; });
-
-var second = accounts[1]
-
-cf.addProduct(1,1,20,'first','first')
-
-cf.registerSeller('gak','marwadi',{from:second})
         productIdToProductIndex[_productId] = index;
         secretIdToProductIndex[_secretId] = index;
 
