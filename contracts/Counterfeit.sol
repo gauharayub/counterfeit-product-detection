@@ -6,6 +6,14 @@ import "./Ownable.sol";
 
 contract Counterfeit is Ownable {
 
+    constructor(){
+        products.push(Product(0, 0, 'dummy', 'dummy', true));
+        sellerId++;
+        sellers.push(sellerDetails(sellerId,0,"owner","originalOwner"));
+        sellerAddressToSellerId[owner()] = sellerId;
+        sellerIdToSellerIndex[sellerId] = sellers.length -1;
+    }
+
     //---------------------------------------//
     //----------------Events----------------//
     //--------------------------------------//
@@ -16,7 +24,8 @@ contract Counterfeit is Ownable {
     event productPurchased(address buyerAddress);
     event productSold(address sellerAddress);
     event sellerRegistered(address sellerAddress);
-
+    // event sellerIs(uint id,string name,string details);
+    // event productIs(string name, uint price, string details, bool isSold);
     //------------------------------------//
     //------------Variables---------------//
     //------------------------------------//
@@ -248,6 +257,21 @@ contract Counterfeit is Ownable {
         return true;
     }
 
+
+    function whoIsSeller(uint _productId) external view returns (uint id,string memory name,string memory details) {
+        address sellerAddress = productToOwner[_productId];
+        uint sellerIndex = returnSellerIndex(sellerAddress);
+
+        sellerDetails storage seller = sellers[sellerIndex];
+        return (seller.id,seller.name,seller.details);
+    }
+
+    function whatIsProduct(uint _productId) external view returns (string memory name, uint price, string memory details, bool isSold){
+        uint index = productIdToProductIndex[_productId];
+
+        Product storage tP = products[index];
+        return (tP.name,tP.price,tP.details,tP.isSold);
+    }
     //------------------------------------//
     //----------Functions End-------------//
     //------------------------------------//
