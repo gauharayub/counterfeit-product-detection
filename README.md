@@ -37,3 +37,16 @@ truffle migrate --reset
 ```
 
 if some previous version of contract are deployed
+
+
+
+var cf = await Counterfeit.deployed()
+
+var accounts;
+web3.eth.getAccounts(function(err,res) { accounts = res; });
+
+var second = accounts[1]
+
+cf.addProduct(1,1,20,'first','first')
+
+cf.registerSeller('gak','marwadi',{from:second})
