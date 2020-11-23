@@ -1,7 +1,8 @@
 const Web3 = require('web3');
 const Tx = require('ethereumjs-tx').Transaction
+const ganache = require("ganache-core");
 
-const web3 = new Web3('ws://127.0.0.1:8545');
+const web3 = new Web3(ganache.provider());
 
 const CounterfeitAbi = require('../build/contracts/Counterfeit.json')
 
