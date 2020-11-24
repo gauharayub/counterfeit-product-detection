@@ -1,0 +1,12 @@
+{
+  "name": "fake-product-detection-app",
+  "displayName": "fake-product-detection-app",
+  "expo": {
+    "name": "fake-product-detection-app",
+    "slug": "fake-product-detection-app",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
