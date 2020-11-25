@@ -1,9 +1,18 @@
 import 'react-native-gesture-handler';
 import React from 'react';
-import { StyleSheet, Text, View, Button, TextInput } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  Button,
+  TextInput,
+} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
 import { createStackNavigator } from '@react-navigation/stack';
+import QRCodeScanner from 'react-native-qrcode-scanner';
+import { RNCamera } from 'react-native-camera';
 const Stack = createStackNavigator();
 
 export default function App() {
@@ -73,7 +82,18 @@ const ViewProducts = ({ navigation, route }) => {
 };
 
 const VerifyProduct = ({ navigation, route }) => {
-  return <View style={styles.container} />;
+  return (
+    <View style={styles.container}>
+      <Text style={styles.scanHeading}>SCAN AND VERIFY</Text>
+      <QRCodeScanner
+        cameraStyle={styles.cameraStyle}
+        onRead={() => {
+          console.log('sacnned successfully');
+        }}
+        flashMode={RNCamera.Constants.FlashMode.torch}
+      />
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({
@@ -118,5 +138,27 @@ const styles = StyleSheet.create({
   },
   submitButton: {
     marginTop: 35,
+  },
+  textBold: {
+    fontWeight: '500',
+    color: '#000',
+  },
+  buttonText: {
+    fontSize: 21,
+    color: 'rgb(0,122,255)',
+  },
+  buttonTouchable: {
+    padding: 16,
+  },
+  scanHeading: {
+    fontSize: 30,
+    marginBottom: 50,
+    fontWeight: 'bold',
+    color: 'black',
+  },
+  cameraStyle: {
+    marginTop: 50,
+    height: '60%',
+    width: '100%',
   },
 });
