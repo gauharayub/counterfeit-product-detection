@@ -41,18 +41,14 @@ const sellerController = {
             const email = req.body.email;
             const password = req.body.password;
 
-            if (await sellerManager.checkEmailRegistered(email)) {
-                throw new Error('User already registered')
-            }
+            await sellerManager.checkEmailRegistered(email)
 
             const hash = await argon2.hash(password);
-
             const privateKey = await sellerManager.generatePrivateKey()
 
             await sellerManager.storeSeller(email, hash, privateKey)
 
             res.cookie('jwt', jwt.sign(email, process.env.JWT_SECRET_KEY))
-
             res.send("Seller registered successfully")
 
         } catch (error) {

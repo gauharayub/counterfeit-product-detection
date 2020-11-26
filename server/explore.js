@@ -22,7 +22,7 @@ const mysql = require('./lib/mysql');
 
 console.log(process.env.DB_HOST)
 const email = 'anas'
-const q = `Select * from users where type = seller and email = ${email}`
+const q = `Select * from users where type = 'seller' and email = '${email}'`
 mysql.query(q)
     .then(data => console.log(data))
     .catch(e => console.error(e))
