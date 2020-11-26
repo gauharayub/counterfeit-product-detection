@@ -1,3 +1,4 @@
+require('dotenv').config()
 const argon2 = require('argon2');
 const Web3 = require('web3');
 const web3 = new Web3()
@@ -17,6 +18,9 @@ const mysql = require('./lib/mysql');
 //     console.log(newAccount.privateKey.length)
 // }
 // test()
+
+
+console.log(process.env.DB_HOST)
 const email = 'anas'
 const q = `Select * from users where type = seller and email = ${email}`
 mysql.query(q)
