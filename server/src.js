@@ -1,5 +1,4 @@
 const Web3 = require('web3');
-const Tx = require('ethereumjs-tx').Transaction
 const ganache = require("ganache-core");
 
 const web3 = new Web3(ganache.provider());
@@ -9,9 +8,8 @@ const CounterfeitAbi = require('../build/contracts/Counterfeit.json')
 //find this address from ganache
 const CounterfeitAddress = '0x940f333167865baa78fdf8f8276410fc4317a19e'
 
-const myPrivateKey = Buffer.from('348ce564d427a3311b6536bbcff9390d69395b06ed6c486954e971d960fe8709', 'hex')
-console.log(myPrivateKey);
 const privateKey = '0x348ce564d427a3311b6536bbcff9390d69395b06ed6c486954e971d960fe8709'
+
 web3.eth.getAccounts().then(async accounts => {
     try {
 
