@@ -35,6 +35,7 @@ function secure(req, res, next) {
       if (err) {
         throw new Error();
       }
+      req.email = decoded
       next();
     });
   } catch (error) {
