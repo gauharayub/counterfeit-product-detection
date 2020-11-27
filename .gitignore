@@ -1,6 +1,7 @@
 node_modules
 bin
 build
+/server/.env
 
 # OSX
 #
