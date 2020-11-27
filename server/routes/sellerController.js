@@ -1,18 +1,19 @@
 const manager = require('../manager');
 const sellerManager = manager.sellerManager;
-
+const sellerOp = require('../chainop/sellerOp')
 const argon2 = require('argon2');
 const jwt = require('jsonwebtoken');
 
 const sellerController = {
   login: async function (req, res, next) {
     try {
-      if (!req.body || !req.body.email || !req.body.password) {
+      if (!req.body) {
+        throw new Error('no body')
+      }
+      const { email, password } = req.body
+      if (!email || !password) {
         throw new Error('Invalid email or password');
       }
-
-      const email = req.body.email;
-      const password = req.body.password;
 
       const rawResponse = await sellerManager.getPasswordByEmail(email);
       const response = rawResponse[0];
@@ -31,21 +32,27 @@ const sellerController = {
 
   signup: async function (req, res, next) {
     try {
-      if (!req.body || !req.body.email || !req.body.password) {
+      if (!req.body) {
+        throw new Error('no body')
+      }
+      const { email, password, name, details } = req.body
+
+      if (!email || !password) {
         throw new Error('Invalid email or password');
       }
-
-      const email = req.body.email;
-      const password = req.body.password;
+      if (!name || !details) {
+        throw new Error('Name or details not provided')
+      }
 
       await sellerManager.checkEmailRegistered(email);
 
       const hash = await argon2.hash(password);
-      const privateKey = await sellerManager.generatePrivateKey();
+      const privateKey = await sellerOp.genKey();
 
       await sellerManager.storeSeller(email, hash, privateKey);
 
       // add web3 code for registering as a seller in blockchain...
+      await sellerOp.register(privateKey, name, details)
 
       res.cookie('jwt', jwt.sign(email, process.env.JWT_SECRET_KEY));
 
@@ -62,10 +69,20 @@ const sellerController = {
 
   sellProduct: function (req, res, next) {
     try {
-      const productId = req.body.productId;
-      const buyerAddress = req.body.buyerAddress;
+      if(!req.body){
+        throw new Error("No body")
+      }
+      const {productId,buyerAddress} = req.body
+      const {email } = req.email
+      
+      if(!productId || !buyerAddress|| !email){
+        throw new Error("Not All Details")
+      }
+      const privateKey = await sellerManager.getPrivateKeyByEmail(email)
 
-      // web3 function call...
+      await sellerOp.sell(productId, buyerAddress,privateKey)
+      res.send("Sold successfully")
+
     } catch (error) {
       return next(error);
     }
