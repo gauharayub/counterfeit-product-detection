@@ -30,8 +30,8 @@ contract Counterfeit is Ownable {
     //------------Variables---------------//
     //------------------------------------//
 
-    uint256 sellerId = 1000;
-    uint256 reportThreshold = 100;
+    uint256 private sellerId = 1000;
+    uint256 private reportThreshold = 100;
 
     //------------------------------------//
     //------------Variables End-----------//
@@ -149,15 +149,13 @@ contract Counterfeit is Ownable {
         sellerId++;
 
         //creating new instance and storing in array
-        sellerDetails memory sDet = sellerDetails(sellerId,0,_name,_details);
-        sellers.push(sDet);
-        uint sellerIndex = sellers.length - 1;
+        sellers.push(sellerDetails(sellerId,0,_name,_details));
 
         //assingning index for future search
-        sellerIdToSellerIndex[sellerId] = sellerIndex;
+        sellerIdToSellerIndex[sellerId] = sellers.length - 1;
         sellerAddressToSellerId[msg.sender] = sellerId;
 
-        emit sellerRegistered(msg.sender);
+        // emit sellerRegistered(msg.sender);
     }
 
     function registerReport(uint _productId) external returns(bool) {
@@ -278,5 +276,18 @@ contract Counterfeit is Ownable {
     }
     //------------------------------------//
     //----------Functions End-------------//
+    //------------------------------------//
+
+    //------------------------------------//
+    //----------Dev Only Owner-------------//
+    //------------------------------------//
+    function productLength() onlyOwner public view returns (uint _productArrayLength){
+        return products.length;
+    }
+     function sellersLength() onlyOwner public view returns (uint _sellerArrayLength){
+        return sellers.length;
+    }
+    //------------------------------------//
+    //--------Dev Only Owner End----------//
     //------------------------------------//
 }

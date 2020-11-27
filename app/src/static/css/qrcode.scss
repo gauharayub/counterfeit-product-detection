@@ -1,0 +1,42 @@
+#scanner {
+  width: 100%;
+  max-width: 500px;
+  min-width: 300px;
+  margin: auto;
+  height: 400px;
+  border-radius: 4px;
+  > section,
+  video {
+    width: 100%;
+    border-radius: 4px;
+    max-width: 500px;
+    min-width: 300px;
+    height: 400px;
+  }
+}
+#data {
+  width: 100%;
+  max-width: 500px;
+  min-width: 300px;
+  margin: auto;
+
+  p {
+    display: flex;
+    justify-content: space-evenly;
+    font-size: clamp(1.5rem, 4vw, 2rem);
+    font-weight: 300;
+    border-radius: 4px;
+    text-align: justify;
+    color: #232323;
+    background-color: #eee;
+    span {
+      font-weight: 500;
+      color: #232323;
+    }
+  }
+  a,button {
+    font-size: 1.5rem;
+    width: 100%;
+    padding: 12px 18px;
+  }
+}
