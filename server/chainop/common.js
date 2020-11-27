@@ -22,7 +22,7 @@ const common = {
             const newAccount = await web3.eth.accounts.create();
             return newAccount.privateKey;
         } catch (error) {
-            console.log(error);
+            console.log(error.message);
             throw new Error('failed to create new private key');
         }
     },
