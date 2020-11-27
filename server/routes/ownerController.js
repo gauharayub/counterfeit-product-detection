@@ -1,10 +1,10 @@
 const manager = require('../manager');
-const sellerManager = manager.sellerManager;
+const ownerManager = manager.sellerManager;
 
 const argon2 = require('argon2');
 const jwt = require('jsonwebtoken');
 
-const sellerController = {
+const ownerController = {
   login: async function (req, res, next) {
     try {
       if (!req.body || !req.body.email || !req.body.password) {
@@ -14,7 +14,7 @@ const sellerController = {
       const email = req.body.email;
       const password = req.body.password;
 
-      const rawResponse = await sellerManager.getPasswordByEmail(email);
+      const rawResponse = await ownerManager.getPasswordByEmail(email);
       const response = rawResponse[0];
 
       if (await argon2.verify(response, password)) {
@@ -38,17 +38,14 @@ const sellerController = {
       const email = req.body.email;
       const password = req.body.password;
 
-      await sellerManager.checkEmailRegistered(email);
+      await ownerManager.checkEmailRegistered(email);
 
       const hash = await argon2.hash(password);
-      const privateKey = await sellerManager.generatePrivateKey();
+      const privateKey = await ownerManager.generatePrivateKey();
 
-      await sellerManager.storeSeller(email, hash, privateKey);
-
-      // add web3 code for registering as a seller in blockchain...
+      await ownerManager.storeOwner(email, hash, privateKey);
 
       res.cookie('jwt', jwt.sign(email, process.env.JWT_SECRET_KEY));
-
       res.send('Seller registered successfully');
     } catch (error) {
       return next(error);
@@ -60,16 +57,17 @@ const sellerController = {
     res.redirect('/');
   },
 
-  sellProduct: function (req, res, next) {
+  addProduct: async function (req, res, next) {
     try {
-      const productId = req.body.productId;
-      const buyerAddress = req.body.buyerAddress;
+      // object containing details of product to be added...
+      const productDetails = req.body.productDetails;
+      // web3 function call....
 
-      // web3 function call...
+      res.send('Product added successfully');
     } catch (error) {
       return next(error);
     }
   },
 };
 
-module.exports = sellerController;
+module.exports = ownerController;

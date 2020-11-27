@@ -1,3 +1,6 @@
+<<<<<<< HEAD
+//function to sign transaction etc
+=======
 const Web3 = require('web3');
 
 const web3 = new Web3(new Web3.providers.HttpProvider(process.env.BLOCKCHAIN_NODE))
@@ -93,3 +96,4 @@ const common = {
 }
 
 module.exports = common
+>>>>>>> 6fa5071f27547dea8e830bf301e255c85dc479a6
