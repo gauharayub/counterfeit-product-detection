@@ -1,10 +1,6 @@
-<<<<<<< HEAD
-//function to sign transaction etc
-=======
 const Web3 = require('web3');
 
 const web3 = new Web3(new Web3.providers.HttpProvider(process.env.BLOCKCHAIN_NODE))
-console.log("BOO")
 const Abi = require('../../build/contracts/Counterfeit.json')
 
 //current contract address (coutnerfeit contract) on blockchaine(ganache)
@@ -21,9 +17,17 @@ const common = {
         const account = await web3.eth.accounts.privateKeyToAccount(privateKey)
         return account
     },
-
+    async generatePrivateKey () {
+        try {
+            const newAccount = await web3.eth.accounts.create();
+            return newAccount.privateKey;
+        } catch (error) {
+            console.log(error);
+            throw new Error('failed to create new private key');
+        }
+    },
     //for not transaction methods ex- view pure
-    callTransaction(method,privateKey = process.env.COMMON_PRIVATE_KEY) {
+    callTransaction(method, privateKey = process.env.COMMON_PRIVATE_KEY) {
         return new Promise(async (resolve, reject) => {
             try {
                 const contract = await this.returnContract()
@@ -96,4 +100,3 @@ const common = {
 }
 
 module.exports = common
->>>>>>> 6fa5071f27547dea8e830bf301e255c85dc479a6
