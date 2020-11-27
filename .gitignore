@@ -1,7 +1,8 @@
 node_modules
 bin
 build
-/server/.env
+./truffle-config.js
+server/.env
 
 # OSX
 #
