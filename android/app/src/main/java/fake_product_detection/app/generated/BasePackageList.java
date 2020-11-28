@@ -1,4 +1,4 @@
-package com.fakeproductdetectionapp.generated;
+package fake_product_detection.app.generated;
 
 import java.util.Arrays;
 import java.util.List;

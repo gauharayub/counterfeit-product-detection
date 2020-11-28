@@ -131,11 +131,12 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.fakeproductdetectionapp"
+        applicationId 'fake_product_detection.app'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
-        versionName "1.0"
+        versionName "1.0.0"
+        missingDimensionStrategy 'react-native-camera', 'general'
     }
     splits {
         abi {

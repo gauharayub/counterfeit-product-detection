@@ -1,4 +1,4 @@
-package com.fakeproductdetectionapp;
+package fake_product_detection.app;
 
 import android.os.Bundle;
 

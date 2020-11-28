@@ -5,6 +5,6 @@ const sellerController = require('./sellerController');
 router.post('/signup', sellerController.signup);
 router.post('/login', sellerController.login);
 router.post('/logout', sellerController.logout);
-router.get('/sellproduct', sellerController.sellProduct);
+router.post('/sellproduct', sellerController.sellProduct);
 
 module.exports = router;
