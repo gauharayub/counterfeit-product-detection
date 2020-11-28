@@ -80,7 +80,7 @@ function Header() {
                         }
                     </span>
                     <span>
-                        <Link to='/vendor'>
+                        <Link to='/signup'>
                             <span>
                                 <img src={vendorIco} alt="vendor icon" />
                                 <h5 className="ml-2">Become Seller</h5>
