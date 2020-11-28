@@ -1,13 +1,12 @@
 const Web3 = require('web3');
-
 const web3 = new Web3(new Web3.providers.HttpProvider(process.env.BLOCKCHAIN_NODE))
 const Abi = require('../../build/contracts/Counterfeit.json')
 
 //current contract address (coutnerfeit contract) on blockchaine(ganache)
-const CounterfeitAddress = process.env.CONTRACT_ADDRESS
-
+const CounterfeitAddress = process.env.CONTRACT_ADDRESS;
 
 const common = {
+
     //utils methods
     async returnContract() {
         const contract = await new web3.eth.Contract(Abi.abi, CounterfeitAddress)
@@ -33,70 +32,84 @@ const common = {
                 const contract = await this.returnContract()
                 const account = await this.returnAccount(privateKey)
 
-                const transaction = {
-                    from: account.address,
-                    to: CounterfeitAddress
-                }
-                const result = await eval(`contract.methods.${method}.call(transaction)`)
-                return resolve(result)
-            }
-            catch (error) {
-                console.log(error.message);
-                return reject("Failed to call")
-            }
-        })
-    },
-    //sign provide exact method as string second parameter
-    signTransaction(method, privateKey = process.env.COMMON_PRIVATE_KEY) {
-        return new Promise(async (resolve, reject) => {
-            try {
-                //it is being used inside the eval statement
-                const contract = await this.returnContract()
+  //for not transaction methods ex- view pure
+  callTransaction(method, privateKey = process.env.COMMON_PRIVATE_KEY) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const contract = await this.returnContract();
+        const account = await this.returnAccount(privateKey);
 
-                const myAccount = await this.returnAccount(privateKey)
+        const transaction = {
+          from: account.address,
+          to: CounterfeitAddress,
+        };
+        // eslint-disable-next-line no-eval
+        const result = await eval(
+          `contract.methods.${method}.call(transaction)`,
+        );
+        return resolve(result);
+      } catch (error) {
+        console.log(error.message);
+        return reject('Failed to call');
+      }
+    });
+  },
+  //sign provide exact method as string second parameter
+  signTransaction(method, privateKey = process.env.COMMON_PRIVATE_KEY) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        //it is being used inside the eval statement
+        const contract = await this.returnContract();
 
-                const transaction = {
-                    from: myAccount.address,
-                    to: CounterfeitAddress,
-                    gas: 200000,
-                    data: eval(`contract.methods.${method}.encodeABI()`)
-                }
+        const myAccount = await this.returnAccount(privateKey);
 
-                const signedTransaction = await web3.eth.accounts.signTransaction(transaction, privateKey)
+        const transaction = {
+          from: myAccount.address,
+          to: CounterfeitAddress,
+          gas: 200000,
+          // eslint-disable-next-line no-eval
+          data: eval(`contract.methods.${method}.encodeABI()`),
+        };
 
-                return resolve(signedTransaction)
-            } catch (error) {
-                console.log(error.message)
-                return reject("Failed to sign")
-            }
-        })
-    },
+        const signedTransaction = await web3.eth.accounts.signTransaction(
+          transaction,
+          privateKey,
+        );
 
-    sendTransaction(signedTransaction) {
-        return new Promise(async (resolve, reject) => {
-            try {
-                const receipt = await web3.eth.sendSignedTransaction(signedTransaction.rawTransaction)
-                return resolve(receipt)
-            } catch (error) {
-                console.log(error.message)
-                return reject("Failed to send transaction")
-            }
-        })
-    },
-    getBalance(privateKey = process.env.COMMON_PRIVATE_KEY) {
-        return new Promise(async (resolve, reject) => {
-            try {
-                const myAccount = await this.returnAccount(privateKey)
-                const balance = await web3.eth.getBalance(myAccount.address)
-                return resolve(balance)
-            }
-            catch (error) {
-                console.log(error.message)
-                return reject("Failed to get balance")
-            }
-        })
+        return resolve(signedTransaction);
+      } catch (error) {
+        console.log(error.message);
+        return reject('Failed to sign');
+      }
+    });
+  },
 
-    }
-}
+  sendTransaction(signedTransaction) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const receipt = await web3.eth.sendSignedTransaction(
+          signedTransaction.rawTransaction,
+        );
+        return resolve(receipt);
+      } catch (error) {
+        console.log(error.message);
+        return reject('Failed to send transaction');
+      }
+    });
+  },
+  getBalance(privateKey = process.env.COMMON_PRIVATE_KEY) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const myAccount = await this.returnAccount(privateKey);
+        const balance = await web3.eth.getBalance(myAccount.address);
+        return resolve(balance);
+      } catch (error) {
+        console.log(error.message);
+        return reject('Failed to get balance');
+      }
+    });
+  },
+};
 
-module.exports = common
+          
+module.exports = common;
