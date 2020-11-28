@@ -1,22 +1,22 @@
 const manager = require('../manager');
 const commonManager = manager.commonManager;
 const sellerOp = require('../chainop/sellerOp');
+const commonOp = require('../chainop/commonOp');
 const argon2 = require('argon2');
 const jwt = require('jsonwebtoken');
 
 const commonController = {
-
   login: async function (req, res, next) {
     try {
       if (!req.body) {
         throw new Error('no body');
       }
-      const { email, password,type } = req.body;
+      const { email, password, type } = req.body;
       if (!email || !password) {
         throw new Error('Invalid email or password');
       }
 
-      const response= await commonManager.getPasswordByEmail(email,type);
+      const response = await commonManager.getPasswordByEmail(email, type);
 
       if (await argon2.verify(response, password)) {
         res.cookie('jwt', jwt.sign(email, process.env.JWT_SECRET_KEY));
@@ -35,7 +35,7 @@ const commonController = {
       if (!req.body) {
         throw new Error('no body');
       }
-      const { email, password, name, details,type } = req.body;
+      const { email, password, name, details, type } = req.body;
 
       if (!email || !password) {
         throw new Error('Invalid email or password');
@@ -44,12 +44,12 @@ const commonController = {
         throw new Error('Name or details not provided');
       }
 
-      await commonManager.checkEmailRegistered(email,type);
+      await commonManager.checkEmailRegistered(email, type);
 
       const hash = await argon2.hash(password);
       const privateKey = await sellerOp.genKey();
 
-      await commonManager.storeSeller(email, hash, privateKey,type);
+      await commonManager.storeSeller(email, hash, privateKey, type);
 
       // add web3 code for registering as a seller in blockchain...
       await sellerOp.register(privateKey, name, details);
@@ -65,7 +65,26 @@ const commonController = {
   logout: function (req, res, next) {
     res.clearCookie('jwt');
     res.redirect('/');
-  }
+  },
+
+  getAllProducts: async function (req, res, next) {
+    try {
+      if (!req.body) {
+        throw new Error('Nothing in request object');
+      }
+
+      const { ownerAddress } = req.body;
+
+      if (!ownerAddress) {
+        throw new Error('Details incomplete');
+      }
+
+      const products = await commonOp.getAllProducts(ownerAddress);
+      res.send(products);
+    } catch (error) {
+      return next(error);
+    }
+  },
 };
 
 module.exports = commonController;

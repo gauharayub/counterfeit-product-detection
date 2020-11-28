@@ -1,11 +1,8 @@
 const manager = require('../manager');
 const commonManager = manager.commonManager;
 const sellerOp = require('../chainop/sellerOp');
-const argon2 = require('argon2');
-const jwt = require('jsonwebtoken');
 
 const sellerController = {
-
   sellProduct: async function (req, res, next) {
     try {
       if (!req.body) {

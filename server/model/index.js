@@ -1,3 +1,3 @@
 module.exports = {
-  commonModel: require('./commonModel')
+  commonModel: require('./commonModel'),
 };
