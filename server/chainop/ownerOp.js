@@ -14,14 +14,19 @@ const ownerOp = {
       throw new Error('Failed to add product');
     }
   },
-  async genKey() {
+  async unblockSeller(sellerAddress, privateKey) {
     try {
-      return await common.generatePrivateKey();
+      const signedTransaction = await common.signTransaction(
+        `unblockSeller(${sellerAddress})`,
+        privateKey,
+      );
+      const result = await common.sendTransaction(signedTransaction);
+      return result;
     } catch (error) {
       console.log(error.message);
-      throw new Error('failed to generate keys');
+      throw new Error('Failed to unblock seller');
     }
-  },
+  }
 };
 
 module.exports = ownerOp;
