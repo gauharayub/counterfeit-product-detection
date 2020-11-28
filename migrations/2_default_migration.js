@@ -1,5 +1,5 @@
-const Counterfeit = artifacts.require("Counterfeit");
+const Counterfeit = artifacts.require('Counterfeit');
 
 module.exports = function (deployer) {
-    deployer.deploy(Counterfeit);
+  deployer.deploy(Counterfeit);
 };

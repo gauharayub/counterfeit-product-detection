@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.7.0;
-
+pragma experimental ABIEncoderV2;
 import "./Ownable.sol";
 
 
@@ -204,6 +204,29 @@ contract Counterfeit is Ownable {
         emit productPurchased(msg.sender);
 
         return true;
+    }
+
+    function getAllProducts(address _ownerAddress) external view returns(Product[] memory){
+        uint productCount=0;
+        for(uint i=0; i < products.length; i++) {
+            if(productToOwner[products[i].productId] == _ownerAddress) {
+                productCount++;
+            }
+        }
+
+        // push method not available for memory array...
+        Product[] memory ownedProducts = new Product[](productCount);
+        uint j=0;
+
+        for(uint i=0; i < products.length; i++) {
+            if(productToOwner[products[i].productId] == _ownerAddress) {
+                ownedProducts[j] = products[i];
+                j++;
+            }
+        }
+
+        return ownedProducts;
+        
     }
 
     // should be called for reselling
