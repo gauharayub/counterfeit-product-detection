@@ -63,4 +63,9 @@ app.use(function (err, req, res, next) {
     .json({ error: err, message: err.message });
 });
 
+
+app.listen(3000, () => {
+  console.log("Listening on 3000")
+})
+
 module.exports = app;
