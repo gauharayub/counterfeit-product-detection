@@ -3,7 +3,7 @@ const mysql = require('../lib/mysql');
 class commonModel {
   static get(email,type) {
     return new Promise((resolve, reject) => {
-      let q = `Select * from users where type = ${type} and email = '${email}'`;
+      let q = `Select * from users where type = '${type}' and email = '${email}'`;
       mysql
         .query(q)
         .then((data) => resolve(data))
