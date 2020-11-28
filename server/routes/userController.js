@@ -63,13 +63,13 @@ const userController = {
         throw new Error('Nothing in request object');
       }
 
-      const { productId, email } = req.body;
+      const { productId } = req.body;
 
-      if (!email || !productId) {
+      if (!productId) {
         throw new Error('Details incomplete');
       }
 
-      const privateKey = userManager.getPrivateKeyByEmail(email);
+      const privateKey = userManager.generatePrivateKey();
       await userOp.reportSeller(productId, privateKey);
       res.send('Seller reported successfully');
     } catch (error) {
@@ -83,12 +83,12 @@ const userController = {
         throw new Error('Nothing in request object');
       }
 
-      const { sellerAddress, email } = req.body;
+      const { sellerAddress } = req.body;
 
-      if (!email || !sellerAddress) {
+      if (!sellerAddress) {
         throw new Error('Details incomplete');
       }
-      const privateKey = userManager.getPrivateKeyByEmail(email);
+      const privateKey = userManager.generatePrivateKey();
       await userOp.unblockSeller(sellerAddress, privateKey);
       res.send('Seller unblocked successfully');
     } catch (error) {
@@ -101,13 +101,13 @@ const userController = {
       if (!req.body) {
         throw new Error('Nothing in request object');
       }
-      const { ownerAddress, email } = req.body;
+      const { ownerAddress } = req.body;
 
-      if (!email || !ownerAddress) {
+      if (!ownerAddress) {
         throw new Error('Details incomplete');
       }
 
-      const privateKey = userManager.getPrivateKeyByEmail(email);
+      const privateKey = userManager.generatePrivateKey();
       const products = await userOp.getAllProducts(ownerAddress, privateKey);
       res.send(products);
     } catch (error) {
@@ -123,9 +123,9 @@ const userController = {
       }
 
       // secretId of the product extracted from qr code...
-      const { secretId, email } = req.body;
+      const { secretId } = req.body;
 
-      if (!email || !secretId) {
+      if (!secretId) {
         throw new Error('Details incomplete');
       }
 
