@@ -27,19 +27,7 @@ const userOp = {
       throw new Error('Failed to report seller');
     }
   },
-  async unblockSeller(sellerAddress, privateKey) {
-    try {
-      const signedTransaction = await common.signTransaction(
-        `unblockSeller(${sellerAddress})`,
-        privateKey,
-      );
-      const result = await common.sendTransaction(signedTransaction);
-      return result;
-    } catch (error) {
-      console.log(error.message);
-      throw new Error('Failed to unblock seller');
-    }
-  },
+  
   async getAllProducts(ownerAddress) {
     try {
       const result = await common.callTransaction(

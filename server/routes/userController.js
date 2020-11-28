@@ -5,58 +5,7 @@ const argon2 = require('argon2');
 const jwt = require('jsonwebtoken');
 
 const userController = {
-  // login: async function (req, res, next) {
-  //   try {
-  //     if (!req.body || !req.body.email || !req.body.password) {
-  //       throw new Error('Invalid email or password');
-  //     }
-
-  //     const email = req.body.email;
-  //     const password = req.body.password;
-
-  //     const rawResponse = await userManager.getPasswordByEmail(email);
-  //     const response = rawResponse[0];
-
-  //     if (await argon2.verify(response, password)) {
-  //       res.cookie('jwt', jwt.sign(email, process.env.JWT_SECRET_KEY));
-
-  //       return res.send('Login successfully');
-  //     } else {
-  //       throw new Error('Password does not match');
-  //     }
-  //   } catch (error) {
-  //     return next(error);
-  //   }
-  // },
-
-  // signup: async function (req, res, next) {
-  //   try {
-  //     if (!req.body || !req.body.email || !req.body.password) {
-  //       throw new Error('Invalid email or password');
-  //     }
-
-  //     const email = req.body.email;
-  //     const password = req.body.password;
-
-  //     await userManager.checkEmailRegistered(email);
-
-  //     const hash = await argon2.hash(password);
-  //     const privateKey = await userManager.generatePrivateKey();
-
-  //     await userManager.storeUser(email, hash, privateKey);
-
-  //     res.cookie('jwt', jwt.sign(email, process.env.JWT_SECRET_KEY));
-  //     res.send('Seller registered successfully');
-  //   } catch (error) {
-  //     return next(error);
-  //   }
-  // },
-
-  // logout: function (req, res, next) {
-  //   res.clearCookie('jwt');
-  //   res.redirect('/');
-  // },
-
+  
   reportSeller: async function (req, res, next) {
     try {
       if (!req.body) {
@@ -72,25 +21,6 @@ const userController = {
       const privateKey = userManager.generatePrivateKey();
       await userOp.reportSeller(productId, privateKey);
       res.send('Seller reported successfully');
-    } catch (error) {
-      return next(error);
-    }
-  },
-
-  unblockSeller: async function (req, res, next) {
-    try {
-      if (!req.body) {
-        throw new Error('Nothing in request object');
-      }
-
-      const { sellerAddress } = req.body;
-
-      if (!sellerAddress) {
-        throw new Error('Details incomplete');
-      }
-      const privateKey = userManager.generatePrivateKey();
-      await userOp.unblockSeller(sellerAddress, privateKey);
-      res.send('Seller unblocked successfully');
     } catch (error) {
       return next(error);
     }

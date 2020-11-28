@@ -76,6 +76,26 @@ const ownerController = {
       return next(error);
     }
   },
+  unblockSeller: async function (req, res, next) {
+    try {
+      if (!req.body) {
+        throw new Error('Nothing in request object');
+      }
+
+      const { sellerAddress } = req.body;
+      const { email } = req
+
+      if (!sellerAddress || !email) {
+        throw new Error('Details incomplete');
+      }
+      
+      const privateKey = ownerManager.getPrivateKeyByEmail(email);
+      await ownerOp.unblockSeller(sellerAddress, privateKey);
+      res.send('Seller unblocked successfully');
+    } catch (error) {
+      return next(error);
+    }
+  },
 };
 
 module.exports = ownerController;

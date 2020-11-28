@@ -22,6 +22,19 @@ const ownerManager = {
         });
     });
   },
+  async getPrivateKeyByEmail(email){
+    try{
+      const result = await sellerModel.get(email)
+      if (!result || result.length === 0) {
+        throw new Error('email not found in user table');
+      }
+      return result[0].privateKey
+    }
+    catch(error){
+      console.log(error.message);
+      throw new Error("Failed to get private key")
+    }
+  },
   generatePrivateKey: async function () {
     try {
       const newAccount = await web3.eth.accounts.create();
