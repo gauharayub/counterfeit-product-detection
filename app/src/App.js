@@ -1,6 +1,6 @@
 
 import { useRecoilValue, useSetRecoilState,RecoilRoot } from 'recoil'
-import { useEffect,lazy } from 'react';
+import { lazy } from 'react';
 import {
   BrowserRouter as Router, Switch, Route,Redirect
 } from "react-router-dom";
@@ -23,25 +23,6 @@ const Sell = lazy(() => import(/*webpackChunkName: "SELL" */ './pages/sell'))
 function App() {
 
   const setLogin = useSetRecoilState(ll)
-
-  // useEffect(() => {
-  //   if (localStorage.getItem('login')) {
-  //     const currentDate = new Date()
-  //     //parsing date object stored in localstorage
-  //     let storedDate = JSON.parse(localStorage.getItem('login'))
-  //     //creating real date object with date only
-  //     storedDate = new Date(storedDate.substr(0, 10))
-  //     //if one month has passed since login
-  //     if (currentDate >= storedDate) {
-  //       //remove login from localstorage
-  //       localStorage.removeItem('login')
-
-  //     } else {
-  //       setLogin(true)
-  //     }
-  //   }
-  // }, [])
-
 
   return (
     <RecoilRoot>

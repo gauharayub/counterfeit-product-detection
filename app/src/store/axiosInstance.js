@@ -5,16 +5,13 @@ const axiosInstance = axios.create({
 })
 
 axiosInstance.interceptors.request.use(function (config) {
-    config.headers["x-api-key"] = localStorage.getItem('x-api-key') || ''
+    config.withCredentials = true
     return config
 }, function (error) {
     return Promise.reject(error);
 })
 
 axiosInstance.interceptors.response.use(function (response) {
-    if (response.headers["x-api-key"]) {
-        setKey(response.headers["x-api-key"])
-    }
     return response
 
 }, function (error) {
@@ -32,22 +29,5 @@ axiosInstance.interceptors.response.use(function (response) {
     return Promise.reject(error)
 })
 
-function setKey(key) {
-    localStorage.setItem('x-api-key', key)
-}
-
-function delKey() {
-    localStorage.removeItem('login')
-}
-
-function setLoginC() {
-    const date = new Date()
-    const currentDate = date.getDate()
-    //setting the date of  days ahead
-    date.setDate(currentDate + 30)
-
-    localStorage.setItem('login', JSON.stringify(date))
-}
-
 export default axiosInstance
-export { delKey, setLoginC }
+export { delKey }
