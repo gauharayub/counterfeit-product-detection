@@ -57,7 +57,7 @@ app.use('/owner', ownerRouter);
 
 // error handler
 app.use(function (err, req, res, next) {
-  console.log(err);
+  console.log(err.message);
   return res
     .status(err.status || 500)
     .json({ error: err, message: err.message });
