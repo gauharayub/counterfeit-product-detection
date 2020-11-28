@@ -3,11 +3,12 @@ const cookieParser = require('cookie-parser');
 const jwt = require('jsonwebtoken');
 const cors = require('cors');
 
+require('dotenv').config();
+
 const userRouter = require('./routes/user');
 const sellerRouter = require('./routes/seller');
 const ownerRouter = require('./routes/owner');
 
-require('dotenv').config();
 
 const app = express();
 
@@ -64,8 +65,8 @@ app.use(function (err, req, res, next) {
 });
 
 
-app.listen(3000, () => {
-  console.log("Listening on 3000")
+app.listen(8000, () => {
+  console.log("Listening on 8000")
 })
 
 module.exports = app;
