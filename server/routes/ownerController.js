@@ -1,6 +1,6 @@
 const manager = require('../manager');
 const ownerManager = manager.sellerManager;
-
+const ownerOp = require('../chainop/ownerOp');
 const argon2 = require('argon2');
 const jwt = require('jsonwebtoken');
 
@@ -41,7 +41,7 @@ const ownerController = {
       await ownerManager.checkEmailRegistered(email);
 
       const hash = await argon2.hash(password);
-      const privateKey = await ownerManager.generatePrivateKey();
+      const privateKey = await ownerOp.genKey();
 
       await ownerManager.storeOwner(email, hash, privateKey);
 
@@ -59,10 +59,18 @@ const ownerController = {
 
   addProduct: async function (req, res, next) {
     try {
-      // object containing details of product to be added...
-      const productDetails = req.body.productDetails;
-      // web3 function call....
+      if (!req.body) {
+        throw new Error('Nothing in request object');
+      }
 
+      const { productDetails, email } = req.body;
+
+      if (!email || !productDetails) {
+        throw new Error('Details incomplete');
+      }
+
+      const privateKey = ownerManager.getPrivateKeyByEmail(email);
+      await ownerOp.addProduct(productDetails, privateKey);
       res.send('Product added successfully');
     } catch (error) {
       return next(error);

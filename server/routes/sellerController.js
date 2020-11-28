@@ -1,6 +1,6 @@
 const manager = require('../manager');
 const sellerManager = manager.sellerManager;
-const sellerOp = require('../chainop/sellerOp')
+const sellerOp = require('../chainop/sellerOp');
 const argon2 = require('argon2');
 const jwt = require('jsonwebtoken');
 
@@ -8,9 +8,9 @@ const sellerController = {
   login: async function (req, res, next) {
     try {
       if (!req.body) {
-        throw new Error('no body')
+        throw new Error('no body');
       }
-      const { email, password } = req.body
+      const { email, password } = req.body;
       if (!email || !password) {
         throw new Error('Invalid email or password');
       }
@@ -33,15 +33,15 @@ const sellerController = {
   signup: async function (req, res, next) {
     try {
       if (!req.body) {
-        throw new Error('no body')
+        throw new Error('no body');
       }
-      const { email, password, name, details } = req.body
+      const { email, password, name, details } = req.body;
 
       if (!email || !password) {
         throw new Error('Invalid email or password');
       }
       if (!name || !details) {
-        throw new Error('Name or details not provided')
+        throw new Error('Name or details not provided');
       }
 
       await sellerManager.checkEmailRegistered(email);
@@ -52,7 +52,7 @@ const sellerController = {
       await sellerManager.storeSeller(email, hash, privateKey);
 
       // add web3 code for registering as a seller in blockchain...
-      await sellerOp.register(privateKey, name, details)
+      await sellerOp.register(privateKey, name, details);
 
       res.cookie('jwt', jwt.sign(email, process.env.JWT_SECRET_KEY));
 
@@ -67,22 +67,20 @@ const sellerController = {
     res.redirect('/');
   },
 
-  sellProduct: function (req, res, next) {
+  sellProduct: async function (req, res, next) {
     try {
-      if(!req.body){
-        throw new Error("No body")
+      if (!req.body) {
+        throw new Error('No body');
       }
-      const {productId,buyerAddress} = req.body
-      const {email } = req.email
-      
-      if(!productId || !buyerAddress|| !email){
-        throw new Error("Not All Details")
+      const { productId, buyerAddress, email } = req.body;
+
+      if (!productId || !buyerAddress || !email) {
+        throw new Error('Not All Details');
       }
-      const privateKey = await sellerManager.getPrivateKeyByEmail(email)
+      const privateKey = await sellerManager.getPrivateKeyByEmail(email);
 
-      await sellerOp.sell(productId, buyerAddress,privateKey)
-      res.send("Sold successfully")
-
+      await sellerOp.sell(productId, buyerAddress, privateKey);
+      res.send('Sold successfully');
     } catch (error) {
       return next(error);
     }

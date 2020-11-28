@@ -1,37 +1,32 @@
 const Web3 = require('web3');
-const web3 = new Web3(new Web3.providers.HttpProvider(process.env.BLOCKCHAIN_NODE))
-const Abi = require('../../build/contracts/Counterfeit.json')
+
+const web3 = new Web3(
+  new Web3.providers.HttpProvider(process.env.BLOCKCHAIN_NODE),
+);
+const Abi = require('../../build/contracts/Counterfeit.json');
 
 //current contract address (coutnerfeit contract) on blockchaine(ganache)
 const CounterfeitAddress = process.env.CONTRACT_ADDRESS;
 
 const common = {
-
-    //utils methods
-    async returnContract() {
-        const contract = await new web3.eth.Contract(Abi.abi, CounterfeitAddress)
-        return contract
-    },
-    async returnAccount(privateKey) {
-        const account = await web3.eth.accounts.privateKeyToAccount(privateKey)
-        return account
-    },
-    async generatePrivateKey () {
-        try {
-            const newAccount = await web3.eth.accounts.create();
-            return newAccount.privateKey;
-        } catch (error) {
-            console.log(error.message);
-            throw new Error('failed to create new private key');
-        }
-    },
-    //for not transaction methods ex- view pure
-    callTransaction(method, privateKey = process.env.COMMON_PRIVATE_KEY) {
-        return new Promise(async (resolve, reject) => {
-            try {
-                const contract = await this.returnContract()
-                const account = await this.returnAccount(privateKey)
-
+  //utils methods
+  async returnContract() {
+    const contract = await new web3.eth.Contract(Abi.abi, CounterfeitAddress);
+    return contract;
+  },
+  async returnAccount(privateKey) {
+    const account = await web3.eth.accounts.privateKeyToAccount(privateKey);
+    return account;
+  },
+  async generatePrivateKey() {
+    try {
+      const newAccount = await web3.eth.accounts.create();
+      return newAccount.privateKey;
+    } catch (error) {
+      console.log(error.message);
+      throw new Error('failed to create new private key');
+    }
+  },
   //for not transaction methods ex- view pure
   callTransaction(method, privateKey = process.env.COMMON_PRIVATE_KEY) {
     return new Promise(async (resolve, reject) => {
@@ -111,5 +106,4 @@ const common = {
   },
 };
 
-          
 module.exports = common;
