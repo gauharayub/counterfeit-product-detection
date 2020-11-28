@@ -1,16 +1,14 @@
 'use strict';
-const Web3 = require('web3');
-const web3 = new Web3();
 
 const models = require('../model');
 
-const sellerModel = models.sellerModel;
+const commonModel = models.commonModel;
 
-const sellerManager = {
-  checkEmailRegistered: function (email) {
+const commonManager = {
+  checkEmailRegistered: function (email,type = 'seller') {
     return new Promise((resolve, reject) => {
-      sellerModel
-        .get(email)
+      commonModel
+        .get(email,type)
         .then((response) => {
           if (response && response.length === 0) {
             return resolve(true);
@@ -22,10 +20,10 @@ const sellerManager = {
         });
     });
   },
-  storeSeller: function (email, hash, privateKey) {
+  storeSeller: function (email, hash, privateKey,type='seller') {
     return new Promise((resolve, reject) => {
-      sellerModel
-        .set(email, hash, privateKey)
+      commonModel
+        .set(email, hash, privateKey,type)
         .then((response) => {
           return resolve(response);
         })
@@ -34,9 +32,9 @@ const sellerManager = {
         });
     });
   },
-  async getPrivateKeyByEmail(email){
+  async getPrivateKeyByEmail(email,type='seller'){
     try{
-      const result = await sellerModel.get(email)
+      const result = await commonModel.get(email,type)
       if (!result || result.length === 0) {
         throw new Error('email not found in user table');
       }
@@ -48,10 +46,10 @@ const sellerManager = {
     }
   }
   ,
-  getPasswordByEmail: function (email) {
+  getPasswordByEmail: function (email,type='seller') {
     return new Promise((resolve, reject) => {
-      sellerModel
-        .get(email)
+      commonModel
+        .get(email,type)
         .then((response) => {
           if (!response || response.length === 0) {
             throw new Error('email not found in user table');
@@ -66,4 +64,4 @@ const sellerManager = {
   },
 };
 
-module.exports = sellerManager;
+module.exports = commonManager;

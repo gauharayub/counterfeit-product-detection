@@ -1,5 +1,5 @@
 const manager = require('../manager');
-const ownerManager = manager.sellerManager;
+const commonManager = manager.commonManager;
 const ownerOp = require('../chainop/ownerOp');
 const argon2 = require('argon2');
 const jwt = require('jsonwebtoken');
@@ -14,7 +14,7 @@ const ownerController = {
       const email = req.body.email;
       const password = req.body.password;
 
-      const rawResponse = await ownerManager.getPasswordByEmail(email);
+      const rawResponse = await commonManager.getPasswordByEmail(email,'owner');
       const response = rawResponse[0];
 
       if (await argon2.verify(response, password)) {
@@ -56,7 +56,6 @@ const ownerController = {
     res.clearCookie('jwt');
     res.redirect('/');
   },
-
   addProduct: async function (req, res, next) {
     try {
       if (!req.body) {
@@ -69,7 +68,7 @@ const ownerController = {
         throw new Error('Details incomplete');
       }
 
-      const privateKey = ownerManager.getPrivateKeyByEmail(email);
+      const privateKey = commonManager.getPrivateKeyByEmail(email,'owner');
       await ownerOp.addProduct(productDetails, privateKey);
       res.send('Product added successfully');
     } catch (error) {
@@ -88,14 +87,23 @@ const ownerController = {
       if (!sellerAddress || !email) {
         throw new Error('Details incomplete');
       }
-      
-      const privateKey = ownerManager.getPrivateKeyByEmail(email);
+
+      const privateKey = commonManager.getPrivateKeyByEmail(email,'owner');
       await ownerOp.unblockSeller(sellerAddress, privateKey);
       res.send('Seller unblocked successfully');
     } catch (error) {
       return next(error);
     }
   },
+  async transferOwnership(req,res,next) {
+    try {
+      return res.send("FUNCTION not ready yet")
+     }
+    catch(error) {
+      console.log(error.message)
+      return res.status(500).send("Failed to transfer ownership")
+    }
+  }
 };
 
 module.exports = ownerController;

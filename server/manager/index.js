@@ -1,5 +1,3 @@
 module.exports = {
-  userManager: require('./userManager'),
-  ownerManager: require('./ownerManager'),
-  sellerManager: require('./sellerManager'),
+  commonManager: require('./commonManager')
 };

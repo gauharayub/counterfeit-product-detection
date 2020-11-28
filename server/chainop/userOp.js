@@ -38,15 +38,7 @@ const userOp = {
       console.log(error.message);
       throw new Error('Failed to retrieve all products');
     }
-  },
-  async genKey() {
-    try {
-      return await common.generatePrivateKey();
-    } catch (error) {
-      console.log(error.message);
-      throw new Error('Failed to generate keys');
-    }
-  },
+  }
 };
 
 module.exports = userOp;

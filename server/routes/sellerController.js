@@ -1,5 +1,5 @@
 const manager = require('../manager');
-const sellerManager = manager.sellerManager;
+const commonManager = manager.commonManager;
 const sellerOp = require('../chainop/sellerOp');
 const argon2 = require('argon2');
 const jwt = require('jsonwebtoken');
@@ -15,7 +15,7 @@ const sellerController = {
         throw new Error('Invalid email or password');
       }
 
-      const rawResponse = await sellerManager.getPasswordByEmail(email);
+      const rawResponse = await commonManager.getPasswordByEmail(email);
       const response = rawResponse[0];
 
       if (await argon2.verify(response, password)) {
@@ -44,12 +44,12 @@ const sellerController = {
         throw new Error('Name or details not provided');
       }
 
-      await sellerManager.checkEmailRegistered(email);
+      await commonManager.checkEmailRegistered(email);
 
       const hash = await argon2.hash(password);
       const privateKey = await sellerOp.genKey();
 
-      await sellerManager.storeSeller(email, hash, privateKey);
+      await commonManager.storeSeller(email, hash, privateKey);
 
       // add web3 code for registering as a seller in blockchain...
       await sellerOp.register(privateKey, name, details);
@@ -77,7 +77,7 @@ const sellerController = {
       if (!productId || !buyerAddress || !email) {
         throw new Error('Not All Details');
       }
-      const privateKey = await sellerManager.getPrivateKeyByEmail(email);
+      const privateKey = await commonManager.getPrivateKeyByEmail(email);
 
       await sellerOp.sell(productId, buyerAddress, privateKey);
       res.send('Sold successfully');

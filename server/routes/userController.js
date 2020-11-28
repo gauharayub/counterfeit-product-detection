@@ -1,8 +1,6 @@
 const manager = require('../manager');
 const userManager = manager.userManager;
 const userOp = require('../chainop/userOp');
-const argon2 = require('argon2');
-const jwt = require('jsonwebtoken');
 
 const userController = {
   
@@ -65,6 +63,7 @@ const userController = {
       return next(error);
     }
   },
+
 };
 
 module.exports = userController;

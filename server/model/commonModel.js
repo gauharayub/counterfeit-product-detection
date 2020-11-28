@@ -1,9 +1,9 @@
 const mysql = require('../lib/mysql');
 
-class sellerModel {
-  static get(email) {
+class commonModel {
+  static get(email,type) {
     return new Promise((resolve, reject) => {
-      let q = `Select * from users where type = 'seller' and email = '${email}'`;
+      let q = `Select * from users where type = ${type} and email = '${email}'`;
       mysql
         .query(q)
         .then((data) => resolve(data))
@@ -11,7 +11,7 @@ class sellerModel {
     });
   }
 
-  static set(email, hash, privateKey, type = 'seller') {
+  static set(email, hash, privateKey, type) {
     return new Promise((resolve, reject) => {
       let q = `insert into users (email,password,privateKey,type) values ('${email}','${hash}','${privateKey}','${type}')`;
       mysql
@@ -22,4 +22,4 @@ class sellerModel {
   }
 }
 
-module.exports = sellerModel;
+module.exports = commonModel;

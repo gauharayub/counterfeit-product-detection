@@ -26,15 +26,7 @@ const ownerOp = {
       console.log(error.message);
       throw new Error('Failed to unblock seller');
     }
-  },
-  async genKey() {
-    try {
-      return await common.generatePrivateKey();
-    } catch (error) {
-      console.log(error.message);
-      throw new Error('failed to generate keys');
-    }
-  },
+  }
 };
 
 module.exports = ownerOp;
