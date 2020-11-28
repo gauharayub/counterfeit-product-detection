@@ -140,7 +140,7 @@ contract Counterfeit is Ownable {
         return sellerIdToSellerIndex[seller_Id];
     }
 
-    function registerSeller (string memory _name, string memory _details) external {
+    function registerSeller (string memory _name, string memory _details) external returns(string memory status ) {
 
         //checking seller is not registered before
         require(sellerAddressToSellerId[msg.sender] == 0);
@@ -155,6 +155,7 @@ contract Counterfeit is Ownable {
         sellerIdToSellerIndex[sellerId] = sellers.length - 1;
         sellerAddressToSellerId[msg.sender] = sellerId;
 
+        return "Seller registered successfully";
         // emit sellerRegistered(msg.sender);
     }
 
