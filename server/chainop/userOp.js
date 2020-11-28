@@ -4,7 +4,7 @@ const userOp = {
   async buyProduct(secretId, privateKey) {
     try {
       const signedTransaction = await common.signTransaction(
-        `buyProduct(${secretId})`,
+        `buyProduct('${secretId}')`,
         privateKey,
       );
       const result = await common.sendTransaction(signedTransaction);
@@ -17,7 +17,7 @@ const userOp = {
   async reportSeller(productId, privateKey) {
     try {
       const signedTransaction = await common.signTransaction(
-        `registerReport(${productId})`,
+        `registerReport('${productId}')`,
         privateKey,
       );
       const result = await common.sendTransaction(signedTransaction);
@@ -31,7 +31,7 @@ const userOp = {
   async getAllProducts(ownerAddress) {
     try {
       const result = await common.callTransaction(
-        `getAllProducts(${ownerAddress})`,
+        `getAllProducts('${ownerAddress}')`,
       );
       return result;
     } catch (error) {

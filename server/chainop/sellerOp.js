@@ -3,7 +3,7 @@ const sellerOp = {
   async sell(productId, buyerAddress, privateKey) {
     try {
       const signedTransaction = await common.signTransaction(
-        `sellProduct(${productId}, ${buyerAddress})`,
+        `sellProduct('${productId}', '${buyerAddress}')`,
         privateKey,
       );
       const result = await common.sendTransaction(signedTransaction);
@@ -16,7 +16,7 @@ const sellerOp = {
   async register(privateKey, name, details) {
     try {
       const signedTransaction = await common.signTransaction(
-        `registerSeller (${name}, ${details})`,
+        `registerSeller ('${name}', '${details}')`,
         privateKey,
       );
       const result = await common.sendTransaction(signedTransaction);

@@ -4,7 +4,7 @@ const ownerOp = {
   async addProduct({ productId, secretId, price, name, details }, privateKey) {
     try {
       const signedTransaction = await common.signTransaction(
-        `addProduct(${productId}, ${secretId}, ${price}, ${name}, ${details})`,
+        `addProduct('${productId}', '${secretId}', '${price}', '${name}', '${details}')`,
         privateKey,
       );
       const result = await common.sendTransaction(signedTransaction);
@@ -17,7 +17,7 @@ const ownerOp = {
   async unblockSeller(sellerAddress, privateKey) {
     try {
       const signedTransaction = await common.signTransaction(
-        `unblockSeller(${sellerAddress})`,
+        `unblockSeller('${sellerAddress}')`,
         privateKey,
       );
       const result = await common.sendTransaction(signedTransaction);
