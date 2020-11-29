@@ -14,6 +14,7 @@ const ownerOp = {
       throw new Error('Failed to add product');
     }
   },
+
   async unblockSeller(sellerAddress, privateKey) {
     try {
       const signedTransaction = await common.signTransaction(
@@ -26,7 +27,7 @@ const ownerOp = {
       console.log(error.message);
       throw new Error('Failed to unblock seller');
     }
-  }
+  },
 };
 
 module.exports = ownerOp;

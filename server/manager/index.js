@@ -1,3 +1,3 @@
 module.exports = {
-  commonManager: require('./commonManager')
+  commonManager: require('./commonManager'),
 };
