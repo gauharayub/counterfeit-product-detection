@@ -1,5 +1,6 @@
 #! /bin/bash
 
+systemctl start mysql
 # to give executable permission run
 # chmod +x startChain 
 # put a copy of this file inside the bin directory of your home directory
