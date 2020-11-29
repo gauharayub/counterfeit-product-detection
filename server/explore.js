@@ -2,7 +2,7 @@ require('dotenv').config();
 const common = require('./chainop/common');
 
 common
-  .signTransaction(undefined, 'registerSeller("NS", "Nerd")')
+  .signTransaction('registerSeller("NS", "Nerd")')
   .then((response) => {
     console.log('singedTransaction', response);
   })
@@ -20,7 +20,7 @@ common
   });
 
 common
-  .signTransaction(undefined, 'registerSeller("NS", "Nerd")')
+  .signTransaction('registerSeller("NS", "Nerd")')
   .then((response) => {
     common
       .sendTransaction(response)
@@ -36,7 +36,7 @@ common
   });
 
 common
-  .callTransaction(undefined, 'whatIsProduct(0)')
+  .callTransaction('whatIsProduct(0)')
   .then((response) => {
     console.log('cal', response);
   })

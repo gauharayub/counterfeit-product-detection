@@ -1,0 +1,9 @@
+#! /bin/bash
+
+systemctl start mysql
+# to give executable permission run
+# chmod +x startChain 
+# put a copy of this file inside the bin directory of your home directory
+# to run it directly from terminal
+
+ganache-cli -g 0 -a 1 -d --db ~/fk -i 4444 --mnemonic="myth like bonus scare over problem client lizard pioneer submit female collect"

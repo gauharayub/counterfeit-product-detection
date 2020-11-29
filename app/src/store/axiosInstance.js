@@ -30,4 +30,3 @@ axiosInstance.interceptors.response.use(function (response) {
 })
 
 export default axiosInstance
-export { delKey }
