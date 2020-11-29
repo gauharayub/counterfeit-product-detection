@@ -16,7 +16,7 @@ const commonManager = {
           throw new Error('email already exist');
         })
         .catch((e) => {
-          throw reject(e);
+          reject(e);
         });
     });
   },
@@ -28,7 +28,7 @@ const commonManager = {
           return resolve(response);
         })
         .catch((error) => {
-          throw reject(error);
+          reject(error);
         });
     });
   },
@@ -56,7 +56,7 @@ const commonManager = {
           return resolve(response[0].password);
         })
         .catch((e) => {
-          throw reject(e);
+          reject(e);
         });
     });
   },

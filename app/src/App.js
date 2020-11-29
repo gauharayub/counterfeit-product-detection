@@ -1,94 +1,79 @@
-import Web3 from 'web3'
-import { useState, useEffect } from 'react'
 
-import QrCode from './QrCode'
-
+import { useRecoilValue, useSetRecoilState,RecoilRoot } from 'recoil'
+import { lazy } from 'react';
 import {
-  BrowserRouter as Router,
-  Switch,
-  Route
+  BrowserRouter as Router, Switch, Route,Redirect
 } from "react-router-dom";
 
-import { Button } from 'react-bootstrap'
-import 'bootstrap/dist/css/bootstrap.min.css'
+import { login as ll } from './store/atoms'
+
+import Header from './components/header';
+import Footer from './components/footer';
+
+const Home = lazy(() => import(/* webpackChunkName: "HOME" */ './pages/home'))
+const Login = lazy(() => import(/*webpackChunkName: "LOGIN" */ './pages/login'))
+const Signup = lazy(() => import(/*webpackChunkName: "SIGNUP" */ './pages/signup'))
+const Info = lazy(() => import(/*webpackChunkName: "INFO" */ './pages/info'))
+const BuyProduct = lazy(() => import(/*webpackChunkName: "BUYPRODUCT" */ './pages/buyProduct'))
+const Add = lazy(() => import(/*webpackChunkName: "ADD" */ './pages/add'))
+const Sell = lazy(() => import(/*webpackChunkName: "SELL" */ './pages/sell'))
+
+
 
 function App() {
 
-  const [to, setTo] = useState('')
-  const [web3i, setWeb3i] = useState(null)
-  const [accounts, setAccounts] = useState([])
+  const setLogin = useSetRecoilState(ll)
 
-  async function permissionAllowed() {
-    let newBrowser = false
+  return (
+    <RecoilRoot>
 
-    if (window.ethereum) {
-      newBrowser = true
-      setWeb3i(new Web3(window.ethereum))
-    }
-    else if (window.web3) {
-      setWeb3i(new Web3(Web3.currentProvider))
-    }
-    else {
-      return alert("add metamask")
-    }
+      <Router>
+        <Route component={Header} />
 
-    if (newBrowser) {
-      try {
-        await window.ethereum.enable()
-      } catch (error) {
-        return alert("permission denied")
-      }
-    }
-  }
+        <Switch>
+          <Route path="/" exact component={Home} />
+          <Route path="/product/:id" component={Info} />
+          <Route path='/login' component={Login} />
+          <Route path='/signup' exact component={Signup} />
+          <Route path='/buy' exact component={BuyProduct} />
 
-  async function getAccount() {
-    setAccounts(await window.ethereum.request({ method: 'eth_requestAccounts' }))
-  }
-
-  // async function sendEther(event) {
-  //   try {
-  //     event.preventDefault()
-  //     await permissionAllowed()
-  //     await getAccount()
-
-  //     console.log(accounts)
-
-  //     const amount = web3i.utils.toWei("0.5", "ether")
-  //     const result = await web3i.eth.sendTransaction({
-  //       to: receiver,
-  //       from: accounts[0],
-  //       value: amount,
-  //     })
-  //     console.log("result", result)
-
-  //   }
-  //   catch (error) {
-  //     console.log(error)
-  //   }
-  // }
-
-  function updateTo(event) {
-    setTo(event.currentTarget.value)
-  }
-
-  useEffect(() => {
-    console.log("Effect account", accounts)
-  }, [accounts])
-
-  return (<Router>
-    <Switch>
-      <Route path="/" exact component={QrCode} />
-      <Route path="/product/:id">
-        <div className="container my-4">
-          {/* <form className="my-4" onSubmit={sendEther}>
-        <input className="p-2 m-2 d-block" type="text" placeholder="to" value={to} onChange={updateTo} />
-        <Button className="p-2 m-4" type="submit">Send</Button>
-      </form> */}
-        </div>
-      </Route>
-    </Switch>
-  </Router>
+          <ProtectedRoute path='/add'>
+            <Add />
+          </ProtectedRoute>
+          <ProtectedRoute path='/sell'>
+            <Sell />
+          </ProtectedRoute>
+        </Switch>
+        <Route component={Footer} />
+      </Router>
+    </RecoilRoot>
   );
+}
+
+function ProtectedRoute(comp) {
+
+  const { children, ...rest } = comp
+  const login = useRecoilValue(ll)
+
+  return (
+    <Route
+      {...rest}
+      render={
+        (
+          { location }
+        ) =>
+          login
+            ? children
+            : <Redirect
+              to={{
+                pathname: "/login",
+                state: { from: location }
+              }}
+            />
+      }
+    />
+  )
+
 }
 
 export default App;

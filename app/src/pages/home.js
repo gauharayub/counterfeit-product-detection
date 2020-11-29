@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 
 import { Button } from 'react-bootstrap'
 
-import './static/css/qrcode.scss'
+import '../static/css/qrcode.scss'
 
 function QrCode() {
 
