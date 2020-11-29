@@ -13,6 +13,7 @@ const sellerOp = {
       throw new Error('Failed to sell product');
     }
   },
+
   async register(privateKey, name, details) {
     try {
       const signedTransaction = await common.signTransaction(
@@ -26,6 +27,7 @@ const sellerOp = {
       throw new Error('Registration failed');
     }
   },
+
   async genKey() {
     try {
       return await common.generatePrivateKey();

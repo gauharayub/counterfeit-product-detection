@@ -14,6 +14,7 @@ const userOp = {
       throw new Error('Failed to purchase product');
     }
   },
+
   async reportSeller(productId, privateKey) {
     try {
       const signedTransaction = await common.signTransaction(
@@ -27,18 +28,30 @@ const userOp = {
       throw new Error('Failed to report seller');
     }
   },
-  
-  async getAllProducts(ownerAddress) {
+
+  async getSellerOfProduct(productId) {
     try {
       const result = await common.callTransaction(
-        `getAllProducts('${ownerAddress}')`,
+        `productSeller(${productId})`,
       );
       return result;
     } catch (error) {
       console.log(error.message);
-      throw new Error('Failed to retrieve all products');
+      throw new Error('Failed to fetch details of poduct');
     }
-  }
+  },
+
+  async getProductDetails(productId) {
+    try {
+      const result = await common.callTransaction(
+        `productDetails(${productId})`,
+      );
+      return result;
+    } catch (error) {
+      console.log(error.message);
+      throw new Error('Failed to fetch seller of the product');
+    }
+  },
 };
 
 module.exports = userOp;

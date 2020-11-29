@@ -7,5 +7,6 @@ router.post('/signup', commonController.signup);
 router.post('/login', commonController.login);
 router.get('/logout', commonController.logout);
 router.post('/sellproduct', sellerController.sellProduct);
+router.get('/getproducts', commonController.getAllProducts);
 
 module.exports = router;

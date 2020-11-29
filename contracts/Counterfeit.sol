@@ -284,7 +284,7 @@ contract Counterfeit is Ownable {
     }
 
 
-    function whoIsSeller(uint _productId) external view returns (uint id,string memory name,string memory details) {
+    function productSeller(uint _productId) external view returns (uint id,string memory name,string memory details) {
         address sellerAddress = productToOwner[_productId];
         uint sellerIndex = returnSellerIndex(sellerAddress);
 
@@ -292,9 +292,8 @@ contract Counterfeit is Ownable {
         return (seller.id,seller.name,seller.details);
     }
 
-    function whatIsProduct(uint _productId) external view returns (string memory name, uint price, string memory details, bool isSold){
+    function productDetails(uint _productId) external view returns (string memory name, uint price, string memory details, bool isSold){
         uint index = productIdToProductIndex[_productId];
-
         Product storage tP = products[index];
         return (tP.name,tP.price,tP.details,tP.isSold);
     }

@@ -14,10 +14,12 @@ const common = {
     const contract = await new web3.eth.Contract(Abi.abi, CounterfeitAddress);
     return contract;
   },
+
   async returnAccount(privateKey) {
     const account = await web3.eth.accounts.privateKeyToAccount(privateKey);
     return account;
   },
+
   async generatePrivateKey() {
     try {
       const newAccount = await web3.eth.accounts.create();
@@ -27,6 +29,7 @@ const common = {
       throw new Error('failed to create new private key');
     }
   },
+
   //for not transaction methods ex- view pure
   callTransaction(method, privateKey = process.env.COMMON_PRIVATE_KEY) {
     return new Promise(async (resolve, reject) => {
@@ -49,6 +52,7 @@ const common = {
       }
     });
   },
+
   //sign provide exact method as string second parameter
   signTransaction(method, privateKey = process.env.COMMON_PRIVATE_KEY) {
     return new Promise(async (resolve, reject) => {
@@ -92,6 +96,7 @@ const common = {
       }
     });
   },
+
   getBalance(privateKey = process.env.COMMON_PRIVATE_KEY) {
     return new Promise(async (resolve, reject) => {
       try {
