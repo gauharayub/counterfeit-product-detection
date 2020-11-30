@@ -1,0 +1,16 @@
+.productList h1{
+    text-align: center;
+    padding:5vh;
+    color:#272343;
+}
+
+.productList{
+    min-height: 100vh;
+    text-align: center;
+    background-color:#f8f5f2;
+}
+
+.list-group{
+    width:80vw;
+    margin:auto;
+}

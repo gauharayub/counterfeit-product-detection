@@ -1,12 +1,9 @@
-
 import { useRecoilValue, useSetRecoilState,RecoilRoot } from 'recoil'
 import { lazy } from 'react';
 import {
   BrowserRouter as Router, Switch, Route,Redirect
 } from "react-router-dom";
-
 import { login as ll } from './store/atoms'
-
 import Header from './components/header';
 import Footer from './components/footer';
 
@@ -15,9 +12,9 @@ const Login = lazy(() => import(/*webpackChunkName: "LOGIN" */ './pages/login'))
 const Signup = lazy(() => import(/*webpackChunkName: "SIGNUP" */ './pages/signup'))
 const Info = lazy(() => import(/*webpackChunkName: "INFO" */ './pages/info'))
 const BuyProduct = lazy(() => import(/*webpackChunkName: "BUYPRODUCT" */ './pages/buyProduct'))
-const Add = lazy(() => import(/*webpackChunkName: "ADD" */ './pages/add'))
+const AddProduct = lazy(() => import(/*webpackChunkName: "ADD" */ './pages/add'))
 const Sell = lazy(() => import(/*webpackChunkName: "SELL" */ './pages/sell'))
-
+const Products = lazy(() => import('./pages/products'))
 
 
 function App() {
@@ -38,10 +35,13 @@ function App() {
           <Route path='/buy' exact component={BuyProduct} />
 
           <ProtectedRoute path='/add'>
-            <Add />
+            <AddProduct />
           </ProtectedRoute>
           <ProtectedRoute path='/sell'>
             <Sell />
+          </ProtectedRoute>
+          <ProtectedRoute path='/products'>
+            <Products/>
           </ProtectedRoute>
         </Switch>
         <Route component={Footer} />

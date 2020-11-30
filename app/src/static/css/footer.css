@@ -59,7 +59,7 @@ letter-spacing: 1px;
   position: relative;
 }
 .getstarted li{
-  float: left;
+  /* float: left; */
   text-align: left;
   color: white;
   font-weight: 600;
