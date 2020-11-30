@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import React, { useState } from 'react';
 import { Form, Col, Button } from 'react-bootstrap'
 import { Formik, Form as Fm, Field, ErrorMessage } from 'formik';
@@ -7,14 +6,14 @@ import Axios from '../store/axiosInstance';
 import { useSetRecoilState, useRecoilValue } from 'recoil';
 
 //css
-import '../static/css/signup.css'
-import '../static/css/vendor.css'
-import { login as ll} from '../store/atoms'
+import '../static/css/signup.css';
+import '../static/css/vendor.css';
+import { login as ll} from '../store/atoms';
 
 export default function AddProduct() {
 
     //local state
-    const [successError, setSuccessError] = useState('')
+    const [successError, setSuccessError] = useState('');
     //redirect back to signup page if number is not set, or direct access
 
     const schema = yup.object({
@@ -105,7 +104,7 @@ export default function AddProduct() {
                                         </Form.Row>
 
                                         <Form.Row>
-                                            <Form.Group as={Col} controlId="5">
+                                            <Form.Group as={Col} controlId="4">
                                                 <Form.Label>Details</Form.Label>
                                                 <Field
                                                     tabIndex="4"

@@ -12,7 +12,7 @@ function Footer() {
             <div className="container-fluid Foot">
                 <div className="row">
                     <div className="col-lg-3 col-md-4 col-12">
-                        <div className="logopicdiv"><img src={logo} className="img-fluid logopic"></img></div>
+                        <div className="logopicdiv"><img src={logo} alt="logo" className="img-fluid logopic"></img></div>
                     </div>
                     <div className="col-lg-2 col-sm-3 col-8 offset-md-0 offset-2 offset-sm-2 ">
 
@@ -29,12 +29,14 @@ function Footer() {
                         <ul className="getstarted">
                             <h2>Owner</h2>
                             <li>
-                                <Link to="/">
-                                    Info</Link>
+                                <Link to="/add">
+                                    Add Product
+                                </Link>
                             </li>
                             <li>
-                                <Link to="/add">
-                                    Add Product</Link>
+                                <Link to="/products">
+                                    Products
+                                </Link>
                             </li>
                         </ul>
                     </div>
