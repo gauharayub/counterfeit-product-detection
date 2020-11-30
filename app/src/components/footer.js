@@ -30,9 +30,12 @@ function Footer() {
                             <h2>Owner</h2>
                             <li>
                                 <Link to="/">
-                                    info</Link>
+                                    Info</Link>
                             </li>
-
+                            <li>
+                                <Link to="/add">
+                                    Add Product</Link>
+                            </li>
                         </ul>
                     </div>
                     <div className="col-lg-2 col-sm-3 offset-lg-0 offset-md-4 col-8 offset-2 offset-sm-2">
