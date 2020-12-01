@@ -1,6 +1,6 @@
 //libraries
 import { useState, useEffect } from "react"
-import { Link,useHistory } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import Axios from '../store/axiosInstance'
 
@@ -61,9 +61,9 @@ function Header() {
     async function logout() {
         try {
             const response = await Axios.get('/seller/logout')
-            console.log("logout resposne",response);
+            console.log("logout resposne", response);
             setLogin(false)
-            if(response.status === 200){
+            if (response.status === 200) {
                 history.replace('/')
             }
 
@@ -85,13 +85,15 @@ function Header() {
                         <span className="LocationImage">
                             <img src={locaIco} alt="location icon" />
                         </span>
-                        <span className="Location">
-                            <p>
-                                Indore
-                            </p>
+                        <span className="location">
+                            <Link to='/'>
+                                <span>
+                                    <h6 className="ml-2">
+                                        Enter secret key here!
+                                </h6>
+                                </span>
+                            </Link>
                         </span>
-
-
                     </div>
                 </div>
 
@@ -106,18 +108,10 @@ function Header() {
                     <span>
                         {login
                             ? <Link to='/profile'><span><img src={userIco} alt="user icon" /><h5 className="ml-2"> Profile</h5></span></Link>
-                            : <Link to='/login'><span><img src={userIco} alt="user icon" /><h5 className="ml-2"> Login </h5></span></Link>
+                            : <Link to='/login'><span><img src={userIco} alt="user icon" /><h5 className="ml-2"> Login/Signup </h5></span></Link>
                         }
                     </span>
-                    <span>
-                        <Link to='/signup'>
-                            <span>
-                                <img src={vendorIco} alt="vendor icon" />
-                                <h5 className="ml-2">Become Seller</h5>
-                            </span>
 
-                        </Link>
-                    </span>
                     {login ? <span>
                         <div onClick={logout}>
                             <span>

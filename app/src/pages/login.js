@@ -1,16 +1,27 @@
-import { useSetRecoilState } from 'recoil'
+import { useRecoilState, useSetRecoilState } from 'recoil'
 import { Formik, Form as Fm, Field, ErrorMessage } from 'formik'
 import * as yup from 'yup'
+import { useHistory, useLocation } from 'react-router-dom'
+
 import { Form, Col, Button } from 'react-bootstrap'
 
 import Axios from '../store/axiosInstance'
 import '../static/css/login.css'
 
-import { login as ll } from '../store/atoms'
+import { login as ll, popups } from '../store/atoms'
 
 export default function Login() {
+    const history = useHistory()
+    const [login, setLogin] = useRecoilState(ll)
+    const setPopup = useSetRecoilState(popups)
 
-    const setLogin = useSetRecoilState(ll)
+    const location = useLocation()
+    let { from } = location.state || { from: { pathname: "/" } };
+
+    if (login) {
+        setPopup("Already Logged In!")
+        history.replace('/')
+    }
 
     const schema = yup.object({
         email: yup.string().required('Required!').max(250).email('Enter valid Email !'),
@@ -24,14 +35,31 @@ export default function Login() {
         password: "",
     }
 
+
+    const schemaSignup = yup.object({
+        nameS: yup.string().required('Required!').max(250, 'Name Should be less than 250 characters').test('no Num', "Number not allowed", async (val) => { if (val) { return await !val.match(/[0-9]+/) } return false }).test('noSpecial', "Special characters not allowed", async (val) => { if (val) { return await val.match(/[a-z]/i) } return false }),
+        emailS: yup.string().required('Required!').max(250).email('Enter valid Email !'),
+        password1S: yup.string().required('Required!').max(250),
+        password2S: yup.string().required('Required!').oneOf([yup.ref('password1S'), null], "Password doesn't match"),
+        detailsS: yup.string().required('Required!').max(350, 'Details Should be less than 350 characters')
+    });
+
+    const initialValuesSignup = {
+        nameS: "",
+        emailS: "",
+        password1S: "",
+        password2S: "",
+        detailsS: ""
+    }
+
     function $(node) {
         return document.querySelector(node)
     }
 
     function buttonClick(event) {
+        console.log("beam");
         $(".form-signin").classList.toggle("form-signin-left");
         $(".form-signup").classList.toggle("form-signup-left");
-        $(".frame").classList.toggle("frame-long");
         $(".signup-inactive").classList.toggle("signup-active");
         $(".signin-active").classList.toggle("signin-inactive");
         $(".forgot").classList.toggle("forgot-left");
@@ -39,25 +67,35 @@ export default function Login() {
         event.target.classList.add("active");
     }
 
-    function buttonSignup(event) {
-        event.preventDefault()
-        $(".nav").classList.toggle("nav-up");
-        $(".form-signup-left").classList.toggle("form-signup-down");
-        $(".frame").classList.toggle("frame-short");
+    async function buttonSignup(values) {
+        try {
+            const pL = {
+                email: values.emailS,
+                password: values.password1S,
+                details: values.detailsS,
+                name: values.nameS
+            }
+            const response = await Axios.post('/seller/signup', pL)
+            if (response.status === 200) {
+                setLogin(true)
+                setPopup("Signed Up successfully!")
+
+                history.push(from)
+            }
+        }
+        catch (error) {
+            console.log(error.message)
+        }
     }
 
-    function buttonSignin(values) {
-        $(".frame").classList.toggle("frame-short");
-        $(".forgot").classList.toggle("forgot-fade");
-
-        submitSignin(values)
-    }
-
-    async function submitSignin(values) {
+    async function buttonSignin(values) {
         try {
             const response = await Axios.post('/seller/login', values)
             if (response.status === 200) {
                 setLogin(true)
+                setPopup("Logged In successfully!")
+
+                history.push(from)
             }
 
         }
@@ -68,7 +106,7 @@ export default function Login() {
 
     return (<section>
 
-        <div className="container">
+        <div className="containerS">
             <div className="frame">
                 <div className="nav">
                     <ul className="links">
@@ -83,13 +121,12 @@ export default function Login() {
                         onSubmit={buttonSignin}
                         initialValues={initialValues}
                     >
-                        <Fm className="form-signin">
+                        <Fm className="form-signin" name="form">
 
                             <Form.Row>
                                 <Form.Group as={Col} controlId="1">
                                     <Form.Label>Type</Form.Label>
                                     <Field
-                                        autoFocus
                                         tabIndex="1"
                                         type="text"
                                         placeholder="owner/seller"
@@ -101,8 +138,6 @@ export default function Login() {
 
 
                             </Form.Row>
-
-
 
                             <Form.Row>
                                 <Form.Group as={Col} controlId="2">
@@ -116,7 +151,6 @@ export default function Login() {
                                     <ErrorMessage name="email" />
 
                                 </Form.Group>
-
 
                             </Form.Row>
 
@@ -135,25 +169,105 @@ export default function Login() {
                             </Form.Row>
 
                             <Button className="btn btn-signup" tabIndex="4" type="submit">Sign In</Button>
+                            <div className="forgot">
+                                <a href="#">Forgot your password?</a>
+                            </div>
                         </Fm>
                     </Formik>
 
-                    <form className="form-signup" onSubmit={buttonSignup} name="form">
-                        <label htmlFor="fullname">Full name</label>
-                        <input className="form-styling" type="text" name="fullname" placeholder="" />
-                        <label htmlFor="email">Email</label>
-                        <input className="form-styling" type="text" name="email" placeholder="" />
-                        <label htmlFor="password">Password</label>
-                        <input className="form-styling" type="text" name="password" placeholder="" />
-                        <label htmlFor="confirmpassword">Confirm password</label>
-                        <input className="form-styling" type="text" name="confirmpassword" placeholder="" />
-                        <button type="submit" className="btn btn-signup">Sign Up</button>
-                    </form>
 
-                </div>
 
-                <div className="forgot">
-                    <a href="#">Forgot your password?</a>
+
+                    <Formik
+                        validationSchema={schemaSignup}
+                        onSubmit={buttonSignup}
+                        initialValues={initialValuesSignup}
+                    >
+                        <Fm className="form-signup" name="form2">
+
+                            <Form.Row>
+                                <Form.Group as={Col} controlId="10">
+                                    <Form.Label>Business Name</Form.Label>
+                                    <Field
+                                        tabIndex="8"
+                                        type="text"
+                                        placeholder="Business Name"
+                                        name="nameS"
+                                        className="form-styling" />
+                                    <ErrorMessage name="nameS" />
+
+                                </Form.Group>
+
+
+                            </Form.Row>
+
+
+
+                            <Form.Row>
+                                <Form.Group as={Col} controlId="12">
+                                    <Form.Label>Email</Form.Label>
+                                    <Field
+                                        tabIndex="9"
+                                        type="email"
+                                        placeholder="Email"
+                                        name="emailS"
+                                        className="form-styling" />
+                                    <ErrorMessage name="emailS" />
+
+                                </Form.Group>
+
+
+                            </Form.Row>
+
+                            <Form.Row>
+                                <Form.Group as={Col} controlId="13">
+                                    <Form.Label>Password</Form.Label>
+                                    <Field
+                                        tabIndex="10"
+                                        type="password"
+                                        placeholder="Password"
+                                        name="password1S"
+                                        className="form-styling" />
+                                    <ErrorMessage name="password1S" />
+
+                                </Form.Group>
+
+
+                            </Form.Row>
+
+                            <Form.Row>
+                                <Form.Group as={Col} controlId="14">
+                                    <Form.Label>Repeat Password</Form.Label>
+                                    <Field
+                                        tabIndex="11"
+                                        type="password"
+                                        placeholder="Password"
+                                        name="password2S"
+                                        className="form-styling" />
+                                    <ErrorMessage name="password2S" />
+
+                                </Form.Group>
+
+
+                            </Form.Row>
+
+                            <Form.Row>
+                                <Form.Group as={Col} controlId="15">
+                                    <Form.Label>Details</Form.Label>
+                                    <Field
+                                        tabIndex="12"
+                                        type="text"
+                                        placeholder="Details about your shop"
+                                        name="detailsS"
+                                        className="form-styling" />
+                                    <ErrorMessage name="detailsS" />
+
+                                </Form.Group>
+                            </Form.Row>
+
+                            <Button className="btn btn-signup" tabIndex="16" type="submit">Sign Up</Button>
+                        </Fm>
+                    </Formik>
                 </div>
             </div>
         </div>
