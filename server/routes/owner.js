@@ -9,6 +9,6 @@ router.get('/logout', commonController.logout);
 router.post('/addproduct', ownerController.addProduct);
 router.post('/unblockseller', ownerController.unblockSeller);
 router.post('/transferOwnership', ownerController.transferOwnership);
-router.get('/getproducts', commonController.getAllProducts);
+router.post('/getproducts', commonController.getAllProducts);
 
 module.exports = router;
