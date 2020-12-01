@@ -9,8 +9,8 @@ export default function Products(){
     const history = useHistory();
 
     const productInfo = (productId) => {
-        history.push(`/product/:${productId}`);
-    }
+        history.push(`/productinfo/:${productId}`);
+    } 
 
     return (
         <div className="productList">

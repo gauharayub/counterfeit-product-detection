@@ -1,4 +1,3 @@
-
 import '../static/css/Loader.css'
 function Loader(props) {
 

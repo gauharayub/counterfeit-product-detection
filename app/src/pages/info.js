@@ -1,11 +1,22 @@
-import { React } from 'react'
-import { Button } from 'react-bootstrap'
-
+import React, {useState, useEffect} from 'react';
+import { Button } from 'react-bootstrap';
+import Loader from '../components/loader';
+import Axios from '../store/axiosInstance'
 import '../static/css/signup.css';
 import '../static/css/vendor.css';
 import '../static/css/info.css';
 
-export default function ProductInfo() {
+export default function ProductInfo(props) {
+    
+    const [data, setData] = useState(' '); 
+    const productId = window.location.pathname.split('/')[1];
+
+
+    useEffect(()=>{
+        // Axios.post(`/${user}/`, values).then(()=>{
+
+        // })
+    })
 
     const product = {
         productName:'',
@@ -67,7 +78,7 @@ export default function ProductInfo() {
                         </div>
                     </div>
                     <div className="buy-button-container">
-                        <Button>Buy Product</Button>
+                        <Button>BUY AND VERIFY</Button>
                     </div>
                 </div>
             </div>
