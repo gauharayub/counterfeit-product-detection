@@ -81,9 +81,7 @@ contract Counterfeit is Ownable {
 
     //tells who is the owner of product
     mapping(uint256 => address) private productToOwner;
-
     mapping(uint256 => uint256)  private productIdToProductIndex;
-
     mapping(uint256 => uint256) private secretIdToProductIndex;
 
     //who owns how many product
@@ -253,8 +251,6 @@ contract Counterfeit is Ownable {
     }
 
 
-
-
     function addProduct(uint _productId, uint _secretId, uint _price, string memory _name, 
     string memory _details) onlyOwner external returns(bool) {
 
@@ -305,7 +301,8 @@ contract Counterfeit is Ownable {
     function productLength() onlyOwner public view returns (uint _productArrayLength){
         return products.length;
     }
-     function sellersLength() onlyOwner public view returns (uint _sellerArrayLength){
+
+    function sellersLength() onlyOwner public view returns (uint _sellerArrayLength){
         return sellers.length;
     }
     //------------------------------------//
