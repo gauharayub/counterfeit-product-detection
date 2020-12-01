@@ -1,7 +1,8 @@
-import { useRecoilValue, useSetRecoilState,RecoilRoot } from 'recoil'
+import { useRecoilValue, useSetRecoilState, RecoilRoot } from 'recoil'
+import React, { useState, useEffect } from 'react';
 import { lazy } from 'react';
 import {
-  BrowserRouter as Router, Switch, Route,Redirect
+  BrowserRouter as Router, Switch, Route, Redirect
 } from "react-router-dom";
 import { login as ll } from './store/atoms'
 import Header from './components/header';
@@ -20,6 +21,8 @@ const Products = lazy(() => import('./pages/products'))
 function App() {
 
   const setLogin = useSetRecoilState(ll)
+
+  
 
   return (
     <RecoilRoot>
@@ -41,7 +44,7 @@ function App() {
             <Sell />
           </ProtectedRoute>
           <ProtectedRoute path='/products'>
-            <Products/>
+            <Products />
           </ProtectedRoute>
         </Switch>
         <Route component={Footer} />
