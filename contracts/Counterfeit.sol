@@ -207,12 +207,8 @@ contract Counterfeit is Ownable {
     }
 
     function getAllProducts(address _ownerAddress) external view returns(Product[] memory){
-        uint productCount=0;
-        for(uint i=0; i < products.length; i++) {
-            if(productToOwner[products[i].productId] == _ownerAddress) {
-                productCount++;
-            }
-        }
+        
+        uint productCount = ownerProductCount[_ownerAddress];
 
         // push method not available for memory array...
         Product[] memory ownedProducts = new Product[](productCount);

@@ -8,29 +8,66 @@ import '../static/css/info.css';
 
 export default function ProductInfo(props) {
     
-    const [data, setData] = useState(' '); 
+    const [productInfo, setProductInfo] = useState(''); 
+    const [sellerInfo, setSellerInfo] = useState('');
+    
     const productId = window.location.pathname.split('/')[1];
 
 
-    useEffect(()=>{
-        // Axios.post(`/${user}/`, values).then(()=>{
+    useEffect(() => {
 
-        // })
+        async function fetchProductInfo() {
+            try {
+                const response = await Axios.post(
+                    '/user/productdetails',
+                    { productId: productId }
+                );
+                if(response.data){
+                    setProductInfo(response.data.productDetails);
+                }
+                console.log(response);
+            } 
+            catch (e) {
+                console.error(e);
+            }
+        }
+
+        async function fetchSellerInfo() {
+            try {
+                const response = await Axios.post(
+                    '/user/productseller',
+                    { productId: productId }
+                );
+                if(response.data){
+                    setSellerInfo(response.data.seller);
+                }
+                console.log(response);
+            } 
+            catch (e) {
+                console.error(e);
+            }
+        }
+
+        fetchProductInfo();
+        fetchSellerInfo();
     })
 
-    const product = {
-        productName:'',
-        productId: '',
-        productPrice:'',
-        productDetails:''
-    }
+    // const product = {
+    //     productName:'',
+    //     productId: '',
+    //     productPrice:'',
+    //     productDetails:''
+    // }
 
-    const seller = {
-        sellerName:'',
-        sellerId: '',
-        sellerDetails:''
-    }
+    // const seller = {
+    //     sellerName:'',
+    //     sellerId: '',
+    //     sellerDetails:''
+    // }
 
+    // if(!productInfo || !sellerInfo){
+    //     return (<Loader/>)
+    // }
     return (
         <div className="signupdiv Signup ">
             <div className="signupdetailscontainer signupcontainer info-page">
@@ -41,19 +78,19 @@ export default function ProductInfo(props) {
                             <div className="product-details">
                                 <h3>Product Name</h3>
                                 <p>
-                                    { product.productName }
+                                    { productInfo.name }
                                 </p>
                                 <h3>Product Price</h3>
                                 <p>
-                                    { product.productPrice }
+                                    { productInfo.productPrice }
                                 </p>
                                 <h3>Product ID</h3>
                                 <p>
-                                    { product.productId }
+                                    { productInfo.productId }
                                 </p>
                                 <h3>Product Details</h3>
                                 <p>
-                                    { product.productDetails }
+                                    { productInfo.productDetails }
                                 </p>
                             </div>
                         </div>
@@ -64,15 +101,15 @@ export default function ProductInfo(props) {
                             <div className="product-details">
                                 <h3>Seller Name</h3>
                                 <p>
-                                    { seller.sellerName }
+                                    { sellerInfo.sellerName }
                                 </p>
                                 <h3>Seller ID</h3>
                                 <p>
-                                    { seller.sellerId }
+                                    { sellerInfo.sellerId }
                                 </p>
                                 <h3>Seller Details</h3>
                                 <p>
-                                    { seller.sellerDetails }
+                                    { sellerInfo.sellerDetails }
                                 </p>
                             </div>
                         </div>

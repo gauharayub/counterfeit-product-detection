@@ -1,19 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import Loader from '../components/loader';
+import Axios from '../store/axiosInstance';
 import '../static/css/signup.css';
 import '../static/css/vendor.css';
 import '../static/css/info.css';
 
-export default function ProductInfo() {
+export default function ProductInfo(props) {
     
-    // const [data, setData] = useState(' '); 
-    // const productId = window.location.pathname.split('/')[1];
+    const [productInfo, setProductInfo] = useState(' '); 
+    const productId = window.location.pathname.split('/')[1];
 
-
-    // useEffect(()=>{
-    //     // Axios.post(`/${user}/`, values).then(()=>{
-
-    //     // })
-    // })
+    // use recoil state to set productInfo..
 
     const product = {
         productName:'',
@@ -31,25 +28,24 @@ export default function ProductInfo() {
                         <div className="product-details">
                             <h3>Product Name</h3>
                             <p>
-                                { product.productName }
+                                { productInfo.productName }
                             </p>
                             <h3>Product Price</h3>
                             <p>
-                                { product.productPrice }
+                                { productInfo.productPrice }
                             </p>
                             <h3>Product ID</h3>
                             <p>
-                                { product.productId }
+                                { productInfo.productId }
                             </p>
                             <h3>Product Details</h3>
                             <p>
-                                { product.productDetails }
+                                { productInfo.productDetails }
                             </p>
                         </div>
                     </div>
                 </div>
             </div>
-            
         </div>
     )
 }
