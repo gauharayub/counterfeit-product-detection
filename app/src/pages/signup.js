@@ -153,7 +153,7 @@ function SignupDetails() {
                                             </Form.Group>
                                         </Form.Row>
 
-                                        <Button className="edit modify" tabIndex="7" type="submit">Submit</Button>
+                                        <Button className="edit modify" tabIndex="7" type="submit">SUBMIT</Button>
                                     </Fm>
                                 </Formik>
                             </div>

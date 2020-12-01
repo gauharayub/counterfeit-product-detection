@@ -81,9 +81,7 @@ contract Counterfeit is Ownable {
 
     //tells who is the owner of product
     mapping(uint256 => address) private productToOwner;
-
     mapping(uint256 => uint256)  private productIdToProductIndex;
-
     mapping(uint256 => uint256) private secretIdToProductIndex;
 
     //who owns how many product
@@ -207,12 +205,8 @@ contract Counterfeit is Ownable {
     }
 
     function getAllProducts(address _ownerAddress) external view returns(Product[] memory){
-        uint productCount=0;
-        for(uint i=0; i < products.length; i++) {
-            if(productToOwner[products[i].productId] == _ownerAddress) {
-                productCount++;
-            }
-        }
+        
+        uint productCount = ownerProductCount[_ownerAddress];
 
         // push method not available for memory array...
         Product[] memory ownedProducts = new Product[](productCount);
@@ -255,8 +249,6 @@ contract Counterfeit is Ownable {
         
         return true;
     }
-
-
 
 
     function addProduct(uint _productId, uint _secretId, uint _price, string memory _name, 
@@ -309,7 +301,8 @@ contract Counterfeit is Ownable {
     function productLength() onlyOwner public view returns (uint _productArrayLength){
         return products.length;
     }
-     function sellersLength() onlyOwner public view returns (uint _sellerArrayLength){
+
+    function sellersLength() onlyOwner public view returns (uint _sellerArrayLength){
         return sellers.length;
     }
     //------------------------------------//

@@ -16,6 +16,7 @@ const BuyProduct = lazy(() => import(/*webpackChunkName: "BUYPRODUCT" */ './page
 const AddProduct = lazy(() => import(/*webpackChunkName: "ADD" */ './pages/add'))
 const Sell = lazy(() => import(/*webpackChunkName: "SELL" */ './pages/sell'))
 const Products = lazy(() => import('./pages/products'))
+const ProductInfo = lazy(() => import('./pages/productInfo'))
 
 
 function App() {
@@ -36,7 +37,7 @@ function App() {
           <Route path='/login' component={Login} />
           <Route path='/signup' exact component={Signup} />
           <Route path='/buy' exact component={BuyProduct} />
-
+          <Route path='/productinfo/:id' component={ProductInfo} />
           <ProtectedRoute path='/add'>
             <AddProduct />
           </ProtectedRoute>

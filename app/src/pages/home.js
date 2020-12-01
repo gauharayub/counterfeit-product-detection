@@ -1,14 +1,12 @@
 import QrReader from 'react-qr-scanner';
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-
 import { Button } from 'react-bootstrap'
-
 import '../static/css/qrcode.scss'
 
 function QrCode() {
 
-    const [data, setData] = useState('')
+    const [data, setData] = useState('P1PER')
     const [scanError, setScanError] = useState('')
 
 
