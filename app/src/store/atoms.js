@@ -6,7 +6,20 @@ const login = atom({
 })
 const popups = atom({
     key: 'popups',
-    default:''
+    default: ''
 })
 
-export { login,popups }
+const buyerAddress = atom({
+    key: 'buyerAddress',
+    default: ''
+})
+
+const productId = atom({
+    key: 'productId',
+    default: ''
+})
+const fall = atom({
+    key: 'fall',
+    default: ''
+})
+export { login, popups, buyerAddress, productId, fall }
