@@ -16,6 +16,7 @@ const AddProduct = lazy(() => import(/*webpackChunkName: "ADD" */ './pages/add')
 const Sell = lazy(() => import(/*webpackChunkName: "SELL" */ './pages/sell'))
 const Products = lazy(() => import('./pages/products'))
 const ProductInfo = lazy(() => import('./pages/productInfo'))
+const QRCode = lazy(() => import('./pages/qrcode'))
 
 
 function App() {
@@ -27,7 +28,6 @@ function App() {
 
       <Router>
         <Route component={Header} />
-
         <Switch>
           <Route path="/" exact component={Home} />
           <Route path="/product/:id" component={Info} />
@@ -44,9 +44,13 @@ function App() {
           <ProtectedRoute path='/products'>
             <Products/>
           </ProtectedRoute>
+          <ProtectedRoute path='/qrcode'>
+            <QRCode />
+          </ProtectedRoute>
         </Switch>
         <Route component={Footer} />
       </Router>
+
     </RecoilRoot>
   );
 }
