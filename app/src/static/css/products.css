@@ -11,6 +11,13 @@
 }
 
 .list-group{
-    width:80vw;
+    width:70vw;
     margin:auto;
+    font-size: 25px;
+    font-family: Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    text-align: left;
+}
+
+.no-product-message {
+    font-size: 25px;
 }

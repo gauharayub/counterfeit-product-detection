@@ -149,20 +149,29 @@
   place-items: center;
   /* margin-bottom: 40px; */
 }
+
 .signupdetailscontainer{
   width: 70%;
   box-shadow: 0 2px 5px 2px rgba(0,0,0,0.2);
-  padding: 1.5rem;
+  padding-left: 1.5rem;
 }
+
 .imageContainer{
+  margin-top:0;
+  padding:0;
   width: 100%;
   height: 100%;
   display: grid;
   place-items: center;
 }
+
 .imageContainer img{
   width:100%;
   height:100%;
+}
+
+.leftDiv {
+  margin:2vh 0;
 }
 
 @media (max-width:768px){

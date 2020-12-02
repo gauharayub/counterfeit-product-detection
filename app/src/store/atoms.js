@@ -2,7 +2,7 @@ import { atom } from "recoil"
 
 const login = atom({
     key: 'login',
-    default: false,
+    default: 'true',
 })
 const popups = atom({
     key: 'popups',

@@ -37,6 +37,11 @@ form img {
   font-weight: lighter;
   font-family: "Nunito";
 }
+
+.add-heading {
+  color:black;
+}
+
 .formVendor hr {
   margin: auto;
   width: 40%;

@@ -50,7 +50,7 @@ export default function ProductInfo(props) {
 
         fetchProductInfo();
         fetchSellerInfo();
-    })
+    }, [])
 
     const buyAndVerify = async (secretId) => {
         try {
@@ -88,12 +88,12 @@ export default function ProductInfo(props) {
     // }
     return (
         <div className="signupdiv Signup info-container">
-            <div className="signupdetailscontainer signupcontainer info-page">
+            <div className="signupdetailscontainer signupcontainer info-page info-user">
                 <div className="row">
                     <div className="col-lg-6">
                         <div>
                             <div className="product-details">
-                                <h1>Product</h1>
+                                <h1>PRODUCT</h1>
                                 <div>
                                     <h3>Product Name</h3>
                                     <p>
@@ -118,7 +118,7 @@ export default function ProductInfo(props) {
                     <div className="col-lg-6">
                         <div>
                             <div className="product-details">
-                                <h1>Seller </h1>
+                                <h1>SELLER</h1>
                                 <h3>Seller Name</h3>
                                 <p>
                                     { sellerInfo.sellerName }

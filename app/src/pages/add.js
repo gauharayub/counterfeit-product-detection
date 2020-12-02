@@ -9,6 +9,7 @@ import { useSetRecoilState, useRecoilValue } from 'recoil';
 //css
 import '../static/css/signup.css';
 import '../static/css/vendor.css';
+import addProduct from '../static/images/add.jpg'
 import { login as ll} from '../store/atoms';
 
 
@@ -51,7 +52,6 @@ export default function AddProduct() {
         // }
         setProductId(values.productId);
         setSubmitted(true);
-
     }
 
     if(submitted){
@@ -66,7 +66,7 @@ export default function AddProduct() {
                 <div className="row">
                     <div className="col-lg-6 ">
                         <div className="leftDiv">
-                            <h1>Add Product</h1>
+                            <h1 className="add-heading">Add Product</h1>
                             {successError && <h5 className="error">{successError}</h5>}
                             <Formik
                                 validationSchema={schema}
@@ -135,7 +135,7 @@ export default function AddProduct() {
                     </div>
                     <div className="col-lg-6 ">
                         <div className="imageContainer">
-
+                            <img alt="add-product" src={addProduct} />
                         </div>
                     </div>
                 </div>
