@@ -64,7 +64,7 @@ const commonController = {
 
   logout: function (req, res, next) {
     res.clearCookie('jwt');
-    res.redirect('/');
+    res.send();
   },
 
   getAllProducts: async function (req, res, next) {
