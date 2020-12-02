@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Form, Col, Button } from 'react-bootstrap'
+import { Redirect } from 'react-router-dom';
 import { Formik, Form as Fm, Field, ErrorMessage } from 'formik';
 import * as yup from 'yup';
 import Axios from '../store/axiosInstance';
@@ -10,11 +11,15 @@ import '../static/css/signup.css';
 import '../static/css/vendor.css';
 import { login as ll} from '../store/atoms';
 
+
 export default function AddProduct() {
 
     //local state
     const [successError, setSuccessError] = useState('');
-    //redirect back to signup page if number is not set, or direct access
+
+    const [submitted, setSubmitted] = useState('');
+
+    const [productId, setProductId] = useState('');
 
     const schema = yup.object({
         name: yup.string().required('Required!').max(250, 'ProductName Should be less than 250 characters').test('no Num', "Number not allowed", async (val) => { if (val) { return await !val.match(/[0-9]+/) } return false }).test('noSpecial', "Special characters not allowed", async (val) => { if (val) { return await val.match(/[a-z]/i) } return false }),
@@ -31,18 +36,29 @@ export default function AddProduct() {
     }
 
     const onSubmit = async (values) => {
-        try {
-            const secretId = ""
+        // console.log('hua');
+       
+        // try {
+        //     // const secretId = ""
 
-            const response = await Axios.post('/owner/addproduct', 
-                            {values, secretId})
+        //     // const response = await Axios.post('/owner/addproduct', 
+        //     //                 {values, secretId})
 
-            console.log(response)
+        //     // console.log(response)
 
-        } catch (error) {
-                // setPopup(t('toast.unknownError'))
-                console.log(error)
-        }
+        // } catch (error) {
+        //         // setPopup(t('toast.unknownError'))
+        //         // console.log(error)
+        // }
+        setProductId(values.productId);
+        setSubmitted(true);
+
+    }
+
+    if(submitted){
+        return (
+            <Redirect to={`/qrcode/${productId}`} />
+        )
     }
 
     return (
