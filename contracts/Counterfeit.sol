@@ -260,7 +260,7 @@ contract Counterfeit is Ownable {
         
         //assigning owner to the one who initiated the call...
         productToOwner[_productId] = msg.sender;
-        ownerProductCount[msg.sender]++;       
+        ownerProductCount[msg.sender]++;        
 
         //addint product to products array
         products.push(Product(_productId, _price, _name, _details, false));

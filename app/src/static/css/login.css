@@ -87,7 +87,7 @@ li {
 }
 
 .form-signup {
-  position: relative;
+  position: absolute;
   font-weight: 300;
   padding: 57px 37px;
   opacity: 0;

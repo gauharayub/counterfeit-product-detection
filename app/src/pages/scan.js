@@ -1,11 +1,9 @@
 import QrReader from 'react-qr-scanner';
 import { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
-import { Button } from 'react-bootstrap'
 import '../static/css/qrcode.scss'
 import { useHistory } from "react-router-dom";
 import * as atoms from '../store/atoms'
-import { useRecoilState, useSetRecoilState } from 'recoil'
+import { useSetRecoilState } from 'recoil'
 
 function QrCode(props) {
 
