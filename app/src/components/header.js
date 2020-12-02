@@ -5,8 +5,8 @@ import { useRecoilState, useRecoilValue } from 'recoil'
 import Axios from '../store/axiosInstance'
 
 //css
-import '../static/css/header.css'
-import '../static/css/hamMenuAnimation.css'
+import '../static/css/header.scss'
+import '../static/css/hamMenuAnimation.scss'
 
 //#region images
 import logo from '../static/images/2.png'
@@ -61,7 +61,7 @@ function Header() {
     }
 
     return (
-        <header className="App-header">
+        <header>
             <nav className="navbar ">
                 <div className="NavbarBrand">
                     <div id="logo">
@@ -69,7 +69,7 @@ function Header() {
                     </div>
 
 
-                    <div className="pincodeContainer d-flex">
+                    <div className="pincodeContainer">
                         <span className="LocationImage">
                             <img src={locaIco} alt="location icon" />
                         </span>

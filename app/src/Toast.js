@@ -1,6 +1,6 @@
 import React,{useState,useEffect} from 'react';
 import { CSSTransition } from 'react-transition-group'
-import './static/css/pops.css'
+import './static/css/pops.scss'
 import './static/css/ReactTransitions.css'
 
 import { useRecoilState } from 'recoil'
