@@ -20,6 +20,16 @@ class commonModel {
         .catch((e) => reject(e));
     });
   }
+
+  static remove(email) {
+    return new Promise((resolve, reject) => {
+      let q = `delete from users where email = ${email})`;
+      mysql
+        .query(q)
+        .then((data) => resolve(data))
+        .catch((e) => reject(e));
+    });
+  }
 }
 
 module.exports = commonModel;

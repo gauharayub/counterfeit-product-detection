@@ -33,32 +33,35 @@ const commonController = {
   signup: async function (req, res, next) {
     try {
       if (!req.body) {
-        throw new Error('no body');
+        next(new Error('no body'));
       }
       const { email, password, name, details, type } = req.body;
 
       if (!email || !password) {
-        throw new Error('Invalid email or password');
+        next(new Error('Invalid email or password'));
       }
       if (!name || !details) {
-        throw new Error('Name or details not provided');
+        next(new Error('Name or details not provided'));
       }
 
       await commonManager.checkEmailRegistered(email, type);
 
       const hash = await argon2.hash(password);
       const privateKey = await sellerOp.genKey();
-
       await commonManager.storeSeller(email, hash, privateKey, type);
-
       // add web3 code for registering as a seller in blockchain...
       await sellerOp.register(privateKey, name, details);
 
       res.cookie('jwt', jwt.sign(email, process.env.JWT_SECRET_KEY));
-
       res.send('Seller registered successfully');
     } catch (error) {
-      return next(error);
+      commonManager.removeAccount(email)
+        .then(result => {
+          next(error)
+        }).catch(err => {
+          console.log("Failed to remove")
+          next(error)
+        })
     }
   },
 
