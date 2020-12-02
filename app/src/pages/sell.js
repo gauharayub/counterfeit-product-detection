@@ -1,4 +1,4 @@
-import { useRecoilValue, useSetRecoilState } from 'recoil'
+import { useRecoilValue,useRecoilState, useSetRecoilState } from 'recoil'
 import { Formik, Form as Fm, Field, ErrorMessage } from 'formik'
 import * as yup from 'yup'
 import React, { useState } from 'react';
@@ -12,8 +12,8 @@ import { popups,buyerAddress as ba,productId as pi } from '../store/atoms'
 
 export default function BuyProduct() {
     const setPopup = useSetRecoilState(popups)
-    const buyerAddress = useRecoilValue(ba)
-    const productId = useRecoilValue(pi)
+    const [buyerAddress,setBuyerAddress] = useRecoilState(ba)
+    const [productId,setProductId] = useRecoilState(pi)
 
     const schema = yup.object({
         productId: yup.string().required('Required!').max(30),
@@ -29,6 +29,8 @@ export default function BuyProduct() {
         try {
             const response = await Axios.post('/seller/sellproduct', values)
             if (response.status === 200) {
+                setProductId('')
+                setBuyerAddress('')
                 setPopup(`Product Sold successfully to ${values.address}`)
             }
         }

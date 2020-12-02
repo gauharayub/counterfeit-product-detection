@@ -9,6 +9,7 @@ import Axios from '../store/axiosInstance'
 import '../static/css/login.css'
 
 import { login as ll, popups } from '../store/atoms'
+import { useEffect } from 'react'
 
 export default function Login() {
     const history = useHistory()
@@ -22,6 +23,11 @@ export default function Login() {
         setPopup("Already Logged In!")
         history.replace('/')
     }
+    useEffect(()=>{
+        if(from.pathname !== '/'){
+            setPopup("Please Login first!")
+        }
+    },[])
 
     const schema = yup.object({
         email: yup.string().required('Required!').max(250).email('Enter valid Email !'),

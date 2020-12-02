@@ -21,6 +21,9 @@ function Footer() {
                             <li>
                                 <Link to='/'>Home</Link>
                             </li>
+                            <li>
+                                <Link to='/buy'>Buy</Link>
+                            </li>
 
                         </ul>
                     </div>

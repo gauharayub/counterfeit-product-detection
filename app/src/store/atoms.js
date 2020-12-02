@@ -18,8 +18,12 @@ const productId = atom({
     key: 'productId',
     default: ''
 })
+const secretId = atom({
+    key: 'secretId',
+    default: ''
+})
 const fall = atom({
     key: 'fall',
     default: ''
 })
-export { login, popups, buyerAddress, productId, fall }
+export { login, popups, buyerAddress, productId, fall,secretId }

@@ -86,7 +86,7 @@ function Header() {
                             <img src={locaIco} alt="location icon" />
                         </span>
                         <span className="location">
-                            <Link to='/'>
+                            <Link to='/buy'>
                                 <span>
                                     <h6 className="ml-2">
                                         Enter secret key here!
