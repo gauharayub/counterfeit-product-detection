@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Loader from '../components/loader';
 import Axios from '../store/axiosInstance';
+import QRCode from "react-qr-code";
 import '../static/css/signup.css';
 import '../static/css/vendor.css';
 import '../static/css/info.css';
@@ -24,7 +25,7 @@ export default function ProductInfo(props) {
             <div className="signupdetailscontainer signupcontainer info-page">
                 <div className="row">
                     <div className="center-content">
-                        <h1 className="center-heading">Product</h1>
+                        <h1 className="center-heading">PRODUCT</h1>
                         <div className="product-details">
                             <h3>Product Name</h3>
                             <p>
@@ -44,6 +45,12 @@ export default function ProductInfo(props) {
                             </p>
                         </div>
                     </div>
+                </div>
+            </div>
+            <div>
+                <div className="qrcode-container">
+                    <h3>PRODUCT QR CODE</h3>   
+                    <QRCode value={productId} />
                 </div>
             </div>
         </div>
