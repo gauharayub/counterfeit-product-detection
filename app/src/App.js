@@ -1,82 +1,38 @@
-import { useRecoilValue, RecoilRoot } from 'recoil'
-import { lazy } from 'react';
-import {
-  BrowserRouter as Router, Switch, Route, Redirect
-} from "react-router-dom";
+import { useSetRecoilState } from 'recoil'
+import { useEffect, useState } from 'react'
 import { login as ll } from './store/atoms'
-import Header from './components/header';
-import Footer from './components/footer';
-import Toast from './Toast.js'
+import Axios from './store/axiosInstance'
+import Loader from './components/loader'
 
-const Home = lazy(() => import(/* webpackChunkName: "HOME" */ './pages/home'))
-const Login = lazy(() => import(/*webpackChunkName: "LOGIN" */ './pages/login'))
-const Info = lazy(() => import(/*webpackChunkName: "INFO" */ './pages/info'))
-const BuyProduct = lazy(() => import(/*webpackChunkName: "BUYPRODUCT" */ './pages/buyProduct'))
-const AddProduct = lazy(() => import(/*webpackChunkName: "ADD" */ './pages/add'))
-const Sell = lazy(() => import(/*webpackChunkName: "SELL" */ './pages/sell'))
-const Products = lazy(() => import('./pages/products'))
-const ProductInfo = lazy(() => import('./pages/productInfo'))
-const Scan = lazy(()=> import('./pages/scan'))
-const QRCode = lazy(() => import('./pages/qrcode'))
+import Routes from './Routes'
 
 function App() {
+  const setLogin = useSetRecoilState(ll)
+  const [request, setRequest] = useState(false)
+  useEffect(async () => {
+    try {
+      const response = await Axios.get('/tokenVerify')
+      if (response.status === 200) {
+        console.log("Token verified")
+        setLogin(true)
+      }
+    }
+    catch (error) {
+      console.log(error.message)
+    }
+    finally {
+      setRequest(true)
+    }
+  }, [])
+
 
   return (
-    <RecoilRoot>
-
-      <Router>
-        <Route component={Header} />
-        <Switch>
-          <Route path="/" exact component={Home} />
-          <Route path="/scan" exact component={Scan} />
-          <Route path="/product/:id" component={Info} />
-          <Route path='/login' component={Login} />
-          <Route path='/buy' exact component={BuyProduct} />
-          <Route path='/productinfo/:id' component={ProductInfo} />
-          <ProtectedRoute path='/add'>
-            <AddProduct />
-          </ProtectedRoute>
-          <ProtectedRoute path='/sell'>
-            <Sell />
-          </ProtectedRoute>
-          <ProtectedRoute path='/products'>
-            <Products />
-          </ProtectedRoute>
-          <ProtectedRoute path='/qrcode'>
-            <QRCode />
-          </ProtectedRoute>
-        </Switch>
-        <Route component={Footer} />
-      </Router>
-      <Toast />
-    </RecoilRoot>
+    <div>
+      { (request) ? <Routes /> : <Loader />}
+    </div>
   );
 }
 
-function ProtectedRoute(comp) {
 
-  const { children, ...rest } = comp
-  const login = useRecoilValue(ll)
-
-  return (
-    <Route
-      {...rest}
-      render={
-        (
-          { location }
-        ) =>
-          login
-            ? children
-            : <Redirect
-              to={{
-                pathname: "/login",
-                state: { from: location }
-              }}
-            />
-      }
-    />
-  )
-
-}
 
 export default App;

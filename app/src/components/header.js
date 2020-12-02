@@ -29,19 +29,7 @@ function Header() {
     const [login, setLogin] = useRecoilState(ll)
     const history = useHistory()
 
-    useEffect(async () => {
-        try {
-            const response = await Axios.get('/tokenVerify')
-            if (response.status === 200) {
-                console.log("Token verified")
-                setLogin(true)
-            }
-
-        }
-        catch (error) {
-            console.log(error.message)
-        }
-    }, [])
+    
     //function to set ham menu open and close
     function hamOpener() {
         let list = document.querySelector('.nav-items')

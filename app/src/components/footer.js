@@ -19,7 +19,7 @@ function Footer() {
                         <ul className="getstarted">
                             <h2>User</h2>
                             <li>
-                                <Link to='/'>Home</Link>
+                                <Link to='/'>Verify</Link>
                             </li>
                             <li>
                                 <Link to='/buy'>Buy</Link>
