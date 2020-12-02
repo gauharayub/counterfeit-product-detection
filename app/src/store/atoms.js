@@ -2,8 +2,14 @@ import { atom } from "recoil"
 
 const login = atom({
     key: 'login',
-    default: 'false',
+    default: false,
 })
+
+const type = atom({
+    key: 'type',
+    default: 'Seller'
+})
+
 const popups = atom({
     key: 'popups',
     default: ''
@@ -26,4 +32,4 @@ const fall = atom({
     key: 'fall',
     default: ''
 })
-export { login, popups, buyerAddress, productId, fall,secretId }
+export { login, type, popups, buyerAddress, productId, fall,secretId }

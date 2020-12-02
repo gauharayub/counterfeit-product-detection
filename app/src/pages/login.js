@@ -2,17 +2,18 @@ import { useRecoilState, useSetRecoilState } from 'recoil'
 import { Formik, Form as Fm, Field, ErrorMessage } from 'formik'
 import * as yup from 'yup'
 import { useHistory, useLocation } from 'react-router-dom'
-
 import { Form, Col, Button } from 'react-bootstrap'
-
 import Axios from '../store/axiosInstance'
+
+// css
 import '../static/css/login.css'
 
-import { login as ll, popups } from '../store/atoms'
+import { login as ll, popups, type as ti } from '../store/atoms'
 import { useEffect } from 'react'
 
 export default function Login() {
     const history = useHistory()
+    const [type, setType] = useRecoilState(ti);
     const [login, setLogin] = useRecoilState(ll)
     const setPopup = useSetRecoilState(popups)
 
@@ -24,7 +25,10 @@ export default function Login() {
         history.replace('/')
     }
     useEffect(()=>{
-        if(from.pathname !== '/'){
+        if(from.pathname === '/add'){
+            setPopup("Please register as owner to add products")
+        }
+        else if(from.pathname !== '/'){
             setPopup("Please Login first!")
         }
     },[])
@@ -82,10 +86,11 @@ export default function Login() {
                 name: values.nameS
             }
             const response = await Axios.post('/seller/signup', pL)
+            console.log('pp');
             if (response.status === 200) {
                 setLogin(true)
+                setType('Seller');
                 setPopup("Signed Up successfully!")
-
                 history.push(from)
             }
         }
@@ -100,10 +105,9 @@ export default function Login() {
             if (response.status === 200) {
                 setLogin(true)
                 setPopup("Logged In successfully!")
-
+                setType(values.type);
                 history.push(from)
             }
-
         }
         catch (error) {
             console.log(error.message)
@@ -127,7 +131,7 @@ export default function Login() {
                         onSubmit={buttonSignin}
                         initialValues={initialValues}
                     >
-                        <Fm className="form-signin" name="form">
+                        <Fm key={2} className="form-signin" name="form">
 
                             <Form.Row>
                                 <Form.Group as={Col} controlId="1">
@@ -189,7 +193,7 @@ export default function Login() {
                         onSubmit={buttonSignup}
                         initialValues={initialValuesSignup}
                     >
-                        <Fm className="form-signup" name="form2">
+                        <Fm key={1} className="form-signup" name="form2">
 
                             <Form.Row>
                                 <Form.Group as={Col} controlId="10">

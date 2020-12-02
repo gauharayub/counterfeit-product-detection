@@ -1,4 +1,6 @@
 import { Link } from 'react-router-dom'
+import { useRecoilState } from 'recoil';
+import { type as ti} from '../store/atoms';
 
 //icons
 import '../static/css/footer.css';
@@ -7,6 +9,10 @@ import '../static/css/footer.css';
 import logo from '../static/images/urbansetu.png';
 
 function Footer() {
+
+    const [type, setType] = useRecoilState(ti);
+
+
     return (
         <footer className="footersection">
             <div className="container-fluid Foot">

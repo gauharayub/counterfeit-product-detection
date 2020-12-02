@@ -2,11 +2,11 @@ import React, {useState, useEffect} from 'react';
 import { Button } from 'react-bootstrap';
 import Loader from '../components/loader';
 import Axios from '../store/axiosInstance'
+
 import '../static/css/signup.css';
-import '../static/css/vendor.css';
 import '../static/css/info.css';
 
-export default function ProductInfo(props) {
+export default function ProductInfo() {
     
     const [productInfo, setProductInfo] = useState(''); 
     const [sellerInfo, setSellerInfo] = useState('');
@@ -83,9 +83,9 @@ export default function ProductInfo(props) {
     //     sellerDetails:''
     // }
 
-    // if(!productInfo || !sellerInfo){
-    //     return (<Loader/>)
-    // }
+    if(!productInfo || !sellerInfo){
+        return (<Loader/>)
+    }
     return (
         <div className="signupdiv Signup info-container">
             <div className="signupdetailscontainer signupcontainer info-page info-user">

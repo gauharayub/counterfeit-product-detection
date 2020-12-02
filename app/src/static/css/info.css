@@ -1,5 +1,5 @@
 .product-details{
-    padding:2vh 5vw;
+    padding:5vh 5vw;
     font-family: Roboto, Oxygen, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
@@ -24,13 +24,17 @@
     margin-top:10vh;
 }
 
+.info-container{
+    width:70vw;
+    margin:auto;
+}
+
 .info-user{
     margin-top:0;
 }
 
 .buy-button-container{
-    margin:5vh 0;
-    margin:auto;
+    margin:5vh auto;
 }
 
 .center-content{

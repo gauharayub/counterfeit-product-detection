@@ -6,7 +6,7 @@ import '../static/css/qrcode.scss'
 
 function QrCode() {
 
-    const [data, setData] = useState('P1PER')
+    const [data, setData] = useState('')
     const [scanError, setScanError] = useState('')
 
 

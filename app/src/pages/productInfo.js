@@ -2,23 +2,38 @@ import React, { useState, useEffect } from 'react';
 import Loader from '../components/loader';
 import Axios from '../store/axiosInstance';
 import QRCode from "react-qr-code";
+import { useRecoilState, useSetRecoilState } from 'recoil';
+import { type as ti } from '../store/atoms';
+
+// css....
 import '../static/css/signup.css';
-import '../static/css/vendor.css';
 import '../static/css/info.css';
 
-export default function ProductInfo(props) {
+export default function ProductInfo() {
     
     const [productInfo, setProductInfo] = useState(' '); 
+    const [type, setType] = useRecoilState(ti);
     const productId = window.location.pathname.split('/')[1];
 
-    // use recoil state to set productInfo..
+    useEffect(() => {
+        async function fetchProductInfo() {
+            try {
+                const response = await Axios.post(
+                    `/${type.toLowerCase()}/productdetails`,
+                    { productId: productId }
+                );
+                if(response.data){
+                    setProductInfo(response.data.productDetails);
+                }
+                console.log(response);
+            } 
+            catch (e) {
+                console.error(e);
+            }
+        }
+        fetchProductInfo();
+    }, []);
 
-    const product = {
-        productName:'',
-        productId: '',
-        productPrice:'',
-        productDetails:''
-    }
 
     return (
         <div className="signupdiv Signup ">
