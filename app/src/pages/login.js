@@ -127,7 +127,7 @@ export default function Login() {
                         onSubmit={buttonSignin}
                         initialValues={initialValues}
                     >
-                        <Fm className="form-signin" name="form">
+                        <Fm key={2} className="form-signin" name="form">
 
                             <Form.Row>
                                 <Form.Group as={Col} controlId="1">
@@ -189,7 +189,7 @@ export default function Login() {
                         onSubmit={buttonSignup}
                         initialValues={initialValuesSignup}
                     >
-                        <Fm className="form-signup" name="form2">
+                        <Fm key={1} className="form-signup" name="form2">
 
                             <Form.Row>
                                 <Form.Group as={Col} controlId="10">
