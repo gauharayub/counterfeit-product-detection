@@ -45,7 +45,7 @@ function Footer() {
                         <ul className="getstarted">
                             <h2>Seller</h2>
                             <li>
-                                <Link to="/buy">Buy</Link>
+                                <Link to="/sell">Sell</Link>
                             </li>
                         </ul>
                     </div>

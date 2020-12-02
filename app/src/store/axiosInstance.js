@@ -1,13 +1,14 @@
 import axios from 'axios'
 
 const axiosInstance = axios.create({
-    baseURL: "http://localhost:8000"
+    baseURL: "http://localhost:8000",
+    withCredentials:true
 })
 
 axiosInstance.interceptors.request.use(function (config) {
-    config.withCredentials = true
     return config
 }, function (error) {
+    console.log("Interceptor request", error.message);
     return Promise.reject(error);
 })
 
@@ -15,7 +16,7 @@ axiosInstance.interceptors.response.use(function (response) {
     return response
 
 }, function (error) {
-    console.log("interceptor", error, error.response);
+    console.log("interceptor response", error.message);
     // if ((error.response && error.response.status === 401 && error.response.data && error.response.data.message === "You are not logged in.") && localStorage.getItem('x-api-key')) {
     //     window.location = "/login"
     // }
