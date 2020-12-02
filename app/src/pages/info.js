@@ -52,6 +52,24 @@ export default function ProductInfo(props) {
         fetchSellerInfo();
     })
 
+    const buyAndVerify = async (secretId) => {
+        try {
+            const response = await Axios.post(
+                '/user/buyproduct',
+                { secretId: secretId }
+            );
+            if(response.data){
+                // popup for success
+            }
+            // popup message
+            console.log(response);
+        } 
+        catch (e) {
+            console.error(e);
+            // popup for error..
+        }
+    }
+
     // const product = {
     //     productName:'',
     //     productId: '',
@@ -69,36 +87,38 @@ export default function ProductInfo(props) {
     //     return (<Loader/>)
     // }
     return (
-        <div className="signupdiv Signup ">
+        <div className="signupdiv Signup info-container">
             <div className="signupdetailscontainer signupcontainer info-page">
                 <div className="row">
                     <div className="col-lg-6">
                         <div>
-                            <h1>Product</h1>
                             <div className="product-details">
-                                <h3>Product Name</h3>
-                                <p>
-                                    { productInfo.name }
-                                </p>
-                                <h3>Product Price</h3>
-                                <p>
-                                    { productInfo.productPrice }
-                                </p>
-                                <h3>Product ID</h3>
-                                <p>
-                                    { productInfo.productId }
-                                </p>
-                                <h3>Product Details</h3>
-                                <p>
-                                    { productInfo.productDetails }
-                                </p>
+                                <h1>Product</h1>
+                                <div>
+                                    <h3>Product Name</h3>
+                                    <p>
+                                        { productInfo.name }
+                                    </p>
+                                    <h3>Product Price</h3>
+                                    <p>
+                                        { productInfo.productPrice }
+                                    </p>
+                                    <h3>Product ID</h3>
+                                    <p>
+                                        { productInfo.productId }
+                                    </p>
+                                    <h3>Product Details</h3>
+                                    <p>
+                                        { productInfo.productDetails }
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div className="col-lg-6">
                         <div>
-                            <h1>Seller </h1>
                             <div className="product-details">
+                                <h1>Seller </h1>
                                 <h3>Seller Name</h3>
                                 <p>
                                     { sellerInfo.sellerName }
@@ -115,7 +135,7 @@ export default function ProductInfo(props) {
                         </div>
                     </div>
                     <div className="buy-button-container">
-                        <Button>BUY AND VERIFY</Button>
+                        <Button onClick={()=>{buyAndVerify()}}>BUY AND VERIFY</Button>
                     </div>
                 </div>
             </div>

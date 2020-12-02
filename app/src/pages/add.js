@@ -36,7 +36,6 @@ export default function AddProduct() {
     }
 
     const onSubmit = async (values) => {
-        // console.log('hua');
        
         // try {
         //     // const secretId = ""

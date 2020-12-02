@@ -1,8 +1,16 @@
 .product-details{
-    padding:5vh 0;
+    padding:2vh 5vw;
+}
+
+.product-details h1{
+    margin-bottom: 5vh;
+}
+
+.info-container {
+    background-color: #b8c1ec;
 }
 .info-page{
-    background-color: #f8f5f2;
+    background-color: #fffffe;
 }
 
 .buy-button-container{

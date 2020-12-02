@@ -9,7 +9,7 @@ export default function Products(props){
 
     const history = useHistory();
 
-    const [productList, setProducts] = useState('');
+    const [productList, setProducts] = useState([]);
 
     useEffect(()=>{
         async function fetchData() {
@@ -18,17 +18,18 @@ export default function Products(props){
                     `/${props.type}/getproducts`,
                     { ownerAddress: props.data }
                 );
-                if(response.data){
-                    setProducts(response.data);
+                if(true){
+                    setProducts([{name:"aa", productId:"aa"}]);
                 }
                 console.log(response);
             } 
             catch (e) {
+                setProducts([{name:"aa", productId:"aa"}]);
                 console.error(e);
             }
         }
         fetchData();
-    })
+    }, [])
 
     const productInfo = (productId) => {
         history.push(`/productinfo/:${productId}`);
@@ -54,6 +55,8 @@ export default function Products(props){
             </div>
         )
     }
+
+    
 
     return (
         <div className="productList">
