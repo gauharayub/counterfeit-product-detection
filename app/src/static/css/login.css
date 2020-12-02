@@ -8,7 +8,9 @@
 }
 
 .frame {
-  width: 430px;
+  min-width: 320px;
+  width: 50%;
+  max-width: 500px;
   background: linear-gradient(rgba(35, 43, 85, 0.75), rgba(35, 43, 85, 0.95));
   margin: auto;
   border-top: solid 1px rgba(255, 255, 255, 0.5);
@@ -74,7 +76,7 @@
   overflow: hidden;
   position: relative;
   display: grid;
-  grid-template-columns: 430px 430px;
+  grid-template-columns: 100% 100%;
 }
 .form-signin {
   font-weight: 300;
@@ -85,7 +87,7 @@
 .form-signin-left {
   position: relative;
   z-index: -1;
-  transform: translateX(-430px);
+  transform: translateX(-100%);
   opacity: 0;
 }
 
@@ -101,7 +103,7 @@
 .form-signup-left {
   position: relative;
   z-index: 0;
-  transform: translateX(-430px);
+  transform: translateX(-100%);
   opacity: 1;
 }
 

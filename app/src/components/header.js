@@ -29,7 +29,7 @@ function Header() {
     const [login, setLogin] = useRecoilState(ll)
     const history = useHistory()
 
-    
+
     //function to set ham menu open and close
     function hamOpener() {
         let list = document.querySelector('.nav-items')
@@ -70,18 +70,16 @@ function Header() {
 
 
                     <div className="pincodeContainer">
-                        <span className="LocationImage">
+                        <div className="LocationImage">
                             <img src={locaIco} alt="location icon" />
-                        </span>
-                        <span className="location">
+                        </div>
+                        <div className="location">
                             <Link to='/buy'>
-                                <span>
-                                    <h6 className="ml-2">
-                                        Enter secret key here!
+                                <h6 className="ml-2">
+                                    Enter secret key here!
                                 </h6>
-                                </span>
                             </Link>
-                        </span>
+                        </div>
                     </div>
                 </div>
 
@@ -101,13 +99,13 @@ function Header() {
                     </span>
 
                     {login ? <span>
-                        <div onClick={logout}>
+                        <a onClick={logout}>
                             <span>
                                 <img src={vendorIco} alt="vendor icon" />
                                 <h5 className="ml-2">Logout</h5>
                             </span>
 
-                        </div>
+                        </a>
                     </span> : ''}
 
                 </div>

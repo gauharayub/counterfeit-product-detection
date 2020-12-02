@@ -16,12 +16,9 @@
 
 .NavbarBrand {
   flex-basis: 50%;
-  width: 50%;
-
   #logo {
-    flex-basis: 200px;
-    width: 200px;
-    min-width: 200px;
+    flex-basis: 50%px;
+    min-width: 120px;
     a {
       padding: 0;
     }
@@ -36,9 +33,8 @@
   }
   .pincodeContainer {
     padding: 0 20px;
-    flex-basis: 200px;
-    width: 200px;
-    min-width: 200px;
+    flex-basis: 50%;
+    min-width: 180px;
     color: #fff;
     .LocationImage {
       min-width: 30px;
@@ -58,7 +54,7 @@ nav.navbar {
   padding: 8px;
   font-weight: 600;
   box-shadow: 0 0 5px -3px black;
-  padding: 0 2rem;
+  padding: 0;
 }
 
 /* ############################# Location Add Section ###################################################### */
@@ -69,7 +65,6 @@ nav.navbar {
   justify-content: space-evenly;
   align-items: center;
   flex-basis: 50%;
-  width: 50%;
   max-width: 850px;
 
   span {
@@ -144,35 +139,39 @@ nav.navbar {
   background: transparent !important;
 }
 
-@media (max-width: 973px) {
-  .NavbarBrand #logo .LogoImg {
-    height: 70px !important;
+@media (max-width: 768px) {
+  .NavbarBrand {
+    
+    flex-basis: 80%;
+    #logo {
+      .LogoImg {
+        height: 70px !important;
+        padding: 0.5rem 0;
+      }
+    }
   }
 
   .nav-items {
     position: absolute;
     left: 0;
-
     flex-direction: column;
-
-    top: 56px;
+    top: 70px;
     display: none;
     z-index: 10000 !important;
     margin-right: 0;
     background-color: #171e30;
     transition: all ease 3s;
     font-size: 0.3rem !important;
-    /* transitions to display not possible changing visibility along with display with js */
-    animation: Nav_items_display 0.5s ease-in-out alternate forwards;
+    animation: Nav_items_display 0.5s ease-in-out  forwards;
     white-space: nowrap;
-    box-shadow: 0 2px 8px 2px rgba(0, 0, 0, 0.9);
+    box-shadow: 0 4px 4px 0px rgba(0, 0, 0, 0.9);
   }
   @keyframes Nav_items_display {
     0% {
       width: 0%;
     }
     100% {
-      width: 75%;
+      width: 100%;
     }
   }
 
@@ -184,64 +183,31 @@ nav.navbar {
     z-index: 100;
   }
   nav.navbar {
-    height: 56px;
+    height: 70px;
     padding: 0;
     font-size: 0.8125rem;
   }
 }
 
-@media (max-width: 942px) {
-  nav.navbar > div > li {
-    padding-right: 8px;
-  }
-
+@media (max-width: 350px) {
   .NavbarBrand {
-    display: flex !important;
-    justify-items: flex-start;
-    width: 70%;
-    padding: 0 0px;
+    .pincodeContainer{
+      padding-left: 0;
+      padding-right: 10px;
+      min-width: 150px;
+      .location{
+        h6{
+          font-size: 14px;
+        }
+      }
+    }
+    flex-basis: 80%;
     #logo {
-      width: auto !important;
-      height: auto;
-      margin: auto;
-      padding: 0;
+      min-width: 100px;
       .LogoImg {
-        width: auto;
+        height: 70px !important;
+        padding: 0.5rem 0;
       }
     }
-
-    .pincodeContainer {
-      position: relative;
-      width: 150px !important;
-      margin-left: 0 !important;
-      padding: 0px;
-
-      .LocationImage {
-        width: 50px;
-        img {
-          width: 25px !important;
-          object-fit: contain;
-        }
-      }
-      span {
-        margin: auto 0px;
-      }
-      .Location {
-        width: 100px;
-
-        p {
-          margin: auto 0;
-          font-size: 0.9rem;
-          overflow: hidden !important;
-          text-overflow: ellipsis !important;
-          white-space: nowrap;
-        }
-      }
-    }
-  }
-  .navbar #logo img {
-    height: 30px;
-    margin-top: 0;
-    margin: 0;
   }
 }

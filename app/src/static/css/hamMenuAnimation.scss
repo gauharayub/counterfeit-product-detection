@@ -2,7 +2,6 @@
   /* ham menu animation css */
   .nav-icon {
     width: 35px;
-
     position: relative;
     left: 0px;
     z-index: 3;
@@ -67,9 +66,5 @@
     }
   }
 
-  @media (max-width: 450px) {
-    .nav-icon {
-      width: 5px;
-    }
-  }
+  
 }
