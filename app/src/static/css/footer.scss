@@ -1,0 +1,140 @@
+/* Footer css */
+
+.footersection {
+  width: 100%;
+  /* height: 100vh; */
+  background: #171e30;
+  padding-top: 30px;
+  margin-top: 1px;
+
+  a,
+  a:hover {
+    font-weight: 300 !important;
+    color: white !important;
+    text-decoration: none !important;
+  }
+  a,
+  label {
+    font-weight: lighter;
+  }
+  select {
+    background-color: transparent;
+    outline: none;
+    border: none;
+    color: #00acee;
+    font-size: 1rem;
+    letter-spacing: 1px;
+    font-weight: bold;
+    border-radius: 100px;
+    cursor: pointer;
+  }
+  option {
+    background: #1a5276;
+    letter-spacing: 1px;
+  }
+
+  .logopicdiv {
+    justify-content: center;
+    text-align: center;
+    margin-bottom: 40px;
+  }
+  .logopic {
+    margin: auto;
+    margin-top: 20px;
+    width: 200px;
+  }
+
+  .list {
+    ul {
+      display: grid;
+      justify-content: center;
+    }
+    li {
+      position: relative;
+      list-style: none;
+      text-align: left;
+
+      color: white;
+      font-weight: 600;
+      font-size: 0.9375rem;
+      cursor: pointer;
+      position: relative;
+      transition: all 0.3s ease;
+      a {
+        padding: 0.75rem;
+        display: inline-block;
+      }
+      p {
+        &::after {
+          content: "";
+          position: absolute;
+          bottom: 0;
+          background-color: white;
+          height: 2px;
+          left: 50%;
+          opacity: 0;
+          width: 100px;
+          transition: all 0.5s ease;
+        }
+      }
+      &:hover p::after {
+        opacity: 1;
+        left: 0;
+      }
+    }
+  }
+
+  h2 {
+    color: white;
+    text-align: center;
+    font-size: 1.25rem;
+    font-weight: 500;
+    letter-spacing: 1.4px;
+    position: relative;
+    padding: 10px 0;
+  }
+  h2::after {
+    content: "";
+    position: absolute;
+    height: 2px;
+    bottom: 0;
+    width: 0;
+    left: 50%;
+    background-color: #fff;
+    display: block;
+    transition: all 0.3s ease;
+  }
+
+  .list:hover h2::after {
+    width: 100%;
+    left: 0;
+  }
+
+  .copyrights {
+    width: 100%;
+    background-color: #111624;
+    padding: 0;
+  }
+  .copyrights a {
+    display: block;
+    margin: auto;
+    margin-top: 8px;
+    z-index: 20;
+    padding-top: 4px;
+    margin-bottom: 0;
+    height: 30px;
+    text-align: center;
+    color: #fff;
+    letter-spacing: 1px;
+  }
+  .col-md-4,
+  .col-8 {
+    padding: 0;
+  }
+
+  @media (max-width: 480px) {
+    p {
+      font-size: 0.75rem;
+    }
+  }
+}

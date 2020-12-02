@@ -6,6 +6,8 @@ import Loader from './components/loader'
 
 import Routes from './Routes'
 
+import './static/css/app.scss'
+
 function App() {
   const setLogin = useSetRecoilState(ll)
   const [request, setRequest] = useState(false)

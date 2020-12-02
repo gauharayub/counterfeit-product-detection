@@ -9,7 +9,7 @@ import '../static/css/header.css'
 import '../static/css/hamMenuAnimation.css'
 
 //#region images
-import logo from '../static/images/urbansetu.png'
+import logo from '../static/images/2.png'
 
 import homeIco from '../static/images/nav/home.svg'
 import locaIco from '../static/images/nav/location.png'

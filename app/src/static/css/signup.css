@@ -1,6 +1,4 @@
 /* signup css */
-@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans&family=Scheherazade&display=swap');
 
 .Main_signup{
   width: 100%;
@@ -34,12 +32,10 @@
   font-weight: bold;
   font-size: 4rem;
   letter-spacing:4px;
-  font-family: 'Scheherazade', serif;
 }
 .RightDiv p, b{
   letter-spacing: 1px;
   font-size: 1rem;
-  font-family: "Nunito";
 }
 .RightDiv a{
   margin-left: 2px;
@@ -65,7 +61,6 @@
 	padding: 15px 0;
 	display: block;
 	font-size: 1.125rem;
-	font-family: 'Muli', sans-serif;
   width: 100%;
   background: transparent;
   transition: 0.1s ease-in;

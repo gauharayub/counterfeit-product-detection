@@ -1,8 +1,5 @@
 /* vendor css */
 
-@import url("https://fonts.googleapis.com/css2?family=Nunito&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Acme&display=swap");
-@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
 
 .vendorBody {
   width: 100%;
@@ -35,7 +32,6 @@ form img {
   place-items: center;
   text-transform: uppercase;
   font-weight: lighter;
-  font-family: "Nunito";
 }
 
 .add-heading {
@@ -65,7 +61,6 @@ form {
 .form-group label {
   font-size: 1rem;
   font-weight: 600;
-  font-family: "Nunito";
   letter-spacing: 2px;
   color: #408fcc;
 }
@@ -103,7 +98,6 @@ form {
 .formControl::placeholder {
   font-size: 1rem;
   font-weight: lighter;
-  font-family: "Poppins";
   letter-spacing: 1px;
 }
 .textarea {

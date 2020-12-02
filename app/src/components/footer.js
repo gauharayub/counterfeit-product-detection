@@ -1,23 +1,23 @@
 import { Link } from 'react-router-dom'
 
 //icons
-import '../static/css/footer.css';
+import '../static/css/footer.scss';
 
 //logo image
-import logo from '../static/images/urbansetu.png';
+import logo from '../static/images/2.png';
 
 function Footer() {
     return (
         <footer className="footersection">
-            <div className="container-fluid Foot">
+            <div className="container-fluid">
                 <div className="row">
-                    <div className="col-lg-3 col-md-4 col-12">
+                    <div className="col-lg-2 offset-lg-2 col-sm-4 offset-sm-2">
                         <div className="logopicdiv"><img src={logo} alt="logo" className="img-fluid logopic"></img></div>
                     </div>
-                    <div className="col-lg-2 col-sm-3 col-8 offset-md-0 offset-2 offset-sm-2 ">
+                    <div className="col-lg-2 offset-lg-0 col-sm-4 offset-sm-0 list">
 
-                        <ul className="getstarted">
-                            <h2>User</h2>
+                        <h2>User</h2>
+                        <ul >
                             <li>
                                 <Link to='/'>Verify</Link>
                             </li>
@@ -27,10 +27,10 @@ function Footer() {
 
                         </ul>
                     </div>
-                    <div className="col-lg-2 col-sm-3 col-8 offset-md-0 offset-2 offset-sm-2">
+                    <div className="col-lg-2 offset-lg-0 col-sm-4 offset-sm-2 list">
 
-                        <ul className="getstarted">
-                            <h2>Owner</h2>
+                        <h2>Owner</h2>
+                        <ul >
                             <li>
                                 <Link to="/add">
                                     Add Product
@@ -43,10 +43,10 @@ function Footer() {
                             </li>
                         </ul>
                     </div>
-                    <div className="col-lg-2 col-sm-3 offset-lg-0 offset-md-4 col-8 offset-2 offset-sm-2">
+                    <div className="col-lg-2 offset-lg-0 col-sm-4 offset-sm-0  list">
 
-                        <ul className="getstarted">
-                            <h2>Seller</h2>
+                        <h2>Seller</h2>
+                        <ul >
                             <li>
                                 <Link to="/sell">Sell</Link>
                             </li>
@@ -55,7 +55,7 @@ function Footer() {
                 </div>
             </div>
             <div className="copyrights">
-                <Link to="/">@2020 Copyright Silk</Link>
+                <Link to="/">@2020 Copyright Forge</Link>
             </div>
         </footer>
     )

@@ -1,6 +1,4 @@
 /* header.css */
-@import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Acme&display=swap');
 
 #inputPincode::-webkit-outer-spin-button,
 #inputPincode::-webkit-inner-spin-button {
@@ -45,7 +43,6 @@ input[type="number"] {
 }
 .NavbarBrand .pincodeContainer .Location p{
   margin: auto 0;
-  font-family: 'Nunito';
   letter-spacing: 0px;
   overflow: hidden !important;
   text-overflow: ellipsis;
@@ -68,10 +65,8 @@ input[type="number"] {
   font-size: 1rem;
   font-weight: bold;
   letter-spacing: 1.5px;
-  font-family: 'Nunito';
 }
 #inputPincode::placeholder{
-  font-family: 'Ubuntu';
   letter-spacing: 2px;
 }
 #inputPincode:focus {
@@ -161,7 +156,6 @@ nav.navbar > div > div {
 .AddPincode button{
   padding: 0rem 1rem;
   border: none;
-  font-family: 'Nunito';
   outline: none;
   text-transform: uppercase;
   color: #ffffff;
@@ -178,7 +172,6 @@ nav.navbar > div > div {
   padding: 0 1rem;
   font-size: 1.2rem;
   font-weight: 600;
-  font-family: 'Nunito';
   letter-spacing: 2px;
   margin-left: 0px;
   border: none;
@@ -194,7 +187,6 @@ nav.navbar > div > div {
 }
 .locInputbox #autoLocation span{
   font-size: 1.2rem;
-  font-family: 'Nunito' !important;
   font-weight: bold;
   border-bottom: 1px solid #000;
 }
@@ -219,7 +211,6 @@ nav.navbar > div > div {
 
 .nav-items h5{
   font-size: 1.125rem;
-  font-family: 'Nunito';
   letter-spacing: 1.2px;
 }
 .nav-items img {
@@ -302,7 +293,6 @@ nav.navbar > div > div {
   background-color: #85C1E9;
 }
 .CartIconCircle span{
-  font-family: 'Nunito';
   font-weight: bold;
   color: #000;
 }
@@ -396,7 +386,6 @@ nav.navbar > div > div {
    }
    .NavbarBrand .pincodeContainer .Location p{
      margin: auto 0;
-     font-family: 'Nunito';
      font-size: 0.9rem;
      overflow: hidden !important;
      text-overflow: ellipsis !important;
@@ -433,7 +422,6 @@ nav.navbar > div > div {
     border-bottom: 1px solid #000;
     font-size: 1.2rem;
     font-weight: 600;
-    font-family: 'Nunito';
     letter-spacing: 2px;
   }
   .AddPincode button{
@@ -448,7 +436,6 @@ nav.navbar > div > div {
   }
   .locInputbox #autoLocation span{
     font-size: 1.2rem;
-    font-family: 'Nunito' !important;
     font-weight: bold;
   }
   .pincodeContainer .LocationImage{
