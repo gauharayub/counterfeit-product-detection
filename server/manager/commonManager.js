@@ -20,6 +20,20 @@ const commonManager = {
         });
     });
   },
+  async checkSeller(email, type) {
+    try {
+      const response = await commonModel.get(email.trim().toLowerCase(), type.trim().toLowerCase())
+
+      if (response && response.length === 0) {
+        throw new Error('seller not registered');
+      }
+      return response[0];
+    }
+    catch (error) {
+      console.log(error.message);
+      throw Error("Failed to check")
+    }
+  },
   storeSeller: function (email, hash, privateKey, type = 'seller') {
     return new Promise((resolve, reject) => {
       commonModel
@@ -60,13 +74,22 @@ const commonManager = {
         });
     });
   },
-  async removeAccount(email){
-    try{
+  async removeAccount(email) {
+    try {
       await commonModel.remove(email.trim().toLowerCase())
     }
-    catch(error){
+    catch (error) {
       console.log(error.message);
       throw Error("Failed to remove Account")
+    }
+  },
+  async updateDetails(values,email) {
+    try {
+      await commonModel.update(values,email)
+    }
+    catch (error) {
+      console.log(error.message);
+      throw Error("Failed to update Account")
     }
   }
 };

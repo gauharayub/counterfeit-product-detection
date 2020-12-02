@@ -2,12 +2,12 @@ import { useRecoilState, useSetRecoilState } from 'recoil'
 import { Formik, Form as Fm, Field, ErrorMessage } from 'formik'
 import * as yup from 'yup'
 import { useHistory, useLocation } from 'react-router-dom'
-
+import {useState} from 'react'
 import { Form, Col, Button } from 'react-bootstrap'
 
 import Axios from '../store/axiosInstance'
-import '../static/css/login.css'
-
+import '../static/css/login.scss'
+import Loader from '../components/loader'
 import { login as ll, popups } from '../store/atoms'
 import { useEffect } from 'react'
 
@@ -15,15 +15,15 @@ export default function Login() {
     const history = useHistory()
     const [login, setLogin] = useRecoilState(ll)
     const setPopup = useSetRecoilState(popups)
-
+    const [loading,setLoading] = useState(false)
     const location = useLocation()
     let { from } = location.state || { from: { pathname: "/" } };
 
-    if (login) {
-        setPopup("Already Logged In!")
-        history.replace('/')
-    }
     useEffect(()=>{
+        if (login) {
+            setPopup("Already Logged In!")
+            history.replace('/')
+        }
         if(from.pathname !== '/'){
             setPopup("Please Login first!")
         }
@@ -75,6 +75,7 @@ export default function Login() {
 
     async function buttonSignup(values) {
         try {
+            setLoading(true)
             const pL = {
                 email: values.emailS,
                 password: values.password1S,
@@ -90,12 +91,18 @@ export default function Login() {
             }
         }
         catch (error) {
+            setPopup(error.message)
+
             console.log(error.message)
+        }
+        finally{
+            setLoading(false)
         }
     }
 
     async function buttonSignin(values) {
         try {
+            setLoading(true)
             const response = await Axios.post('/seller/login', values)
             if (response.status === 200) {
                 setLogin(true)
@@ -106,14 +113,21 @@ export default function Login() {
 
         }
         catch (error) {
+            setPopup(error.message)
             console.log(error.message)
+        }
+        finally{
+            setLoading(false)
         }
     }
 
     return (<section>
 
         <div className="containerS">
+
             <div className="frame">
+                {loading ?<Loader size="normal" />:
+                <div>
                 <div className="nav">
                     <ul className="links">
                         <li className="signin-active"><a className="btn" onClick={buttonClick}>Sign in</a></li>
@@ -180,9 +194,6 @@ export default function Login() {
                             </div>
                         </Fm>
                     </Formik>
-
-
-
 
                     <Formik
                         validationSchema={schemaSignup}
@@ -275,6 +286,8 @@ export default function Login() {
                         </Fm>
                     </Formik>
                 </div>
+                </div>
+}
             </div>
         </div>
     </section>)

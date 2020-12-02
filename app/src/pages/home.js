@@ -1,6 +1,6 @@
 import { useRecoilValue } from 'recoil'
 import { Link, useHistory } from 'react-router-dom'
-import '../static/css/login.css'
+import '../static/css/login.scss'
 import { BiScan } from 'react-icons/bi'
 
 import { Formik, Form as Fm, Field, ErrorMessage } from 'formik'

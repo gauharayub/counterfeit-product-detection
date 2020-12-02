@@ -28,6 +28,22 @@ const ownerOp = {
       throw new Error('Failed to unblock seller');
     }
   },
+  async transferOwner(sellerPrivateKey, ownerPrivateKey) {
+    try {
+      const sellerAccount = common.returnAccount(sellerPrivateKey)
+      const sellerAddress = sellerAccount.address
+      const signedTransaction = await common.signTransaction(
+        `transferOwnership('${sellerAddress}')`,
+        ownerPrivateKey,
+      );
+      const result = await common.sendTransaction(signedTransaction);
+      return result;
+    } catch (error) {
+      console.log(error.message);
+      throw new Error('Failed to unblock seller');
+    }
+  },
+
 };
 
 module.exports = ownerOp;

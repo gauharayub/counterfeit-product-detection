@@ -37,8 +37,8 @@ function Footer() {
                                 </Link>
                             </li>
                             <li>
-                                <Link to="/products">
-                                    Products
+                                <Link to="/addowner">
+                                    Add Owner
                                 </Link>
                             </li>
                         </ul>
@@ -49,6 +49,11 @@ function Footer() {
                         <ul >
                             <li>
                                 <Link to="/sell">Sell</Link>
+                            </li>
+                            <li>
+                                <Link to="/products">
+                                    Products
+                                </Link>
                             </li>
                         </ul>
                     </div>

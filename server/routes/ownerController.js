@@ -49,6 +49,34 @@ const ownerController = {
       return res.status(500).send('Failed to transfer ownership');
     }
   },
+  async addOwner(req,res,next){
+    try{
+      if (!req.body) {
+        throw new Error('Nothing in request object');
+      }
+
+      const { email } = req.body;
+      const currentOwner = req.email
+
+      if (!email || ! currentOwner) {
+        throw new Error('Details incomplete');
+      }
+
+      const seller = await commonManager.checkSeller(email, 'seller');
+      const ownerPrivateKey = commonManager.getPrivateKeyByEmail(currentOwner, 'owner');
+      
+      //so seller is registered next step to make him owner
+      await commonManager.updateDetails({type:'owner'},email)
+
+
+      await ownerOp.transferOwner(seller.privateKey,ownerPrivateKey)
+      
+    }
+    catch (error){
+      console.log(error.message);
+      return res.status(500).send('Failed to add owner');
+    }
+  }
 };
 
 module.exports = ownerController;

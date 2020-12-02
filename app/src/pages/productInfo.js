@@ -10,6 +10,7 @@ export default function ProductInfo(props) {
     
     const [productInfo, setProductInfo] = useState(' '); 
     const productId = window.location.pathname.split('/')[1];
+    const [loading, setLoading] = useState(false)
 
     // use recoil state to set productInfo..
 
@@ -25,6 +26,8 @@ export default function ProductInfo(props) {
             <div className="signupdetailscontainer signupcontainer info-page">
                 <div className="row">
                     <div className="center-content">
+                    {loading ? <Loader size="normal" /> :
+                    <div>
                         <h1 className="center-heading">PRODUCT</h1>
                         <div className="product-details">
                             <h3>Product Name</h3>
@@ -44,6 +47,7 @@ export default function ProductInfo(props) {
                                 { productInfo.productDetails }
                             </p>
                         </div>
+                        </div>}
                     </div>
                 </div>
             </div>

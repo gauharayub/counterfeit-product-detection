@@ -7,5 +7,7 @@ router.post('/addproduct', ownerController.addProduct);
 router.post('/unblockseller', ownerController.unblockSeller);
 router.post('/transferOwnership', ownerController.transferOwnership);
 router.post('/getproducts', commonController.getAllProducts);
+router.post('/addowner', ownerController.addOwner);
+
 
 module.exports = router;
