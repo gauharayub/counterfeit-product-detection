@@ -1,8 +1,31 @@
 .product-details{
-    padding:5vh 0;
+    padding:2vh 5vw;
+    font-family: Roboto, Oxygen, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
+
+.product-details p{
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 2vh;
+}
+
+.product-details h3{
+    font-size: 25px;
+}
+
+.product-details h1{
+    margin-bottom: 5vh;
+    font-size: 35px;
+    font-weight: 600;
+}
+
 .info-page{
-    background-color: #f8f5f2;
+    background-color: lightgrey;
+    margin-top:10vh;
+}
+
+.info-user{
+    margin-top:0;
 }
 
 .buy-button-container{
@@ -24,6 +47,11 @@
 
 .qrcode-container{
     padding: 5vh 0;
+    margin-bottom: 5vh;
+}
+
+.qrcode-container h3{
+    margin: 5vh 0;
 }
 
 .message-heading{
