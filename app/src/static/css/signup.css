@@ -1,0 +1,50 @@
+/* signup css */
+
+
+@media (max-width:991px){
+  .signupdiv{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+  } 
+}
+
+/* ############################################### Signup Details ######################################### */
+.Signup{
+  width: 100%;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  /* margin-bottom: 40px; */
+}
+
+.signupdetailscontainer{
+  width: 70%;
+  box-shadow: 0 2px 5px 2px rgba(0,0,0,0.2);
+  padding-left: 1.5rem;
+}
+
+.imageContainer{
+  margin-top:0;
+  padding:0;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+}
+
+.imageContainer img{
+  width:100%;
+  height:100%;
+}
+
+.leftDiv {
+  margin:2vh 0;
+}
+
+@media (max-width:768px){
+  .signupdetailscontainer{
+    width: 100%;
+  }
+}
