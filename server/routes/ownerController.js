@@ -1,7 +1,6 @@
 const manager = require('../manager');
 const commonManager = manager.commonManager;
 const ownerOp = require('../chainop/ownerOp');
-
 const ownerController = {
   addProduct: async function (req, res, next) {
     try {
@@ -9,14 +8,19 @@ const ownerController = {
         throw new Error('Nothing in request object');
       }
 
-      const { productDetails, email } = req.body;
-
-      if (!email || !productDetails) {
+      const {values}  = req.body;
+      console.log(values);
+      const email = req.email
+      console.log(email);
+      if (!email || !values) {
+        // console.log(email);
+        console.log(values);
         throw new Error('Details incomplete');
       }
 
-      const privateKey = commonManager.getPrivateKeyByEmail(email, 'owner');
-      await ownerOp.addProduct(productDetails, privateKey);
+      const privateKey = await commonManager.getPrivateKeyByEmail(email, 'owner');
+      await ownerOp.addProduct(values, privateKey);
+      console.log('product added');
       res.send('Product added successfully');
     } catch (error) {
       return next(error);

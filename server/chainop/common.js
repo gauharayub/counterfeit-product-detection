@@ -65,7 +65,7 @@ const common = {
         const transaction = {
           from: myAccount.address,
           to: CounterfeitAddress,
-          gas: 200000,
+          gas: 500000,
           // eslint-disable-next-line no-eval
           data: eval(`contract.methods.${method}.encodeABI()`),
         };
