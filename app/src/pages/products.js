@@ -9,7 +9,7 @@ import { login as ll, popups, type as ti } from '../store/atoms'
 // css-imports
 import '../static/css/products.css';
 
-export default function Products(props){
+export default function Products(){
 
     const history = useHistory();
 
@@ -20,11 +20,14 @@ export default function Products(props){
         async function fetchData() {
             try {
                 const response = await Axios.post(
-                    `/${type.toLowerCase()}/getproducts`,
-                    { ownerAddress: props.ownerAddress }
+                    `/${type.toLowerCase()}/getproducts`,{
+                        type:type.toLowerCase()
+                    }
                 );
-                if(response.data && response.status===200){
-                    setProducts(response);
+                console.log(response.data);
+                if(response.data){
+                    setProducts(response.data);
+                    
                 }
                 console.log(response);
             } 
@@ -61,8 +64,8 @@ export default function Products(props){
                 <ListGroup>
                     {   
                         productList.map((product, idx)=> (
-                            <ListGroup.Item action onClick={()=>{productInfo(product.productId)}}>
-                                {(idx+1) + ". " + product.productId }
+                            <ListGroup.Item action onClick={()=>{productInfo(product[0])}}>
+                                {(idx+1) + ". " + product[2] }
                             </ListGroup.Item>
                         ))
                     }

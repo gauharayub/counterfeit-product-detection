@@ -4,6 +4,8 @@ const sellerOp = require('../chainop/sellerOp');
 const commonOp = require('../chainop/commonOp');
 const argon2 = require('argon2');
 const jwt = require('jsonwebtoken');
+const userOp = require('../chainop/userOp');
+const common = require('../chainop/common');
 
 const commonController = {
   login: async function (req, res, next) {
@@ -35,7 +37,9 @@ const commonController = {
       if (!req.body) {
         next(new Error('no body'));
       }
+    
       const { email, password, name, details, type } = req.body;
+
       if (!email || !password) {
         next(new Error('Invalid email or password'));
       }
@@ -43,7 +47,7 @@ const commonController = {
         next(new Error('Name or details not provided'));
       }
 
-      await commonManager.checkEmailRegistered(email, type);
+      await commonManager.checkEmailRegistered(email, type);      
 
       const hash = await argon2.hash(password);
       const privateKey = await sellerOp.genKey();
@@ -76,13 +80,20 @@ const commonController = {
         throw new Error('Nothing in request object');
       }
 
-      const { ownerAddress } = req.body;
+      const email = req.email;
 
-      if (!ownerAddress) {
+      const { type } = req.body;
+
+      if (!email) {
         throw new Error('Details incomplete');
       }
+      const privateKey = await commonManager.getPrivateKeyByEmail(email, type);
+      
+      const products = await commonOp.getAllProducts(privateKey);
 
-      const products = await commonOp.getAllProducts(ownerAddress);
+      // const address = ownerAddress.address.substr(2,ownerAddress.address.length);
+      // console.log(address)
+      
       res.send(products);
     } catch (error) {
       return next(error);
@@ -95,7 +106,8 @@ const commonController = {
         throw new Error('Nothing in request object');
       }
 
-      // secretId of the product extracted from qr code...
+      // productId of the product extracted from qr code...
+      // console.log(req.body)
       const { productId } = req.body;
 
       if (!productId) {
