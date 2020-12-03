@@ -34,10 +34,10 @@ export default function AddProduct() {
     }
 
     const addProduct = async (values) => {
-       
+       values.secretId = values.productId;
         try {
             const response = await Axios.post('/owner/addproduct', 
-                            {values, secretId})
+                            {values})
             console.log(response)
             if(response.status===200 && response.data){
                 setSubmitted(true);
