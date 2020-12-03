@@ -36,7 +36,6 @@ const commonController = {
         next(new Error('no body'));
       }
       const { email, password, name, details, type } = req.body;
-
       if (!email || !password) {
         next(new Error('Invalid email or password'));
       }
@@ -48,10 +47,11 @@ const commonController = {
 
       const hash = await argon2.hash(password);
       const privateKey = await sellerOp.genKey();
-      await commonManager.storeSeller(email, hash, privateKey, type);
-      // add web3 code for registering as a seller in blockchain...
-      await sellerOp.register(privateKey, name, details);
 
+      await commonManager.storeSeller(email, hash, privateKey, type);
+      
+      await sellerOp.register(privateKey, name, details);
+      
       res.cookie('jwt', jwt.sign(email, process.env.JWT_SECRET_KEY));
       res.send('Seller registered successfully');
     } catch (error) {
@@ -84,6 +84,45 @@ const commonController = {
 
       const products = await commonOp.getAllProducts(ownerAddress);
       res.send(products);
+    } catch (error) {
+      return next(error);
+    }
+  },
+  
+  getProductDetails: async function (req, res, next) {
+    try {
+      if (!req.body) {
+        throw new Error('Nothing in request object');
+      }
+
+      // secretId of the product extracted from qr code...
+      const { productId } = req.body;
+
+      if (!productId) {
+        throw new Error('Details incomplete');
+      }
+
+      const productDetails = await userOp.getProductDetails(productId);
+      res.send({ productDetails: productDetails });
+    } catch (error) {
+      return next(error);
+    }
+  },
+
+  getSellerOfProduct: async function (req, res, next) {
+    try {
+      if (!req.body) {
+        throw new Error('Nothing in request object');
+      }
+
+      // secretId of the product extracted from qr code...
+      const { productId } = req.body;
+
+      if (!productId) {
+        throw new Error('Details incomplete');
+      }
+      const productSeller = await userOp.getSellerOfProduct(productId);
+      res.send({ seller: productSeller });
     } catch (error) {
       return next(error);
     }
