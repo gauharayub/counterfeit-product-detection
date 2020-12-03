@@ -36,7 +36,7 @@ export default function Products(props){
     }, [])
 
     const productInfo = (productId) => {
-        history.push(`/productinfo/:${productId}`);
+        history.push(`/productinfo/${productId}`);
     }
     
 
@@ -48,7 +48,7 @@ export default function Products(props){
         return (
             <div className="productList">
                 <h1>PRODUCTS</h1>
-                <div class="no-product-message"> No products added yet</div>
+                <div className="no-product-message"> No products added yet</div>
             </div>
         )
     }
@@ -60,9 +60,9 @@ export default function Products(props){
             <div className="list-group">
                 <ListGroup>
                     {   
-                        productList.map((product)=> (
+                        productList.map((product, idx)=> (
                             <ListGroup.Item action onClick={()=>{productInfo(product.productId)}}>
-                                { product.productId }
+                                {(idx+1) + ". " + product.productId }
                             </ListGroup.Item>
                         ))
                     }

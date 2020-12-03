@@ -38,7 +38,7 @@ export default function ProductInfo() {
 
     return (
         <div className="signupdiv Signup ">
-            <div className="signupdetailscontainer signupcontainer info-page">
+            <div className="product-info signupdetailscontainer signupcontainer info-page">
                 <div className="row">
                     <div className="center-content">
                     {loading ? <Loader size="normal" /> :

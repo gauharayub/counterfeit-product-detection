@@ -39,6 +39,8 @@
 
 .center-content{
     width:100%;
+    padding:2vh 0;
+    
 }
 
 .center-heading{
@@ -62,3 +64,12 @@
     margin:5vh 0;
 }
 
+.product-info {
+    width:50vw;
+}
+
+@media only screen and (max-width:700px){
+    .product-info{
+        width:70vw;
+    }
+}
