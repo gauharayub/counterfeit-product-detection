@@ -2,15 +2,16 @@ import React, {useState, useEffect} from 'react';
 import { Button } from 'react-bootstrap';
 import Loader from '../components/loader';
 import Axios from '../store/axiosInstance'
+import { useRecoilState } from 'recoil'
+import { popups as pp } from './store/atoms'
 import '../static/css/signup.css';
-import '../static/css/vendor.css';
 import '../static/css/info.css';
 
-export default function ProductInfo(props) {
+export default function ProductInfo() {
     
     const [productInfo, setProductInfo] = useState(''); 
     const [sellerInfo, setSellerInfo] = useState('');
-    
+    const [popup, setPopup] = useRecoilState(pp);
     const productId = window.location.pathname.split('/')[1];
 
 
@@ -22,7 +23,7 @@ export default function ProductInfo(props) {
                     '/user/productdetails',
                     { productId: productId }
                 );
-                if(response.data){
+                if(response.data && response.status===200){
                     setProductInfo(response.data.productDetails);
                 }
                 console.log(response);
@@ -38,7 +39,7 @@ export default function ProductInfo(props) {
                     '/user/productseller',
                     { productId: productId }
                 );
-                if(response.data){
+                if(response.data && response.status===200){
                     setSellerInfo(response.data.seller);
                 }
                 console.log(response);
@@ -58,34 +59,24 @@ export default function ProductInfo(props) {
                 '/user/buyproduct',
                 { secretId: secretId }
             );
-            if(response.data){
-                // popup for success
+            if(response.data && response.status===200){
+                setPopup('Purchase successfull');
             }
-            // popup message
+            else if(response.data && response.status===400){
+                setPopup('Product is counterfieted');
+            }
             console.log(response);
         } 
         catch (e) {
             console.error(e);
-            // popup for error..
+            setPopup('Product puchase failed');
         }
     }
 
-    // const product = {
-    //     productName:'',
-    //     productId: '',
-    //     productPrice:'',
-    //     productDetails:''
-    // }
 
-    // const seller = {
-    //     sellerName:'',
-    //     sellerId: '',
-    //     sellerDetails:''
-    // }
-
-    // if(!productInfo || !sellerInfo){
-    //     return (<Loader/>)
-    // }
+    if(!productInfo || !sellerInfo){
+        return (<Loader/>)
+    }
     return (
         <div className="signupdiv Signup info-container">
             <div className="signupdetailscontainer signupcontainer info-page info-user">
@@ -139,7 +130,6 @@ export default function ProductInfo(props) {
                     </div>
                 </div>
             </div>
-            
         </div>
     )
 }
