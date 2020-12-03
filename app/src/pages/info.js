@@ -3,7 +3,7 @@ import { Button } from 'react-bootstrap';
 import Loader from '../components/loader';
 import Axios from '../store/axiosInstance'
 import { useRecoilState } from 'recoil'
-import { popups as pp } from './store/atoms'
+import { popups as pp } from '../store/atoms'
 import '../static/css/signup.css';
 import '../static/css/info.css';
 

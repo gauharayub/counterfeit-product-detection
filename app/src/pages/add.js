@@ -8,7 +8,7 @@ import { popups, secretId as si } from '../store/atoms'
 import { useRecoilState, useSetRecoilState } from 'recoil'
 
 //css
-import '../static/css/login.css';
+import '../static/css/login.scss';
 
 export default function AddProduct() {
 

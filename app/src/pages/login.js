@@ -19,13 +19,17 @@ export default function Login() {
     let { from } = location.state || { from: { pathname: "/" } };
 
     useEffect(()=>{
+        
         if (login) {
             setPopup("Already Logged In!")
             history.replace('/')
         }
 
         if(from.pathname === '/add'){
-            setPopup("Please register as owner to add products")
+            setPopup("Please Login as owner to add products!")
+        }
+        else if(from.pathname === '/addowner'){
+            setPopup("Please Login as owner to add other owners!")
         }
         else if(from.pathname !== '/'){
             setPopup("Please Login first!")
