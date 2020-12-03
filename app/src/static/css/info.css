@@ -1,5 +1,6 @@
 .product-details{
-    padding:2vh 5vw;
+    padding:5vh 5vw;
+    font-family: Roboto, Oxygen, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 .product-details p{
@@ -23,17 +24,23 @@
     margin-top:10vh;
 }
 
+.info-container{
+    width:70vw;
+    margin:auto;
+}
+
 .info-user{
     margin-top:0;
 }
 
 .buy-button-container{
-    margin:5vh 0;
-    margin:auto;
+    margin:5vh auto;
 }
 
 .center-content{
     width:100%;
+    padding:2vh 0;
+    
 }
 
 .center-heading{
@@ -57,3 +64,12 @@
     margin:5vh 0;
 }
 
+.product-info {
+    width:50vw;
+}
+
+@media only screen and (max-width:700px){
+    .product-info{
+        width:70vw;
+    }
+}

@@ -4,23 +4,20 @@ import { Redirect } from 'react-router-dom';
 import { Formik, Form as Fm, Field, ErrorMessage } from 'formik';
 import * as yup from 'yup';
 import Axios from '../store/axiosInstance';
-import { useSetRecoilState, useRecoilValue } from 'recoil';
+import { popups, secretId as si } from '../store/atoms'
+import { useRecoilState, useSetRecoilState } from 'recoil'
 
 //css
-import '../static/css/signup.css';
-import '../static/css/vendor.css';
-import addProduct from '../static/images/add.jpg'
-import { login as ll} from '../store/atoms';
-
+import '../static/css/login.scss';
 
 export default function AddProduct() {
 
     //local state
     const [successError, setSuccessError] = useState('');
-
     const [submitted, setSubmitted] = useState('');
-
+    const [secretId, setSecretId] = useRecoilState(si);
     const [productId, setProductId] = useState('');
+    const setPopup = useSetRecoilState(popups)
 
     const schema = yup.object({
         name: yup.string().required('Required!').max(250, 'ProductName Should be less than 250 characters').test('no Num', "Number not allowed", async (val) => { if (val) { return await !val.match(/[0-9]+/) } return false }).test('noSpecial', "Special characters not allowed", async (val) => { if (val) { return await val.match(/[a-z]/i) } return false }),
@@ -36,22 +33,22 @@ export default function AddProduct() {
         details: ""
     }
 
-    const onSubmit = async (values) => {
+    const addProduct = async (values) => {
        
-        // try {
-        //     // const secretId = ""
+        try {
+            const response = await Axios.post('/owner/addproduct', 
+                            {values, secretId})
+            console.log(response)
+            if(response.status===200 && response.data){
+                setSubmitted(true);
+                setProductId(values.productId);
+                setPopup('Product added successfully');
+            }
 
-        //     // const response = await Axios.post('/owner/addproduct', 
-        //     //                 {values, secretId})
-
-        //     // console.log(response)
-
-        // } catch (error) {
-        //         // setPopup(t('toast.unknownError'))
-        //         // console.log(error)
-        // }
-        setProductId(values.productId);
-        setSubmitted(true);
+        } catch (error) {
+                setPopup('Failed to add product');
+                console.log(error)
+        }
     }
 
     if(submitted){
@@ -60,86 +57,81 @@ export default function AddProduct() {
         )
     }
 
-    return (
-        <div className="signupdiv Signup">
-            <div className="signupdetailscontainer signupcontainer">
-                <div className="row">
-                    <div className="col-lg-6 ">
-                        <div className="leftDiv">
-                            <h1 className="add-heading">Add Product</h1>
-                            {successError && <h5 className="error">{successError}</h5>}
-                            <Formik
-                                validationSchema={schema}
-                                onSubmit={onSubmit}
-                                initialValues={initialValues}
-                            >
-                                <Fm >
-                                    <Form.Row>
-                                        <Form.Group as={Col} controlId="1">
-                                            <Form.Label>Product Name</Form.Label>
-                                            <Field
-                                                autoFocus
-                                                tabIndex="1"
-                                                type="text"
-                                                placeholder="Name of product"
-                                                name="name"
-                                                className="formControl" />
-                                            <ErrorMessage name="name" />
-                                        </Form.Group>
-                                    </Form.Row>
-
-
-                                    <Form.Row>
-                                        <Form.Group as={Col} controlId="2">
-                                            <Form.Label>Product Price</Form.Label>
-                                            <Field
-                                                tabIndex="2"
-                                                type="text"
-                                                placeholder="Price of the product"
-                                                name="price"
-                                                className="formControl" />
-                                            <ErrorMessage name="price" />
-                                        </Form.Group>
-                                    </Form.Row>
-
-                                    <Form.Row>
-                                        <Form.Group as={Col} controlId="3">
-                                            <Form.Label>Product ID</Form.Label>
-                                            <Field
-                                                tabIndex="3"
-                                                type="text"
-                                                placeholder="Enter the unique ID of product"
-                                                name="productId"
-                                                className="formControl" />
-                                            <ErrorMessage name="productId" />
-                                        </Form.Group>
-                                    </Form.Row>
-
-                                    <Form.Row>
-                                        <Form.Group as={Col} controlId="4">
-                                            <Form.Label>Details</Form.Label>
-                                            <Field
-                                                tabIndex="4"
-                                                type="text"
-                                                placeholder="Details about your product"
-                                                name="details"
-                                                className="formControl" />
-                                            <ErrorMessage name="details" />
-                                        </Form.Group>
-                                    </Form.Row>
-
-                                    <Button className="edit modify" tabIndex="5" type="submit">Submit</Button>
-                                </Fm>
-                            </Formik>
-                        </div>
+    return (<section>
+            <div className="containerS">
+                <div className="frame">
+                    <div className="nav">
+                        <ul className="links">
+                            <li className="signin-active"><a className="btn">Add Product</a></li>
+                        </ul>
                     </div>
-                    <div className="col-lg-6 ">
-                        <div className="imageContainer">
-                            <img alt="add-product" src={addProduct} />
-                        </div>
+                    <div className="formParent">
+                    <Formik
+                            validationSchema={schema}
+                            onSubmit={addProduct}
+                            initialValues={initialValues}
+                        >
+                            <Fm key={1} className="form-signin" name="form">
+
+                                <Form.Row>
+                                    <Form.Group as={Col} controlId="1">
+                                        <Form.Label>Name</Form.Label>
+                                        <Field
+                                            tabIndex="1"
+                                            type="text"
+                                            placeholder="Product Name"
+                                            name="name"
+                                            className="form-styling" />
+                                        <ErrorMessage name="name" />
+                                    </Form.Group>
+                                </Form.Row>
+
+                                <Form.Row>
+                                    <Form.Group as={Col} controlId="2">
+                                        <Form.Label>Price</Form.Label>
+                                        <Field
+                                            tabIndex="2"
+                                            type="text"
+                                            placeholder="Product Price"
+                                            name="price"
+                                            className="form-styling" />
+                                        <ErrorMessage name="price" />
+                                    </Form.Group>
+                                </Form.Row>
+
+                                <Form.Row>
+                                    <Form.Group as={Col} controlId="3">
+                                        <Form.Label>Product ID</Form.Label>
+                                        <Field
+                                            tabIndex="3"
+                                            type="text"
+                                            placeholder="Product ID"
+                                            name="productId"
+                                            className="form-styling" />
+                                        <ErrorMessage name="productId" />
+                                    </Form.Group>
+                                </Form.Row>
+
+                                <Form.Row>
+                                    <Form.Group as={Col} controlId="4">
+                                        <Form.Label>Details</Form.Label>
+                                        <Field
+                                            tabIndex="4"
+                                            type="text"
+                                            placeholder="Details about product"
+                                            name="details"
+                                            className="form-styling" />
+                                        <ErrorMessage name="details" />
+
+                                    </Form.Group>
+                                </Form.Row>
+
+                                <Button className="btn btn-signup" tabIndex="5" type="submit">Add Product</Button>
+                            </Fm>
+                        </Formik>
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
     )
 }

@@ -8,8 +8,6 @@ require('dotenv').config();
 const userRouter = require('./routes/user');
 const sellerRouter = require('./routes/seller');
 const ownerRouter = require('./routes/owner');
-
-
 const app = express();
 
 //jwt check function
@@ -54,13 +52,13 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(morgan('tiny'))
 app.use('*', secure);
-
 app.use('/user', userRouter);
 app.use('/seller', sellerRouter);
 app.use('/owner', ownerRouter);
 app.get('/tokenVerify', (req, res) => {
   res.sendStatus(200)
 })
+
 // error handler
 app.use(function (err, req, res, next) {
   console.log(err.message);

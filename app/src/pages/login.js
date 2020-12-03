@@ -2,17 +2,16 @@ import { useRecoilState, useSetRecoilState } from 'recoil'
 import { Formik, Form as Fm, Field, ErrorMessage } from 'formik'
 import * as yup from 'yup'
 import { useHistory, useLocation } from 'react-router-dom'
-import {useState} from 'react'
+import { useState, useEffect } from 'react'
 import { Form, Col, Button } from 'react-bootstrap'
-
 import Axios from '../store/axiosInstance'
 import '../static/css/login.scss'
 import Loader from '../components/loader'
-import { login as ll, popups } from '../store/atoms'
-import { useEffect } from 'react'
+import { login as ll, popups, type as ti } from '../store/atoms'
 
 export default function Login() {
     const history = useHistory()
+    const [type, setType] = useRecoilState(ti);
     const [login, setLogin] = useRecoilState(ll)
     const setPopup = useSetRecoilState(popups)
     const [loading,setLoading] = useState(false)
@@ -20,13 +19,22 @@ export default function Login() {
     let { from } = location.state || { from: { pathname: "/" } };
 
     useEffect(()=>{
+        
         if (login) {
             setPopup("Already Logged In!")
             history.replace('/')
         }
-        if(from.pathname !== '/'){
+
+        if(from.pathname === '/add'){
+            setPopup("Please Login as owner to add products!")
+        }
+        else if(from.pathname === '/addowner'){
+            setPopup("Please Login as owner to add other owners!")
+        }
+        else if(from.pathname !== '/'){
             setPopup("Please Login first!")
         }
+
     },[])
 
     const schema = yup.object({
@@ -83,10 +91,11 @@ export default function Login() {
                 name: values.nameS
             }
             const response = await Axios.post('/seller/signup', pL)
+            console.log('pp');
             if (response.status === 200) {
                 setLogin(true)
+                setType('Seller');
                 setPopup("Signed Up successfully!")
-
                 history.push(from)
             }
         }
@@ -107,10 +116,9 @@ export default function Login() {
             if (response.status === 200) {
                 setLogin(true)
                 setPopup("Logged In successfully!")
-
+                setType(values.type);
                 history.push(from)
             }
-
         }
         catch (error) {
             setPopup(error.message)

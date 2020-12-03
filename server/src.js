@@ -6,10 +6,10 @@ const web3 = new Web3(ganache.provider());
 const CounterfeitAbi = require('../build/contracts/Counterfeit.json');
 
 //find this address from ganache
-const CounterfeitAddress = '0x940f333167865baa78fdf8f8276410fc4317a19e';
+// const CounterfeitAddress = '0x940f333167865baa78fdf8f8276410fc4317a19e';
+const CounterfeitAddress = process.env.CONTRACT_ADDRESS;
 
-const privateKey =
-  '0x348ce564d427a3311b6536bbcff9390d69395b06ed6c486954e971d960fe8709';
+const privateKey = '2a48d8044fac64dc9c17de42e9ee9dc298cc30b1e4bdf036215314398c855e0d';
 
 web3.eth
   .getAccounts()
@@ -108,7 +108,7 @@ web3.eth
       // console.log(await web3.eth.getGasPrice())
       console.log(
         'second',
-        web3.utils.fromWei(await web3.eth.getBalance(accounts[2]), 'ether'),
+        web3.utils.fromWei(await web3.eth.getBalance(accounts[1]), 'ether'),
       );
     } catch (error) {
       console.log('Other Error', error);

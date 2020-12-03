@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react'
 import { login as ll } from './store/atoms'
 import Axios from './store/axiosInstance'
 import Loader from './components/loader'
-
 import Routes from './Routes'
 
 import './static/css/app.scss'
