@@ -14,6 +14,7 @@ export default function ProductInfo() {
     const [productInfo, setProductInfo] = useState(' '); 
     const [type, setType] = useRecoilState(ti);
     const productId = window.location.pathname.split('/')[1];
+    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
         async function fetchProductInfo() {
@@ -22,7 +23,7 @@ export default function ProductInfo() {
                     `/${type.toLowerCase()}/productdetails`,
                     { productId: productId }
                 );
-                if(response.data){
+                if(response.data && response.status===200){
                     setProductInfo(response.data.productDetails);
                 }
                 console.log(response);
@@ -40,6 +41,8 @@ export default function ProductInfo() {
             <div className="signupdetailscontainer signupcontainer info-page">
                 <div className="row">
                     <div className="center-content">
+                    {loading ? <Loader size="normal" /> :
+                    <div>
                         <h1 className="center-heading">PRODUCT</h1>
                         <div className="product-details">
                             <h3>Product Name</h3>
@@ -59,6 +62,7 @@ export default function ProductInfo() {
                                 { productInfo.productDetails }
                             </p>
                         </div>
+                        </div>}
                     </div>
                 </div>
             </div>

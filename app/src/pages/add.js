@@ -5,7 +5,7 @@ import { Formik, Form as Fm, Field, ErrorMessage } from 'formik';
 import * as yup from 'yup';
 import Axios from '../store/axiosInstance';
 import { popups, secretId as si } from '../store/atoms'
-import { useRecoilValue,useRecoilState, useSetRecoilState } from 'recoil'
+import { useRecoilState, useSetRecoilState } from 'recoil'
 
 //css
 import '../static/css/login.css';
@@ -13,7 +13,6 @@ import '../static/css/login.css';
 export default function AddProduct() {
 
     //local state
-    
     const [successError, setSuccessError] = useState('');
     const [submitted, setSubmitted] = useState('');
     const [secretId, setSecretId] = useRecoilState(si);
@@ -37,10 +36,8 @@ export default function AddProduct() {
     const addProduct = async (values) => {
        
         try {
-
             const response = await Axios.post('/owner/addproduct', 
                             {values, secretId})
-
             console.log(response)
             if(response.status===200 && response.data){
                 setSubmitted(true);

@@ -1,0 +1,213 @@
+.NavbarBrand,
+#logo,
+.nav-items,
+.pincodeContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#hamMenu {
+  display: none;
+  height: 50px;
+  width: fit-content;
+  margin-right: 15px;
+}
+
+.NavbarBrand {
+  flex-basis: 50%;
+  #logo {
+    flex-basis: 50%px;
+    min-width: 120px;
+    a {
+      padding: 0;
+    }
+    img {
+      width: 200px;
+      height: 90px !important;
+      object-fit: contain;
+    }
+    .LogoImg {
+      padding: 1rem 0;
+    }
+  }
+  .pincodeContainer {
+    padding: 0 20px;
+    flex-basis: 50%;
+    min-width: 180px;
+    color: #fff;
+    .LocationImage {
+      min-width: 30px;
+      flex-basis: 30px;
+      img {
+        width: 30px;
+      }
+    }
+  }
+}
+
+nav.navbar {
+  background-color: #171e30;
+  height: 90px;
+  color: white;
+  text-decoration: none;
+  padding: 8px;
+  font-weight: 600;
+  box-shadow: 0 0 5px -3px black;
+  padding: 0;
+}
+
+/* ############################# Location Add Section ###################################################### */
+
+.nav-items {
+  position: relative;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-basis: 50%;
+  max-width: 850px;
+
+  span {
+    display: flex;
+  }
+  a {
+    padding: 0;
+  }
+  h5 {
+    font-size: 1.125rem;
+    letter-spacing: 1.2px;
+  }
+  img {
+    width: 20px;
+    padding-bottom: 10px;
+    padding-right: 2px;
+  }
+
+  a span::after {
+    content: "";
+    height: 2px;
+    background-color: #ffffff;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    transition: all 0.3s ease;
+  }
+  a:hover span::after {
+    left: 0;
+    width: 100%;
+    outline: none;
+  }
+}
+.navbar {
+  button {
+    padding: 8px 12px;
+  }
+  li,
+  a {
+    list-style-type: none;
+    font-size: 0.875rem;
+    color: white;
+    position: relative;
+    transition: all ease 0.3s;
+  }
+
+  a:hover {
+    color: rgb(236, 236, 236);
+    text-decoration: none;
+    cursor: pointer;
+  }
+  li {
+    justify-self: flex-end;
+    flex-basis: 5%;
+    cursor: default;
+    padding: 0;
+    position: relative;
+    &:hover {
+      outline: none;
+    }
+  }
+}
+
+.error {
+  color: red;
+  margin: 5px;
+  font-size: 0.75rem;
+}
+
+#dropdown-basic {
+  background: transparent !important;
+}
+
+@media (max-width: 768px) {
+  .NavbarBrand {
+    
+    flex-basis: 80%;
+    #logo {
+      .LogoImg {
+        height: 70px !important;
+        padding: 0.5rem 0;
+      }
+    }
+  }
+
+  .nav-items {
+    position: absolute;
+    left: 0;
+    flex-direction: column;
+    top: 70px;
+    display: none;
+    z-index: 10000 !important;
+    margin-right: 0;
+    background-color: #171e30;
+    transition: all ease 3s;
+    font-size: 0.3rem !important;
+    animation: Nav_items_display 0.5s ease-in-out  forwards;
+    white-space: nowrap;
+    box-shadow: 0 4px 4px 0px rgba(0, 0, 0, 0.9);
+  }
+  @keyframes Nav_items_display {
+    0% {
+      width: 0%;
+    }
+    100% {
+      width: 100%;
+    }
+  }
+
+  .nav-items span {
+    margin: 10px 0px;
+  }
+  #hamMenu {
+    display: block;
+    z-index: 100;
+  }
+  nav.navbar {
+    height: 70px;
+    padding: 0;
+    font-size: 0.8125rem;
+  }
+}
+
+@media (max-width: 350px) {
+  .NavbarBrand {
+    .pincodeContainer{
+      padding-left: 0;
+      padding-right: 10px;
+      min-width: 150px;
+      .location{
+        h6{
+          font-size: 14px;
+        }
+      }
+    }
+    flex-basis: 80%;
+    #logo {
+      min-width: 100px;
+      .LogoImg {
+        height: 70px !important;
+        padding: 0.5rem 0;
+      }
+    }
+  }
+}

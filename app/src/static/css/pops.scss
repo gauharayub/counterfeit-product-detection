@@ -1,0 +1,32 @@
+#popupContainer {
+  position: fixed;
+  bottom: 30px;
+  left: 50px;
+  z-index: 30;
+  /* transition: all 0.3s ease; */
+  p {
+    min-width: 200px;
+    text-align: center;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-weight: 600;
+    color: #eeeeee;
+    background-color: #222831;
+    margin: 10px;
+    text-transform: capitalize;
+    box-shadow: 0 0 6px 0px #00000067;
+    > button {
+      position: relative;
+      font-size: 15px;
+      text-shadow: none;
+      margin-top: 4px;
+      margin-left: 10px;
+      font-weight: 600;
+      color: inherit;
+      opacity: 1;
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+}

@@ -1,18 +1,20 @@
-import { useRecoilValue, useSetRecoilState,useRecoilState } from 'recoil'
+import { useRecoilValue, useSetRecoilState, useRecoilState } from 'recoil'
 import { Formik, Form as Fm, Field, ErrorMessage } from 'formik'
 import * as yup from 'yup'
 import React, { useState } from 'react';
 import { Form, Col, Button } from 'react-bootstrap'
 import { BiScan } from 'react-icons/bi'
 import Axios from '../store/axiosInstance'
-import '../static/css/login.css'
+import '../static/css/login.scss'
 import { Link } from 'react-router-dom'
+import Loader from '../components/loader'
 
-import { popups,secretId as si } from '../store/atoms'
+import { popups, secretId as si } from '../store/atoms'
 
 export default function BuyProduct() {
     const setPopup = useSetRecoilState(popups)
-    const [secretId,setSecretId] = useRecoilState(si)
+    const [secretId, setSecretId] = useRecoilState(si)
+    const [loading, setLoading] = useState(false)
 
     const schema = yup.object({
         secretId: yup.string().required('Required!').max(30),
@@ -24,6 +26,8 @@ export default function BuyProduct() {
 
     async function buyProduct(values) {
         try {
+            setLoading(true)
+
             const response = await Axios.post('/user/buyproduct', values)
             if (response.status === 200) {
                 setSecretId('')
@@ -31,7 +35,11 @@ export default function BuyProduct() {
             }
         }
         catch (error) {
+            setPopup(error.message)
             console.log(error.message)
+        }
+        finally{
+            setLoading(false)
         }
     }
 
@@ -40,49 +48,52 @@ export default function BuyProduct() {
 
         <div className="containerS">
             <div className="frame">
-                <div className="nav">
-                    <ul className="links">
-                        <li className="signin-active"><a className="btn">Enter Secret Key</a></li>
-                    </ul>
-                </div>
-                <div className="formParent">
+                {loading ? <Loader size="normal" /> :
+                    <div>
+                        <div className="nav">
+                            <ul className="links">
+                                <li className="signin-active"><a className="btn">Enter Secret Key</a></li>
+                            </ul>
+                        </div>
+                        <div className="formParent">
 
-                    <Formik
-                        validationSchema={schema}
-                        onSubmit={buyProduct}
-                        initialValues={initialValues}
-                    >
-                        <Fm className="form-signin" name="form">
+                            <Formik
+                                validationSchema={schema}
+                                onSubmit={buyProduct}
+                                initialValues={initialValues}
+                            >
+                                <Fm className="form-signin" name="form">
 
-                            <Form.Row>
-                                <Form.Group as={Col} controlId="1">
-                                    <Form.Label>Secret Id</Form.Label>
-                                    <div className="d-flex">
+                                    <Form.Row>
+                                        <Form.Group as={Col} controlId="1">
+                                            <Form.Label>Secret Id</Form.Label>
+                                            <div className="d-flex">
 
-                                        <Field
-                                            tabIndex="1"
-                                            type="text"
-                                            placeholder="Secret Id"
-                                            name="secretId"
-                                            className="form-styling" />
+                                                <Field
+                                                    tabIndex="1"
+                                                    type="text"
+                                                    placeholder="Secret Id"
+                                                    name="secretId"
+                                                    className="form-styling" />
 
-                                        <Link to={{pathname: '/scan', query: {returnAddress:'/buy',value:'secretId'}}}>
-                                            <BiScan size={35} color="white" />
-                                        </Link>
+                                                <Link to={{ pathname: '/scan', query: { returnAddress: '/buy', value: 'secretId' } }}>
+                                                    <BiScan size={35} color="white" />
+                                                </Link>
 
-                                    </div>
-                                    <ErrorMessage name="secretId" />
+                                            </div>
+                                            <ErrorMessage name="secretId" />
 
-                                </Form.Group>
+                                        </Form.Group>
 
 
-                            </Form.Row>
+                                    </Form.Row>
 
-                            <Button className="btn btn-signup" tabIndex="4" type="submit">Buy</Button>
+                                    <Button className="btn btn-signup" tabIndex="4" type="submit">Buy</Button>
 
-                        </Fm>
-                    </Formik>
-                </div>
+                                </Fm>
+                            </Formik>
+                        </div>
+                    </div>}
             </div>
         </div>
     </section>)

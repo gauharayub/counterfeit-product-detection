@@ -1,46 +1,81 @@
-import QrReader from 'react-qr-scanner';
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
-import { Button } from 'react-bootstrap'
-import '../static/css/qrcode.scss'
-
-function QrCode() {
-
-    const [data, setData] = useState('')
-    const [scanError, setScanError] = useState('')
+import { useRecoilValue } from 'recoil'
+import { Link, useHistory } from 'react-router-dom'
+import '../static/css/login.scss'
+import { BiScan } from 'react-icons/bi'
+import { Formik, Form as Fm, Field, ErrorMessage } from 'formik'
+import * as yup from 'yup'
+import { Form, Col, Button } from 'react-bootstrap'
+import { productIdHome as pih } from '../store/atoms'
 
 
-    function qrError(error) {
-        setScanError(error)
+function Home() {
+
+    const history = useHistory()
+    const productId = useRecoilValue(pih)
+
+    const schema = yup.object({
+        productId: yup.string().required('Required!').max(30),
+    });
+
+    const initialValues = {
+        productId: productId,
     }
 
-    function qrScan(dt) {
-        if (dt && dt !== data) {
-            // console.log("hemlo",dt,typeof(dt),typeof(data));
-            setData(dt)
-        }
+    function handleSubmit(values) {
+        history.push(`/product/${values.productId}`)
     }
-
 
     return (<div className="container my-4 px-0" >
-        <div id="scanner">
-            <QrReader
-                delay={500}
-                onError={qrError}
-                onScan={qrScan}
-            />
-        </div>
+        <section>
 
-        <div id="data">
-            <p className="border p-4">Id is : <span>{data ? data : "Scanning"}</span></p>
-            {data ?<Link to={`/product/${data}`} className="btn btn-primary">Check</Link>:<Button className="btn btn-primary">Check</Button>}
-        </div>
-        {scanError && <div className="my-4">
-            <p>scanError</p>
-        </div>
-        }
+            <div className="containerS">
+                <div className="frame">
+                    <div className="nav">
+                        <ul className="links">
+                            <li className="signin-active"><a className="btn">Enter Product Id</a></li>
+                        </ul>
+                    </div>
+                    <div className="formParent">
+
+                        <Formik
+                            validationSchema={schema}
+                            initialValues={initialValues}
+                            onSubmit={handleSubmit}
+                        >
+                            <Fm className="form-signin" name="form">
+
+                                <Form.Row>
+                                    <Form.Group as={Col} controlId="1">
+                                        <Form.Label>Product Id</Form.Label>
+                                        <div className="d-flex">
+
+                                            <Field
+                                                tabIndex="1"
+                                                type="text"
+                                                placeholder="Product Id"
+                                                name="productId"
+                                                className="form-styling" />
+
+                                            <Link to={{ pathname: '/scan', query: { returnAddress: '/', value: 'productIdHome' } }}>
+                                                <BiScan size={35} color="white" />
+                                            </Link>
+
+                                        </div>
+                                        <ErrorMessage name="productId" />
+
+                                    </Form.Group>
+                                </Form.Row>
+
+                                <Button className="btn btn-signup" tabIndex="4" type="submit">Buy</Button>
+
+                            </Fm>
+                        </Formik>
+                    </div>
+                </div>
+            </div>
+        </section>
 
     </div>)
 }
 
-export default QrCode
+export default Home

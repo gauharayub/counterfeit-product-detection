@@ -1,0 +1,70 @@
+#hamMenu {
+  /* ham menu animation css */
+  .nav-icon {
+    width: 35px;
+    position: relative;
+    left: 0px;
+    z-index: 3;
+    margin: 10px 0;
+    transform: rotate(0deg);
+    transition: 0.5s ease-in-out;
+    cursor: pointer;
+  }
+
+  .nav-icon span {
+    display: block;
+    position: absolute;
+    height: 4px;
+    width: 100%;
+    background: #fff;
+    border-radius: 9px;
+    opacity: 1;
+    left: 0;
+    transform: rotate(0deg);
+    transition: 0.25s ease-in-out;
+  }
+  .secondHam span {
+    background-color: #408fcc;
+  }
+
+  .nav-icon span:nth-child(1) {
+    top: 4px;
+  }
+
+  .nav-icon span:nth-child(2) {
+    top: 13px;
+  }
+
+  .nav-icon span:nth-child(3) {
+    top: 22px;
+  }
+
+  .nav-icon.openHam span:nth-child(1) {
+    top: 13px;
+    -webkit-transform: rotate(135deg);
+    -moz-transform: rotate(135deg);
+    -o-transform: rotate(135deg);
+    transform: rotate(135deg);
+  }
+
+  .nav-icon.openHam span:nth-child(2) {
+    opacity: 0;
+    left: -60px;
+  }
+
+  .nav-icon.openHam span:nth-child(3) {
+    top: 13px;
+    -webkit-transform: rotate(-135deg);
+    -moz-transform: rotate(-135deg);
+    -o-transform: rotate(-135deg);
+    transform: rotate(-135deg);
+  }
+
+  @media (min-width: 769px) {
+    .nav-icon {
+      display: none;
+    }
+  }
+
+  
+}

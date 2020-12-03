@@ -5,11 +5,11 @@ import { useRecoilState, useRecoilValue } from 'recoil'
 import Axios from '../store/axiosInstance'
 
 //css
-import '../static/css/header.css'
-import '../static/css/hamMenuAnimation.css'
+import '../static/css/header.scss'
+import '../static/css/hamMenuAnimation.scss'
 
 //#region images
-import logo from '../static/images/urbansetu.png'
+import logo from '../static/images/2.png'
 
 import homeIco from '../static/images/nav/home.svg'
 import locaIco from '../static/images/nav/location.png'
@@ -29,19 +29,7 @@ function Header() {
     const [login, setLogin] = useRecoilState(ll)
     const history = useHistory()
 
-    useEffect(async () => {
-        try {
-            const response = await Axios.get('/tokenVerify')
-            if (response.status === 200) {
-                console.log("Token verified")
-                setLogin(true)
-            }
 
-        }
-        catch (error) {
-            console.log(error.message)
-        }
-    }, [])
     //function to set ham menu open and close
     function hamOpener() {
         let list = document.querySelector('.nav-items')
@@ -73,7 +61,7 @@ function Header() {
     }
 
     return (
-        <header className="App-header">
+        <header>
             <nav className="navbar ">
                 <div className="NavbarBrand">
                     <div id="logo">
@@ -81,19 +69,17 @@ function Header() {
                     </div>
 
 
-                    <div className="pincodeContainer d-flex">
-                        <span className="LocationImage">
+                    <div className="pincodeContainer">
+                        <div className="LocationImage">
                             <img src={locaIco} alt="location icon" />
-                        </span>
-                        <span className="location">
+                        </div>
+                        <div className="location">
                             <Link to='/buy'>
-                                <span>
-                                    <h6 className="ml-2">
-                                        Enter secret key here!
+                                <h6 className="ml-2">
+                                    Enter secret key here!
                                 </h6>
-                                </span>
                             </Link>
-                        </span>
+                        </div>
                     </div>
                 </div>
 
@@ -113,13 +99,13 @@ function Header() {
                     </span>
 
                     {login ? <span>
-                        <div onClick={logout}>
+                        <a onClick={logout}>
                             <span>
                                 <img src={vendorIco} alt="vendor icon" />
                                 <h5 className="ml-2">Logout</h5>
                             </span>
 
-                        </div>
+                        </a>
                     </span> : ''}
 
                 </div>

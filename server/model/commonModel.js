@@ -20,6 +20,33 @@ class commonModel {
         .catch((e) => reject(e));
     });
   }
+
+  static remove(email) {
+    return new Promise((resolve, reject) => {
+      let q = `delete from users where email = ${email})`;
+      mysql
+        .query(q)
+        .then((data) => resolve(data))
+        .catch((e) => reject(e));
+    });
+  }
+
+  static update(values, email) {
+    return new Promise((resolve, reject) => {
+
+      let q = 'update users set '
+      Object.keys(values).forEach((key) => {
+        q += `${key}=${values[key]} and `
+      })
+      q = q.substr(0, q.length - 4)
+      q += `where email=${email}`
+
+      mysql
+        .query(q)
+        .then((data) => resolve(data))
+        .catch((e) => reject(e));
+    });
+  }
 }
 
 module.exports = commonModel;

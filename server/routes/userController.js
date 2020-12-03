@@ -37,8 +37,9 @@ const userController = {
 
       // private key required
       await userOp.buyProduct(secretId, privateKey);
-      res.send('Purchase and product verification successfull');
+      res.status(200).send('Purchase and product verification successfull');
     } catch (error) {
+      res.status(400).send(error);
       return next(error);
     }
   },
