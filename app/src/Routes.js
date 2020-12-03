@@ -3,7 +3,7 @@ import { lazy } from 'react';
 import {
   BrowserRouter as Router, Switch, Route, Redirect
 } from "react-router-dom";
-import { login as ll } from './store/atoms'
+import { login as ll, type as ti } from './store/atoms'
 import Header from './components/header';
 import Footer from './components/footer';
 import Toast from './Toast.js'
@@ -34,9 +34,9 @@ function Routes() {
           <Route path='/login' component={Login} />
           <Route path='/buy' exact component={BuyProduct} />
           <Route path='/productinfo/:id' component={ProductInfo} />
-          <ProtectedRoute path='/add'>
+          <ProtectedOwnerRoute path='/add'>
             <AddProduct />
-          </ProtectedRoute>
+          </ProtectedOwnerRoute>
           <ProtectedRoute path='/sell'>
             <Sell />
           </ProtectedRoute>
@@ -82,5 +82,33 @@ function ProtectedRoute(comp) {
   )
 
 }
+
+function ProtectedOwnerRoute(comp) {
+
+  const { children, ...rest } = comp
+  const login = useRecoilValue(ll);
+  const type = useRecoilValue(ti);
+
+  return (
+    <Route
+      {...rest}
+      render={
+        (
+          { location }
+        ) =>
+          (login && type==='Owner')
+            ? children
+            : <Redirect
+              to={{
+                pathname: "/login",
+                state: { from: location }
+              }}
+            />
+      }
+    />
+  )
+
+}
+
 
 export default Routes;
