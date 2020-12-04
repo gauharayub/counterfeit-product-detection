@@ -114,19 +114,7 @@ export default function BuyProduct() {
                                         </Form.Group>
 
                                     </Form.Row>
-                                    <Form.Row>
-                                        <Form.Group as={Col} controlId="2">
-                                            <Form.Label>Type</Form.Label>
-                                                <Field
-                                                    tabIndex="3"
-                                                    type="text"
-                                                    placeholder="type"
-                                                    name="type"
-                                                    className="form-styling" />
-                                            <ErrorMessage name="type" />
-                                        </Form.Group>
-                                    </Form.Row>
-
+                                    
                                     <Form.Row>
                                         <Form.Group as={Col} controlId="2">
                                             <Form.Label>Product ID</Form.Label>
