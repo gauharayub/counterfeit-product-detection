@@ -19,14 +19,14 @@ export default function BuyProduct() {
 
     const schema = yup.object({
         productId: yup.string().required('Required!').max(30),
-        address: yup.string().required('Required!').max(50, 'Enter 16 character long public address of buyer').min(16, 'Enter 16 character long public address of buyer'),
-        type: yup.string().required('Required!').max(30)
+        address: yup.string().required('Required!').max(50, 'Enter 50 character long public address of buyer').min(16, 'Enter 16 character long public address of buyer'),
+        type: yup.string().required('Required!').max(30),
     });
 
     const initialValues = {
         productId: productId,
         address: buyerAddress,
-        type:'seller'
+        type:'seller',
     }
 
     async function sellProduct(values) {
@@ -113,7 +113,18 @@ export default function BuyProduct() {
 
                                         </Form.Group>
 
-
+                                    </Form.Row>
+                                    <Form.Row>
+                                        <Form.Group as={Col} controlId="2">
+                                            <Form.Label>Type</Form.Label>
+                                                <Field
+                                                    tabIndex="3"
+                                                    type="text"
+                                                    placeholder="type"
+                                                    name="type"
+                                                    className="form-styling" />
+                                            <ErrorMessage name="type" />
+                                        </Form.Group>
                                     </Form.Row>
 
                                     <Form.Row>

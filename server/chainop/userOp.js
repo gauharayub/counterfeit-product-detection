@@ -1,7 +1,7 @@
 const common = require('./common');
 
 const userOp = {
-  async buyProduct(secretId, privateKey) {
+  async buyProduct(secretId, privateKey=process.env.COMMON_PRIVATE_KEY) {
     try {
       const signedTransaction = await common.signTransaction(
         `buyProduct('${secretId}')`,
@@ -48,7 +48,7 @@ const userOp = {
       );
       return result;
     } catch (error) {
-      console.log(error.message);
+      console.log(error);
       throw new Error('Failed to fetch seller of the product');
     }
   },

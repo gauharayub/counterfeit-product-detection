@@ -13,8 +13,8 @@ export default function ProductInfo() {
     
     const [productInfo, setProductInfo] = useState(' '); 
     const [type, setType] = useRecoilState(ti);
-    const productId = window.location.pathname.split('/')[1];
-    const [loading, setLoading] = useState(false)
+    const productId = parseInt(window.location.pathname.split('/')[2]);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         async function fetchProductInfo() {
@@ -23,7 +23,7 @@ export default function ProductInfo() {
                     `/${type.toLowerCase()}/productdetails`,
                     { productId: productId }
                 );
-                if(response.data && response.status===200){
+                if(response.data){
                     setProductInfo(response.data.productDetails);
                 }
                 console.log(response);
@@ -47,19 +47,19 @@ export default function ProductInfo() {
                         <div className="product-details">
                             <h3>Product Name</h3>
                             <p>
-                                { productInfo.productName }
+                                { productInfo.name }
                             </p>
                             <h3>Product Price</h3>
                             <p>
-                                { productInfo.productPrice }
+                                { productInfo.price }
                             </p>
                             <h3>Product ID</h3>
                             <p>
-                                { productInfo.productId }
+                                { productId }
                             </p>
                             <h3>Product Details</h3>
                             <p>
-                                { productInfo.productDetails }
+                                { productInfo.details }
                             </p>
                         </div>
                         </div>}
