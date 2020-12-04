@@ -36,9 +36,8 @@ const userController = {
       }
 
       await userOp.buyProduct(secretId);
-      res.send({success:'Purchase and product verification successfull'});
+      res.json({successful:'Purchase and product verification successfull'});
     } catch (error) {
-      res.send({error:error});
       return next(error);
     }
   },
