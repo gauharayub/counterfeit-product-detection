@@ -24,6 +24,7 @@ contract Counterfeit is Ownable {
     event productPurchased(address buyerAddress);
     event productSold(address sellerAddress);
     event sellerRegistered(address sellerAddress);
+    event allProducts(string owner);
     // event sellerIs(uint id,string name,string details);
     // event productIs(string name, uint price, string details, bool isSold);
     //------------------------------------//
@@ -188,8 +189,6 @@ contract Counterfeit is Ownable {
 
         require(ownerProductCount[productOwner] > 0,"Owner does not own the product");
 
-        //not able to sell if blocked
-        uint sellerIndex = returnSellerIndex(productOwner);
         
         require(products[productIndex].isSold == false,"Secret id is scanned before");
 
@@ -204,21 +203,25 @@ contract Counterfeit is Ownable {
         return true;
     }
 
-    function getAllProducts(address _ownerAddress) external view returns(Product[] memory){
+    function getAllProducts() external returns(Product[] memory){
+        emit allProducts("boy");
         
-        uint productCount = ownerProductCount[_ownerAddress];
+        uint productCount = ownerProductCount[msg.sender];
+        require(productCount>0,"No products");
+        emit allProducts("gall");
 
         // push method not available for memory array...
         Product[] memory ownedProducts = new Product[](productCount);
         uint j=0;
+        emit allProducts("tall");
 
         for(uint i=0; i < products.length; i++) {
-            if(productToOwner[products[i].productId] == _ownerAddress) {
+            if(productToOwner[products[i].productId] == msg.sender) {
                 ownedProducts[j] = products[i];
                 j++;
             }
         }
-
+        emit allProducts("beam");
         return ownedProducts;
         
     }
