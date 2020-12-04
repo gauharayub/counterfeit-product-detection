@@ -12,7 +12,7 @@ export default function ProductInfo() {
     const [productInfo, setProductInfo] = useState(''); 
     const [sellerInfo, setSellerInfo] = useState('');
     const [popup, setPopup] = useRecoilState(pp);
-    const productId = window.location.pathname.split('/')[1];
+    const productId = window.location.pathname.split('/')[2];
 
 
     useEffect(() => {
@@ -59,10 +59,10 @@ export default function ProductInfo() {
                 '/user/buyproduct',
                 { secretId: secretId }
             );
-            if(response.data && response.status===200){
+            if(response.data.success){
                 setPopup('Purchase successfull');
             }
-            else if(response.data && response.status===400){
+            else if(response.data.error){
                 setPopup('Product is counterfieted');
             }
             console.log(response);
@@ -92,15 +92,15 @@ export default function ProductInfo() {
                                     </p>
                                     <h3>Product Price</h3>
                                     <p>
-                                        { productInfo.productPrice }
+                                        { productInfo.price }
                                     </p>
                                     <h3>Product ID</h3>
                                     <p>
-                                        { productInfo.productId }
+                                        { productId }
                                     </p>
                                     <h3>Product Details</h3>
                                     <p>
-                                        { productInfo.productDetails }
+                                        { productInfo.details }
                                     </p>
                                 </div>
                             </div>
@@ -112,21 +112,21 @@ export default function ProductInfo() {
                                 <h1>SELLER</h1>
                                 <h3>Seller Name</h3>
                                 <p>
-                                    { sellerInfo.sellerName }
+                                    { sellerInfo.name }
                                 </p>
                                 <h3>Seller ID</h3>
                                 <p>
-                                    { sellerInfo.sellerId }
+                                    { sellerInfo.id }
                                 </p>
                                 <h3>Seller Details</h3>
                                 <p>
-                                    { sellerInfo.sellerDetails }
+                                    { sellerInfo.details }
                                 </p>
                             </div>
                         </div>
                     </div>
                     <div className="buy-button-container">
-                        <Button onClick={()=>{buyAndVerify()}}>BUY AND VERIFY</Button>
+                        <Button onClick={()=>{buyAndVerify(productId)}}>BUY AND VERIFY</Button>
                     </div>
                 </div>
             </div>

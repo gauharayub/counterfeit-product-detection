@@ -36,15 +36,16 @@ const common = {
       try {
         const contract = await this.returnContract();
         const account = await this.returnAccount(privateKey);
-
+        
         const transaction = {
           from: account.address,
           to: CounterfeitAddress,
         };
         // eslint-disable-next-line no-eval
         const result = await eval(
-          `contract.methods.${method}.call(transaction)`,
+          `contract.methods.${method}.call(transaction)`
         );
+        
         return resolve(result);
       } catch (error) {
         console.log(error.message);

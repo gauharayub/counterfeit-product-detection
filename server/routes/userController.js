@@ -35,11 +35,10 @@ const userController = {
         throw new Error('Details incomplete');
       }
 
-      // private key required
-      await userOp.buyProduct(secretId, privateKey);
-      res.status(200).send('Purchase and product verification successfull');
+      await userOp.buyProduct(secretId);
+      res.send({success:'Purchase and product verification successfull'});
     } catch (error) {
-      res.status(400).send(error);
+      res.send({error:error});
       return next(error);
     }
   },
