@@ -1,19 +1,42 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from 'react-bootstrap';
 import Loader from '../components/loader';
+import { Link } from 'react-router-dom'
 import Axios from '../store/axiosInstance'
 import { useRecoilState } from 'recoil'
 import { popups as pp } from '../store/atoms'
-import '../static/css/signup.css';
-import '../static/css/info.css';
+// import '../static/css/signup.css';
+import '../static/css/info.scss';
 
 export default function ProductInfo() {
-    
-    const [productInfo, setProductInfo] = useState(''); 
+
+    const [productInfo, setProductInfo] = useState('');
     const [sellerInfo, setSellerInfo] = useState('');
     const [popup, setPopup] = useRecoilState(pp);
     const productId = window.location.pathname.split('/')[2];
 
+
+    async function reportSeller() {
+        try {
+            const response = await Axios.post(
+                '/user/reportseller',
+                { productId: productId }
+            );
+            if (response.status === 200) {
+                setPopup("Seller reported successfully")
+            }
+            if(response.status === 202){
+                setPopup("This key is already reported")
+
+            }
+
+        }
+        catch (error) {
+            console.log(error);
+            setPopup(error.message)
+
+        }
+    }
 
     useEffect(() => {
 
@@ -23,11 +46,11 @@ export default function ProductInfo() {
                     '/user/productdetails',
                     { productId: productId }
                 );
-                if(response.data && response.status===200){
+                if (response.data && response.status === 200) {
                     setProductInfo(response.data.productDetails);
                 }
                 console.log(response);
-            } 
+            }
             catch (e) {
                 console.error(e);
             }
@@ -39,11 +62,11 @@ export default function ProductInfo() {
                     '/user/productseller',
                     { productId: productId }
                 );
-                if(response.data && response.status===200){
+                if (response.data && response.status === 200) {
                     setSellerInfo(response.data.seller);
                 }
                 console.log(response);
-            } 
+            }
             catch (e) {
                 console.error(e);
             }
@@ -53,83 +76,67 @@ export default function ProductInfo() {
         fetchSellerInfo();
     }, [])
 
-    const buyAndVerify = async (secretId) => {
-        try {
-            const response = await Axios.post(
-                '/user/buyproduct',
-                { secretId: secretId }
-            );
-            if(response.data.success){
-                setPopup('Purchase successfull');
-            }
-            else if(response.data.error){
-                setPopup('Product is counterfieted');
-            }
-            console.log(response);
-        } 
-        catch (e) {
-            console.error(e);
-            setPopup('Product puchase failed');
-        }
-    }
 
-
-    if(!productInfo || !sellerInfo){
-        return (<Loader/>)
+    if (!productInfo || !sellerInfo) {
+        return (<Loader />)
     }
     return (
-        <div className="signupdiv Signup info-container">
-            <div className="signupdetailscontainer signupcontainer info-page info-user">
-                <div className="row">
-                    <div className="col-lg-6">
-                        <div>
-                            <div className="product-details">
-                                <h1>PRODUCT</h1>
-                                <div>
-                                    <h3>Product Name</h3>
-                                    <p>
-                                        { productInfo.name }
-                                    </p>
-                                    <h3>Product Price</h3>
-                                    <p>
-                                        { productInfo.price }
-                                    </p>
-                                    <h3>Product ID</h3>
-                                    <p>
-                                        { productId }
-                                    </p>
-                                    <h3>Product Details</h3>
-                                    <p>
-                                        { productInfo.details }
-                                    </p>
-                                </div>
+
+        <div className="container CI my-4">
+            <div className="d-flex small">
+                <div className="left">
+                    <div>
+                        <div className="product-details">
+                            <h2>Product Info</h2>
+                            <div>
+                                <p>Name : <span>
+                                    {productInfo.name}
+                                </span></p>
+
+                                <p>Price : <span>
+                                    {productInfo.price}
+                                </span></p>
+
+                                <p>ID : <span>
+                                    {productId}
+                                </span></p>
+
+                                <p>Details :  <span>
+                                    {productInfo.details}
+                                </span></p>
+
                             </div>
                         </div>
                     </div>
-                    <div className="col-lg-6">
-                        <div>
-                            <div className="product-details">
-                                <h1>SELLER</h1>
-                                <h3>Seller Name</h3>
-                                <p>
-                                    { sellerInfo.name }
-                                </p>
-                                <h3>Seller ID</h3>
-                                <p>
-                                    { sellerInfo.id }
-                                </p>
-                                <h3>Seller Details</h3>
-                                <p>
-                                    { sellerInfo.details }
-                                </p>
-                            </div>
+                </div>
+                <div className="right">
+                    <div>
+                        <div className="product-details">
+                            <h2>Seller Info</h2>
+                            <p>Name : <span>
+                                {sellerInfo.name}
+                            </span></p>
+
+                            <p>ID : <span>
+                                {sellerInfo.id}
+                            </span></p>
+
+                            <p>Details : <span>
+                                {sellerInfo.details}
+                            </span></p>
+
                         </div>
-                    </div>
-                    <div className="buy-button-container">
-                        <Button onClick={()=>{buyAndVerify(productId)}}>BUY AND VERIFY</Button>
                     </div>
                 </div>
             </div>
+            <div className="fullWidth">
+
+            <div className="buttons">
+                <Link to="/buy" className="btn btn-primary btn-lg ">BUY</Link>
+                <Button className="btn-warning btn btn-lg" onClick={reportSeller}>Report {sellerInfo.name}</Button>
+            </div>
+            </div>
         </div>
+
     )
 }

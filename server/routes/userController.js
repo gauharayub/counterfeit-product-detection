@@ -14,9 +14,12 @@ const userController = {
       }
 
       // private key required
-      await userOp.reportSeller(productId, privateKey);
+      const privateKey = process.env.COMMON_PRIVATE_KEY
+      
+      await userOp.reportSeller(productId,privateKey);
       res.send('Seller reported successfully');
     } catch (error) {
+      // res.status(403).send(error)
       return next(error);
     }
   },

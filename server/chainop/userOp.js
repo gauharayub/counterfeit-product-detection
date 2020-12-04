@@ -25,7 +25,8 @@ const userOp = {
       return result;
     } catch (error) {
       console.log(error.message);
-      throw new Error('Failed to report seller');
+      error.status = 202
+      throw new Error(error);
     }
   },
 

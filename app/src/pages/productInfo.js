@@ -7,7 +7,7 @@ import { type as ti,popups } from '../store/atoms';
 
 // css....
 import '../static/css/signup.css';
-import '../static/css/info.css';
+import '../static/css/info.scss';
 
 export default function ProductInfo() {
     const setPopup = useSetRecoilState(popups)
@@ -48,6 +48,7 @@ export default function ProductInfo() {
                     <div className="center-content">
                         {loading ? <Loader size="normal" /> :
                             <div>
+                                
                                 <h1 className="center-heading">PRODUCT</h1>
                                 <div className="product-details">
                                     <h3>Product Name</h3>
