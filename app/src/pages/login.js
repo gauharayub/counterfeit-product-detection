@@ -119,6 +119,7 @@ export default function Login() {
                 setLogin(true)
                 setPopup("Logged In successfully!")
                 setType(values.type);
+                localStorage.setItem('type',values.type)
                 history.push(from)
             }
         }

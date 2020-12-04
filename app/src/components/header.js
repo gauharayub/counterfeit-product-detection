@@ -51,6 +51,7 @@ function Header() {
             const response = await Axios.get('/seller/logout')
             console.log("logout resposne", response);
             setLogin(false)
+            localStorage.removeItem('type')
             if (response.status === 200) {
                 history.replace('/')
             }
