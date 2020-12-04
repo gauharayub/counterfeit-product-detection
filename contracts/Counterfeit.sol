@@ -298,12 +298,32 @@ contract Counterfeit is Ownable {
     //------------------------------------//
     //----------Dev Only Owner-------------//
     //------------------------------------//
+
     function productLength() onlyOwner public view returns (uint _productArrayLength){
         return products.length;
     }
 
     function sellersLength() onlyOwner public view returns (uint _sellerArrayLength){
         return sellers.length;
+    }
+
+    function registerOwnerAsSeller (string memory _name, string memory _details) onlyOwner external returns(string memory status ) {
+
+        //checking seller is not registered before
+        require(sellerAddressToSellerId[msg.sender] == 0,"You are already registered");
+
+        //increase random id
+        sellerId++;
+
+        //creating new instance and storing in array
+        sellers.push(sellerDetails(sellerId,0,_name,_details));
+
+        //assingning index for future search
+        sellerIdToSellerIndex[sellerId] = sellers.length - 1;
+        sellerAddressToSellerId[msg.sender] = sellerId;
+
+        return "Seller registered successfully";
+        // emit sellerRegistered(msg.sender);
     }
     //------------------------------------//
     //--------Dev Only Owner End----------//

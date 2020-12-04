@@ -61,7 +61,7 @@ const common = {
         const contract = await this.returnContract();
 
         const myAccount = await this.returnAccount(privateKey);
-
+        
         const transaction = {
           from: myAccount.address,
           to: CounterfeitAddress,
@@ -74,7 +74,6 @@ const common = {
           transaction,
           privateKey,
         );
-
         return resolve(signedTransaction);
       } catch (error) {
         console.log(error.message);

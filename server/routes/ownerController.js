@@ -9,18 +9,15 @@ const ownerController = {
       }
 
       const {values}  = req.body;
-      console.log(values);
       const email = req.email
-      console.log(email);
       if (!email || !values) {
-        // console.log(email);
-        console.log(values);
         throw new Error('Details incomplete');
       }
 
       const privateKey = await commonManager.getPrivateKeyByEmail(email, 'owner');
+    
       await ownerOp.addProduct(values, privateKey);
-      console.log('product added');
+  
       res.send('Product added successfully');
     } catch (error) {
       return next(error);
@@ -32,8 +29,8 @@ const ownerController = {
         throw new Error('Nothing in request object');
       }
 
-      const { sellerAddress, email } = req.body;
-
+      const { sellerAddress } = req.body;
+      const email = req.email
       if (!sellerAddress || !email) {
         throw new Error('Details incomplete');
       }
