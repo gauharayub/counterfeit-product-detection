@@ -23,7 +23,7 @@ class commonModel {
 
   static remove(email) {
     return new Promise((resolve, reject) => {
-      let q = `delete from users where email = ${email})`;
+      let q = `delete from users where email = '${email}')`;
       mysql
         .query(q)
         .then((data) => resolve(data))
@@ -36,10 +36,10 @@ class commonModel {
 
       let q = 'update users set '
       Object.keys(values).forEach((key) => {
-        q += `${key}=${values[key]} and `
+        q += `${key}='${values[key]}' and `
       })
       q = q.substr(0, q.length - 4)
-      q += `where email=${email}`
+      q += `where email='${email}'`
 
       mysql
         .query(q)

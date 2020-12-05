@@ -24,7 +24,7 @@
     padding: 1rem 0;
     margin: 1rem auto;
     .left,
-    .right {
+    .right,.center {
       flex-basis: 50%;
       h2 {
         margin-bottom: 1.5rem;
@@ -52,7 +52,15 @@
           justify-content: right;
           margin-right: 0;
           margin-left: auto;
+          max-width: 80px;
         }
+      }
+    }
+    .center{
+      flex-basis: 80% !important;
+      margin: auto;
+      h2{
+        text-align: center;
       }
     }
   }
@@ -119,8 +127,19 @@
 }
 
 .qrcode-container {
+  width: 80%;
+  min-width: 300px;
+  margin: auto;
   padding: 5vh 0;
   margin-bottom: 5vh;
+  .qrParent{
+    margin: auto;
+    max-width: 400px;
+    width: 50%;
+    min-width: 300px;
+    display: flex;
+    justify-content: center;
+  }
 }
 
 .qrcode-container h3 {

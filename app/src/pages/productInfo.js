@@ -3,7 +3,7 @@ import Loader from '../components/loader';
 import Axios from '../store/axiosInstance';
 import QRCode from "react-qr-code";
 import { useRecoilState, useSetRecoilState } from 'recoil';
-import { type as ti,popups } from '../store/atoms';
+import { type as ti, popups } from '../store/atoms';
 
 // css....
 import '../static/css/signup.css';
@@ -42,31 +42,30 @@ export default function ProductInfo() {
 
 
     return (
-        <div className="signupdiv Signup ">
-            <div className="product-info signupdetailscontainer signupcontainer info-page">
-                <div className="row">
-                    <div className="center-content">
+        <div className="container my-4 CI ">
+            <div className="d-flex small">
+                <div className="center">
+                    <div>
                         {loading ? <Loader size="normal" /> :
                             <div>
-                                
-                                <h1 className="center-heading">PRODUCT</h1>
+                                <h2 className="center-heading">Product Info</h2>
                                 <div className="product-details">
-                                    <h3>Product Name</h3>
-                                    <p>
+                                    <p>Product Name : <span>
                                         {productInfo.name}
-                                    </p>
-                                    <h3>Product Price</h3>
-                                    <p>
+                                    </span></p>
+
+                                    <p>Product Price : <span>
                                         {productInfo.price}
-                                    </p>
-                                    <h3>Product ID</h3>
-                                    <p>
+                                    </span></p>
+
+                                    <p>Product ID : <span>
                                         {productId}
-                                    </p>
-                                    <h3>Product Details</h3>
-                                    <p>
+                                    </span></p>
+
+                                    <p>Product Details : <span>
                                         {productInfo.details}
-                                    </p>
+                                    </span></p>
+
                                 </div>
                             </div>}
                     </div>
@@ -74,8 +73,10 @@ export default function ProductInfo() {
             </div>
             <div>
                 <div className="qrcode-container">
-                    <h3>PRODUCT QR CODE</h3>
+                    <h3>Qr Code : </h3>
+                    <div className="qrParent">
                     <QRCode value={productId} />
+                    </div>
                 </div>
             </div>
         </div>
