@@ -5,7 +5,7 @@ const commonOp = {
     try {
       // console.log('aa');
       const ownerAddress = await common.returnAccount(privateKey);
-      // console.log(ownerAddress.address)
+      console.log(ownerAddress.address)
       const result = await common.callTransaction(
         `getAllProducts('${ownerAddress.address}')`,
         privateKey

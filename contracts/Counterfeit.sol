@@ -132,7 +132,7 @@ contract Counterfeit is Ownable {
     }
 
     function returnSellerIndex(address _sellerAddress) internal view returns(uint){
-        require(sellerAddressToSellerId[msg.sender] != 0,"Seller not found");
+        require(sellerAddressToSellerId[_sellerAddress] != 0,"Seller not found");
 
         uint seller_Id = sellerAddressToSellerId[_sellerAddress];
         return sellerIdToSellerIndex[seller_Id];

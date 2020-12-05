@@ -49,6 +49,9 @@ export default function BuyProduct() {
             setLoading(false)
 
         }
+        setProductId('');
+        setBuyerAddress('');
+        setPopup('Product sold successfully');
     }
 
 
