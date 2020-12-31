@@ -14,7 +14,7 @@ export default function ProductInfo() {
 
     const [productInfo, setProductInfo] = useState(' ');
     const [type, setType] = useRecoilState(ti);
-    const productId = parseInt(window.location.pathname.split('/')[2]);
+    const productId = window.location.pathname.split('/')[2]
     const [loading, setLoading] = useState(false);
 
     useEffect(async () => {
@@ -75,7 +75,7 @@ export default function ProductInfo() {
                 <div className="qrcode-container">
                     <h3>Qr Code : </h3>
                     <div className="qrParent">
-                    <QRCode value={productId} />
+                    {productId &&<QRCode value={productId} />}
                     </div>
                 </div>
             </div>

@@ -6,8 +6,8 @@ class commonModel {
       let q = `Select * from users where type = '${type}' and email = '${email}'`;
       mysql
         .query(q)
-        .then((data) => resolve(data))
-        .catch((e) => reject(e));
+        .then((data) => { resolve(data) })
+        .catch((e) => { reject(e) });
     });
   }
 
@@ -16,18 +16,18 @@ class commonModel {
       let q = `insert into users (email,password,privateKey,type) values ('${email}','${hash}','${privateKey}','${type}')`;
       mysql
         .query(q)
-        .then((data) => resolve(data))
-        .catch((e) => reject(e));
+        .then((data) => {resolve(data)})
+        .catch((e) => { reject(e) });
     });
   }
 
   static remove(email) {
     return new Promise((resolve, reject) => {
-      let q = `delete from users where email = '${email}')`;
+      let q = `delete from users where email = '${email}'`;
       mysql
         .query(q)
-        .then((data) => resolve(data))
-        .catch((e) => reject(e));
+        .then((data) => {resolve(data)})
+        .catch((e) => { reject(e) });
     });
   }
 
@@ -43,8 +43,8 @@ class commonModel {
 
       mysql
         .query(q)
-        .then((data) => resolve(data))
-        .catch((e) => reject(e));
+        .then((data) => { resolve(data) })
+        .catch((e) => { reject(e) });
     });
   }
 }

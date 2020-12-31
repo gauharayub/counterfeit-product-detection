@@ -38,7 +38,8 @@ const commonController = {
         next(new Error('no body'));
       }
     
-      const { email, password, name, details, type } = req.body;
+      const { password, name, details, type } = req.body;
+      var { email } =  req.body;
 
       if (!email || !password) {
         next(new Error('Invalid email or password'));
