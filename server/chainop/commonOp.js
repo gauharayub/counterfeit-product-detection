@@ -3,7 +3,8 @@ const common = require('../chainop/common');
 const commonOp = {
   async getAllProducts(privateKey) {
     try {
-      
+      const ownerAddress = await common.returnAccount(privateKey);
+      console.log(ownerAddress.address)
       const result = await common.callTransaction(
         `getAllProducts()`,
         privateKey

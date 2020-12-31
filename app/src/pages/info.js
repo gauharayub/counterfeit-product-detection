@@ -74,6 +74,8 @@ export default function ProductInfo() {
 
         fetchProductInfo();
         fetchSellerInfo();
+        // setProductInfo({name:'Aspirin', price:'$2', details: 'Pharmaceutical product'})
+        // setSellerInfo({name: 'GenoHealth', id:345, details:'One of the largest pharmacy'})
     }, [])
 
 

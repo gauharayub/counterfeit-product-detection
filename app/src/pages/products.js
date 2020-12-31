@@ -43,7 +43,7 @@ export default function Products() {
             setLoading(false)
         }
 
-
+        // setProducts([[4356, "this is medicine", "Aspirin"], [5556, "this is branded shoe", "Adidas Neo"]])
     }, [])
 
     const productInfo = (productId) => {
@@ -53,19 +53,20 @@ export default function Products() {
     return (
         <div className="productList">
             <h1>PRODUCTS</h1>
-            <div className="list-group" style={{ position: "relative" }}>
-                {loading ? <Loader size="normal" /> :
-                    <div>
-                        <ListGroup>
-                            {
-                                productList && productList.map((product, idx) => (
-                                    <ListGroup.Item action onClick={() => { productInfo(product[0]) }}>
-                                        {(idx + 1) + ". " + product[2]}
-                                    </ListGroup.Item>
-                                ))
-                            }
-                        </ListGroup>
-                    </div>}
+            <div className="list-group">
+                {  productList.map((product, idx) =>
+                    <div className="berber" onClick={()=> {productInfo(product[0])}}>
+                        <div className="berber-image">
+                            {(idx+1)}.
+                        </div>
+                        <p class="berber-fullname">
+                            { product[0] }
+                        </p>
+                        <p class="berber-dukkan">
+                            { product[2] }
+                        </p>
+                    </div>
+                )}    
             </div>
         </div>
     )
