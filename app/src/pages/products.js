@@ -54,7 +54,7 @@ export default function Products() {
         <div className="productList">
             <h1>PRODUCTS</h1>
             <div className="list-group">
-                {  productList.map((product, idx) =>
+                {  productList && productList.map((product, idx) =>
                     <div className="berber" onClick={()=> {productInfo(product[0])}}>
                         <div className="berber-image">
                             {(idx+1)}.

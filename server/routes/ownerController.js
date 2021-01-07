@@ -20,7 +20,7 @@ const ownerController = {
   
       res.send('Product added successfully');
     } catch (error) {
-      return next(error);
+       next(error);
     }
   },
   unblockSeller: async function (req, res, next) {
@@ -39,15 +39,15 @@ const ownerController = {
       await ownerOp.unblockSeller(sellerAddress, privateKey);
       res.send('Seller unblocked successfully');
     } catch (error) {
-      return next(error);
+       next(error);
     }
   },
   async transferOwnership(req, res, next) {
     try {
-      return res.send('FUNCTION not ready yet');
+      res.send('FUNCTION not ready yet');
     } catch (error) {
       console.log(error.message);
-      return res.status(500).send('Failed to transfer ownership');
+      res.status(500).send('Failed to transfer ownership');
     }
   },
   async addOwner(req,res,next){
@@ -64,18 +64,22 @@ const ownerController = {
       }
 
       const seller = await commonManager.checkSeller(email, 'seller');
-      const ownerPrivateKey = commonManager.getPrivateKeyByEmail(currentOwner, 'owner');
+      const ownerPrivateKey = await commonManager.getPrivateKeyByEmail(currentOwner, 'owner');
       
+      console.log("Seller :: ",seller.privateKey, ownerPrivateKey);
       //so seller is registered next step to make him owner
-      await commonManager.updateDetails({type:'owner'},email)
 
-
-      await ownerOp.transferOwner(seller.privateKey,ownerPrivateKey)
+      await ownerOp.transferOwner(seller.privateKey, ownerPrivateKey)
       
+
+      await commonManager.updateDetails({ type: 'owner' }, email)
+      await commonManager.updateDetails({ type: 'seller' }, currentOwner)
+      
+      res.send("Changed Owner Successfully")
     }
     catch (error){
       console.log(error.message);
-      return res.status(500).send('Failed to add owner');
+      res.status(500).send('Failed to add owner');
     }
   }
 };
