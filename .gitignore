@@ -2,3 +2,4 @@ build
 bin
 node_modules
 mobileApp
+truffle-config.js

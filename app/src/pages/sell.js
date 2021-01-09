@@ -19,12 +19,14 @@ export default function BuyProduct() {
 
     const schema = yup.object({
         productId: yup.string().required('Required!').max(30),
-        address: yup.string().required('Required!').max(16, 'Enter 16 character long public address of buyer').min(16, 'Enter 16 character long public address of buyer')
+        address: yup.string().required('Required!').max(50, 'Enter 50 character long public address of buyer').min(16, 'Enter 16 character long public address of buyer'),
+        type: yup.string().required('Required!').max(30),
     });
 
     const initialValues = {
         productId: productId,
-        address: buyerAddress
+        address: buyerAddress,
+        type:'seller',
     }
 
     async function sellProduct(values) {
@@ -47,6 +49,9 @@ export default function BuyProduct() {
             setLoading(false)
 
         }
+        setProductId('');
+        setBuyerAddress('');
+        setPopup('Product sold successfully');
     }
 
 
@@ -70,6 +75,26 @@ export default function BuyProduct() {
                             >
                                 <Fm className="form-signin" name="form">
 
+                                <Form.Row>
+                                        <Form.Group as={Col} controlId="2">
+                                            <Form.Label>Type</Form.Label>
+                                           
+
+                                                <Field
+                                                    tabIndex="3"
+                                                    type="text"
+                                                    placeholder="type"
+                                                    name="type"
+                                                    className="form-styling" />
+                                               
+
+                                           
+                                            <ErrorMessage name="type" />
+
+                                        </Form.Group>
+
+                                    </Form.Row>
+
                                     <Form.Row>
                                         <Form.Group as={Col} controlId="1">
                                             <Form.Label>Address </Form.Label>
@@ -91,9 +116,8 @@ export default function BuyProduct() {
 
                                         </Form.Group>
 
-
                                     </Form.Row>
-
+                                    
                                     <Form.Row>
                                         <Form.Group as={Col} controlId="2">
                                             <Form.Label>Product ID</Form.Label>

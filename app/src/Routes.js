@@ -96,7 +96,7 @@ function ProtectedOwnerRoute(comp) {
         (
           { location }
         ) =>
-          (login && type==='Owner')
+          (login && type==='owner')
             ? children
             : <Redirect
               to={{

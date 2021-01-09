@@ -11,7 +11,7 @@ const commonManager = {
         .get(email.trim().toLowerCase(), type.trim().toLowerCase())
         .then((response) => {
           if (response && response.length === 0) {
-            return resolve(true);
+           resolve(true);
           }
           throw new Error('email already exist');
         })
@@ -67,7 +67,7 @@ const commonManager = {
             throw new Error('email not found in user table');
           }
           //check and return only email
-          return resolve(response[0].password);
+          resolve(response[0].password);
         })
         .catch((e) => {
           reject(e);

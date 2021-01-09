@@ -29,7 +29,7 @@ export default function BuyProduct() {
             setLoading(true)
 
             const response = await Axios.post('/user/buyproduct', values)
-            if (response.status === 200) {
+            if (response.success) {
                 setSecretId('')
                 setPopup(`Product bought successfully`)
             }
@@ -41,6 +41,9 @@ export default function BuyProduct() {
         finally{
             setLoading(false)
         }
+
+        // setSecretId('')
+        // setPopup(`Product bought successfully`)
     }
 
 

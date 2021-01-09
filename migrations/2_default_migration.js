@@ -1,5 +1,5 @@
 const Counterfeit = artifacts.require('Counterfeit');
 
-module.exports = function (deployer) {
+module.exports = async function (deployer) {
   deployer.deploy(Counterfeit);
 };

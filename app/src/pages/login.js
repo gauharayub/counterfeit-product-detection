@@ -88,8 +88,10 @@ export default function Login() {
                 email: values.emailS,
                 password: values.password1S,
                 details: values.detailsS,
-                name: values.nameS
+                name: values.nameS,
+                type:'seller',
             }
+            console.log(values.email);
             const response = await Axios.post('/seller/signup', pL)
             console.log('pp');
             if (response.status === 200) {
@@ -117,6 +119,7 @@ export default function Login() {
                 setLogin(true)
                 setPopup("Logged In successfully!")
                 setType(values.type);
+                localStorage.setItem('type',values.type)
                 history.push(from)
             }
         }
