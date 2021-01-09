@@ -1,52 +1,46 @@
-# fake_product_detection
-Blockchain based fake product detection system built as a part of Minor Project
+# FORGE
+Forge is a blockchain based web application to fight product counterfeiting (currently implemented as a centralized application to make it more accessible).
 
-# "Name of Some Sweet"
+# Demo Images
 
-"Name of Some Sweet" is a blockchain application to fight product counterfeiting.
+## Home
+
+![Home](/images/home.png)
+
+## Add Product Form 
+#### Only accessible by owner account
+
+![Add Product Form](/images/addProduct.png)
+
+## After Product is Added
+#### displays the qr code embedding visible key which can be used to fetch details of a product and it current seller 
+
+![After Product is Added](/images/afterProduct.png)
+
+## Login/Signin Form
+
+![Login/Signin Form](/images/login.png)
+
+
+## Product Details Page
+#### displays the details of product and its seller
+
+![Product Details Page](/images/productInfo.png)
+
+
+## Product List 
+#### Lists all the products owned by a particular seller
+
+![Product List](/images/productList.jpeg)
+
+
+## Product Info
+#### Seller can see the info of any product owned by it by clicking on any item of list 
+
+![Product Info](/images/productDetailsList.png)
 
 
 ## Installation
 
 Uses [truffle](https://www.trufflesuite.com/) for easy compilation and deploy.
 
-Uses [Ganache](https://www.trufflesuite.com/) for local blockchain creation
-
-config port inside truffle-config.js
-
-## Usage
-
-For development environment
-
-```bash
-truffle compile
-```
-
-to compile smart contracts (for error checking)
-
-
-```bash
-truffle migrate
-```
-
-to compile and deploy to local blockchain
-
-
-```bash
-truffle migrate --reset
-```
-
-if some previous version of contract are deployed
-
-
-
-var cf = await Counterfeit.deployed()
-
-var accounts;
-web3.eth.getAccounts(function(err,res) { accounts = res; });
-
-var second = accounts[1]
-
-cf.addProduct(1,1,20,'first','first')
-
-cf.registerSeller('gak','marwadi',{from:second})

@@ -77,7 +77,7 @@ export default function AddOwner() {
 
                                     </Form.Row>
 
-                                    <Button className="btn btn-signup" tabIndex="4" type="submit">Add Seller</Button>
+                                    <Button className="btn btn-signup" tabIndex="4" type="submit">Add Owner</Button>
 
                                 </Fm>
                             </Formik>

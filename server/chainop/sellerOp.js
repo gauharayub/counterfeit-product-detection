@@ -6,6 +6,9 @@ const sellerOp = {
         `sellProduct('${productId}', '${buyerAddress}')`,
         privateKey,
       );
+
+      console.log(productId,buyerAddress,privateKey)
+
       const result = await common.sendTransaction(signedTransaction);
       return result;
     } catch (error) {

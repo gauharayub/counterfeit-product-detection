@@ -14,9 +14,12 @@ const userController = {
       }
 
       // private key required
-      await userOp.reportSeller(productId, privateKey);
+      const privateKey = process.env.COMMON_PRIVATE_KEY
+      
+      await userOp.reportSeller(productId,privateKey);
       res.send('Seller reported successfully');
     } catch (error) {
+      // res.status(403).send(error)
       return next(error);
     }
   },
@@ -35,11 +38,9 @@ const userController = {
         throw new Error('Details incomplete');
       }
 
-      // private key required
-      await userOp.buyProduct(secretId, privateKey);
-      res.status(200).send('Purchase and product verification successfull');
+      await userOp.buyProduct(secretId);
+      res.json({successful:'Purchase and product verification successfull'});
     } catch (error) {
-      res.status(400).send(error);
       return next(error);
     }
   },

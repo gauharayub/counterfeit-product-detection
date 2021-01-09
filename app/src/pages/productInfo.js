@@ -3,73 +3,80 @@ import Loader from '../components/loader';
 import Axios from '../store/axiosInstance';
 import QRCode from "react-qr-code";
 import { useRecoilState, useSetRecoilState } from 'recoil';
-import { type as ti } from '../store/atoms';
+import { type as ti, popups } from '../store/atoms';
 
 // css....
 import '../static/css/signup.css';
-import '../static/css/info.css';
+import '../static/css/info.scss';
 
 export default function ProductInfo() {
-    
-    const [productInfo, setProductInfo] = useState(' '); 
-    const [type, setType] = useRecoilState(ti);
-    const productId = window.location.pathname.split('/')[1];
-    const [loading, setLoading] = useState(false)
+    const setPopup = useSetRecoilState(popups)
 
-    useEffect(() => {
-        async function fetchProductInfo() {
-            try {
-                const response = await Axios.post(
-                    `/${type.toLowerCase()}/productdetails`,
-                    { productId: productId }
-                );
-                if(response.data && response.status===200){
-                    setProductInfo(response.data.productDetails);
-                }
-                console.log(response);
-            } 
-            catch (e) {
-                console.error(e);
+    const [productInfo, setProductInfo] = useState(' ');
+    const [type, setType] = useRecoilState(ti);
+    const productId = window.location.pathname.split('/')[2]
+    const [loading, setLoading] = useState(false);
+
+    useEffect(async () => {
+
+        try {
+            setLoading(true)
+            const response = await Axios.post(
+                `/${type.toLowerCase()}/productdetails`,
+                { productId: productId }
+            );
+            if (response.data) {
+                setProductInfo(response.data.productDetails);
             }
+            console.log(response);
         }
-        fetchProductInfo();
+        catch (e) {
+            console.error(e);
+            setPopup(e.message)
+        }
+        finally {
+            setLoading(false)
+        }
+
     }, []);
 
 
     return (
-        <div className="signupdiv Signup ">
-            <div className="signupdetailscontainer signupcontainer info-page">
-                <div className="row">
-                    <div className="center-content">
-                    {loading ? <Loader size="normal" /> :
+        <div className="container my-4 CI ">
+            <div className="d-flex small">
+                <div className="center">
                     <div>
-                        <h1 className="center-heading">PRODUCT</h1>
-                        <div className="product-details">
-                            <h3>Product Name</h3>
-                            <p>
-                                { productInfo.productName }
-                            </p>
-                            <h3>Product Price</h3>
-                            <p>
-                                { productInfo.productPrice }
-                            </p>
-                            <h3>Product ID</h3>
-                            <p>
-                                { productInfo.productId }
-                            </p>
-                            <h3>Product Details</h3>
-                            <p>
-                                { productInfo.productDetails }
-                            </p>
-                        </div>
-                        </div>}
+                        {loading ? <Loader size="normal" /> :
+                            <div>
+                                <h2 className="center-heading">Product Info</h2>
+                                <div className="product-details">
+                                    <p>Product Name : <span>
+                                        {productInfo.name}
+                                    </span></p>
+
+                                    <p>Product Price : <span>
+                                        {productInfo.price}
+                                    </span></p>
+
+                                    <p>Product ID : <span>
+                                        {productId}
+                                    </span></p>
+
+                                    <p>Product Details : <span>
+                                        {productInfo.details}
+                                    </span></p>
+
+                                </div>
+                            </div>}
                     </div>
                 </div>
             </div>
             <div>
                 <div className="qrcode-container">
-                    <h3>PRODUCT QR CODE</h3>   
-                    <QRCode value={productId} />
+                    <h3>Qr Code : </h3>
+                    <div className="qrParent">
+                    {productId &&<QRCode value={productId} />}
+                    </div>
                 </div>
             </div>
         </div>

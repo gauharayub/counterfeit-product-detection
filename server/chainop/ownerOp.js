@@ -1,8 +1,10 @@
 const common = require('./common');
+const jwt = require('jsonwebtoken');
 
 const ownerOp = {
-  async addProduct({ productId, secretId, price, name, details }, privateKey) {
+  async addProduct({ productId,secretId, price, name, details }, privateKey) {
     try {
+      
       const signedTransaction = await common.signTransaction(
         `addProduct('${productId}', '${secretId}', '${price}', '${name}', '${details}')`,
         privateKey,
@@ -30,7 +32,7 @@ const ownerOp = {
   },
   async transferOwner(sellerPrivateKey, ownerPrivateKey) {
     try {
-      const sellerAccount = common.returnAccount(sellerPrivateKey)
+      const sellerAccount = await common.returnAccount(sellerPrivateKey)
       const sellerAddress = sellerAccount.address
       const signedTransaction = await common.signTransaction(
         `transferOwnership('${sellerAddress}')`,
@@ -40,7 +42,7 @@ const ownerOp = {
       return result;
     } catch (error) {
       console.log(error.message);
-      throw new Error('Failed to unblock seller');
+      throw new Error('Failed to transfer seller');
     }
   },
 

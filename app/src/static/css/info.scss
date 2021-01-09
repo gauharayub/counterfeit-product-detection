@@ -1,0 +1,161 @@
+.product-details {
+  padding: 5vh 5vw;
+}
+.CI {
+  border-radius: 4px;
+  padding: 2rem 0;
+  background: linear-gradient(
+    rgba(246, 247, 249, 0.8),
+    rgba(246, 247, 249, 0.8)
+  );
+  a {
+    color: white;
+    &:hover {
+      color: white;
+      text-decoration: none;
+    }
+  }
+  .small {
+    width: 60%;
+    min-width: 300px;
+    margin: auto;
+    background: linear-gradient(rgba(35, 43, 85, 0.75), rgba(35, 43, 85, 0.95));
+    border-radius: 4px;
+    padding: 1rem 0;
+    margin: 1rem auto;
+    .left,
+    .right,.center {
+      flex-basis: 50%;
+      h2 {
+        margin-bottom: 1.5rem;
+        font-size: 1.2rem;
+        text-align: left;
+        color: white;
+        position: relative;
+        transition: all 0.3 ease;
+        ::after {
+          content: "";
+          position: absolute;
+          width: 10px;
+          height: 2px;
+          background-color: white;
+          bottom: 0;
+          left: 0;
+        }
+      }
+      p {
+        color: rgba(255, 255, 255, 0.7);
+        font-weight: 400;
+        font-size: 15px;
+        display: flex;
+        span {
+          justify-content: right;
+          margin-right: 0;
+          margin-left: auto;
+          max-width: 80px;
+        }
+      }
+    }
+    .center{
+      flex-basis: 80% !important;
+      margin: auto;
+      h2{
+        text-align: center;
+      }
+    }
+  }
+  .fullWidth {
+    .buttons {
+      margin: auto;
+      width: 50%;
+      min-width: 300px;
+      display: flex;
+      justify-content: space-evenly;
+      .btn{
+        min-width: 150px;
+        padding: 8px 22px !important;
+        color: white;
+      }
+    }
+  }
+}
+.product-details p {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 2vh;
+}
+
+.product-details h3 {
+  font-size: 25px;
+}
+
+.product-details h1 {
+  margin-bottom: 5vh;
+  font-size: 35px;
+  font-weight: 600;
+}
+
+.info-page {
+  background-color: lightgrey;
+  margin-top: 10vh;
+}
+
+.info-container {
+  width: 70vw;
+  margin: auto;
+}
+
+.info-user {
+  margin-top: 0;
+}
+
+.buy-button-container {
+  margin: 0 auto 5vh;
+}
+
+.center-content {
+  width: 100%;
+  padding: 2vh 0;
+}
+
+.center-heading {
+  text-align: center;
+}
+
+.center-elements {
+  text-align: center;
+}
+
+.qrcode-container {
+  width: 80%;
+  min-width: 300px;
+  margin: auto;
+  padding: 5vh 0;
+  margin-bottom: 5vh;
+  .qrParent{
+    margin: auto;
+    max-width: 400px;
+    width: 50%;
+    min-width: 300px;
+    display: flex;
+    justify-content: center;
+  }
+}
+
+.qrcode-container h3 {
+  margin: 5vh 0;
+}
+
+.message-heading {
+  margin: 5vh 0;
+}
+
+.product-info {
+  width: 50vw;
+}
+
+@media only screen and (max-width: 700px) {
+  .product-info {
+    width: 70vw;
+  }
+}
