@@ -15,7 +15,7 @@ Forge is a blockchain based web application to fight product counterfeiting (cur
 ## After Product is Added
 #### displays the qr code embedding visible key which can be used to fetch details of a product and it current seller 
 
-![After Product is Added](/images/afterProduct.png)
+![After Product is Added](/images/afterProductAdd.png)
 
 ## Login/Signin Form
 
