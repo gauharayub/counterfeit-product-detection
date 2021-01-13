@@ -42,5 +42,5 @@ Forge is a blockchain based web application to fight product counterfeiting (cur
 
 ## Installation
 
-Uses [truffle](https://www.trufflesuite.com/) for easy compilation and deploy.
+Uses [truffle](https://www.trufflesuite.com/) for easy compilation and deployment.
 
