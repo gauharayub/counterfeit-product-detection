@@ -4,7 +4,6 @@ const jwt = require('jsonwebtoken');
 const cors = require('cors');
 const morgan = require('morgan')
 require('dotenv').config();
-
 const userRouter = require('./routes/user');
 const sellerRouter = require('./routes/seller');
 const ownerRouter = require('./routes/owner');
