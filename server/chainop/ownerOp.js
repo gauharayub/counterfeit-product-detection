@@ -2,11 +2,11 @@ const common = require('./common');
 const jwt = require('jsonwebtoken');
 
 const ownerOp = {
-  async addProduct({ productId,secretId, price, name, details }, privateKey) {
+  async addProduct({ productId,secretId, price, name }, privateKey) {
     try {
       
       const signedTransaction = await common.signTransaction(
-        `addProduct('${productId}', '${secretId}', '${price}', '${name}', '${details}')`,
+        `addProduct('${productId}', '${secretId}', '${price}', '${name}')`,
         privateKey,
       );
       const result = await common.sendTransaction(signedTransaction);

@@ -73,7 +73,7 @@ const common = {
 
         const signedTransaction = await web3.eth.accounts.signTransaction(
           transaction,
-          privateKey,
+          privateKey
         );
         return resolve(signedTransaction);
       } catch (error) {
