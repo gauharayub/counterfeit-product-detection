@@ -40,4 +40,5 @@ const fall = atom({
     default: ''
 })
 
-export { login, type, popups, buyerAddress, productId, fall,secretId,productIdHome }
+
+export {login, type, popups, buyerAddress, productId, fall,secretId,productIdHome }

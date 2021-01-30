@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom'
 import Axios from '../store/axiosInstance'
 import { useRecoilState } from 'recoil'
 import { popups as pp } from '../store/atoms'
+import provider from '../store/web3Provider'
+import abi from '../store/abi'
 // import '../static/css/signup.css';
 import '../static/css/info.scss';
 
@@ -14,7 +16,7 @@ export default function ProductInfo() {
     const [sellerInfo, setSellerInfo] = useState('');
     const [popup, setPopup] = useRecoilState(pp);
     const productId = window.location.pathname.split('/')[2];
-
+    const w3 = provider.getProvider()
 
     async function reportSeller() {
         try {

@@ -7,12 +7,10 @@ import * as yup from 'yup'
 import { Form, Col, Button } from 'react-bootstrap'
 import { productIdHome as pih } from '../store/atoms'
 
-
 function Home() {
 
     const history = useHistory()
     const productId = useRecoilValue(pih)
-
     const schema = yup.object({
         productId: yup.string().required('Required!').max(30),
     });

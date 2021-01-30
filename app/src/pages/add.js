@@ -30,20 +30,16 @@ export default function AddProduct() {
         name: "",
         price: "",
         productId: "",
-        details: ""
     }
 
     const addProduct = async (values) => {
        values.secretId = values.productId;
         try {
-            const response = await Axios.post('/owner/addproduct', 
-                            {values})
-            console.log(response)
-            if(response.status===200 && response.data){
-                setSubmitted(true);
-                setProductId(values.productId);
-                setPopup('Product added successfully');
-            }
+            // send transaction for adding a product....
+            await provider.sendTransaction('addProduct', [values.productId, values.productId, values.price, values.name]);
+            setSubmitted(true);
+            setProductId(values.productId);
+            setPopup('Product added successfully');
 
         } catch (error) {
                 setPopup('Failed to add product');
@@ -111,21 +107,6 @@ export default function AddProduct() {
                                         <ErrorMessage name="productId" />
                                     </Form.Group>
                                 </Form.Row>
-
-                                <Form.Row>
-                                    <Form.Group as={Col} controlId="4">
-                                        <Form.Label>Details</Form.Label>
-                                        <Field
-                                            tabIndex="4"
-                                            type="text"
-                                            placeholder="Details about product"
-                                            name="details"
-                                            className="form-styling" />
-                                        <ErrorMessage name="details" />
-
-                                    </Form.Group>
-                                </Form.Row>
-
                                 <Button className="btn btn-signup" tabIndex="5" type="submit">Add Product</Button>
                             </Fm>
                         </Formik>
