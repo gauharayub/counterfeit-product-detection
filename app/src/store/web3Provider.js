@@ -32,7 +32,6 @@ const provider = {
         const portis = await new Portis('42dca739-f49f-4002-a181-82cdaadc7dd5', myPrivateEthereumNode);
         const web = await new Web3(portis.provider)
         this.w3 = web;
-
         // import ganache account in portis....
         // const privateKeyOrMnemonic = "";
         // portis.importWallet(privateKeyOrMnemonic);

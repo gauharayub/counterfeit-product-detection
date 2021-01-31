@@ -5,8 +5,8 @@ import { Formik, Form as Fm, Field, ErrorMessage } from 'formik';
 import * as yup from 'yup';
 import Axios from '../store/axiosInstance';
 import { popups, secretId as si } from '../store/atoms'
-import { useRecoilState, useSetRecoilState } from 'recoil'
-
+import { useRecoilState, useSetRecoilState, useRecoilValue } from 'recoil'
+import provider from '../store/web3Provider'
 //css
 import '../static/css/login.scss';
 
@@ -18,6 +18,7 @@ export default function AddProduct() {
     const [secretId, setSecretId] = useRecoilState(si);
     const [productId, setProductId] = useState('');
     const setPopup = useSetRecoilState(popups)
+    // const web3provider = useRecoilValue(providerObject);
 
     const schema = yup.object({
         name: yup.string().required('Required!').max(250, 'ProductName Should be less than 250 characters').test('no Num', "Number not allowed", async (val) => { if (val) { return await !val.match(/[0-9]+/) } return false }).test('noSpecial', "Special characters not allowed", async (val) => { if (val) { return await val.match(/[a-z]/i) } return false }),
@@ -42,8 +43,8 @@ export default function AddProduct() {
             setPopup('Product added successfully');
 
         } catch (error) {
-                setPopup('Failed to add product');
-                console.log(error)
+            setPopup('Failed to add product');
+            console.log(error)
         }
     }
 
