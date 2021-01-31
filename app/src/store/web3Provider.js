@@ -34,8 +34,8 @@ const provider = {
         this.w3 = web;
 
         // import ganache account in portis....
-        const privateKeyOrMnemonic = "0x7b677cabefc49f90a4ac85192a7d4fc38e3db791";
-        portis.importWallet(privateKeyOrMnemonic);
+        // const privateKeyOrMnemonic = "";
+        // portis.importWallet(privateKeyOrMnemonic);
     },
 
     setContract: async function () {
@@ -45,7 +45,7 @@ const provider = {
     },
 
     // for non-transaction methods ex- view pure
-    callTransaction: async function (method, parameters) {
+    callTransaction: async function (method, parameters=[]) {
         try {
             const transaction = {
                 from: this.account,
@@ -81,7 +81,7 @@ const provider = {
     // },
 
     // method for transaction that require fee....
-    sendTransaction: async function (method, parameters) {
+    sendTransaction: async function (method, parameters=[]) {
         try {
             const transaction = {
                 from: this.account,
