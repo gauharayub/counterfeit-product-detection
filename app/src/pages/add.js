@@ -3,9 +3,8 @@ import { Form, Col, Button } from 'react-bootstrap'
 import { Redirect } from 'react-router-dom';
 import { Formik, Form as Fm, Field, ErrorMessage } from 'formik';
 import * as yup from 'yup';
-import Axios from '../store/axiosInstance';
 import { popups, secretId as si } from '../store/atoms'
-import { useRecoilState, useSetRecoilState, useRecoilValue } from 'recoil'
+import { useSetRecoilState } from 'recoil'
 import provider from '../store/web3Provider'
 //css
 import '../static/css/login.scss';
@@ -13,18 +12,13 @@ import '../static/css/login.scss';
 export default function AddProduct() {
 
     //local state
-    const [successError, setSuccessError] = useState('');
-    const [submitted, setSubmitted] = useState('');
-    const [secretId, setSecretId] = useRecoilState(si);
     const [productId, setProductId] = useState('');
     const setPopup = useSetRecoilState(popups)
-    // const web3provider = useRecoilValue(providerObject);
 
     const schema = yup.object({
         name: yup.string().required('Required!').max(250, 'ProductName Should be less than 250 characters').test('no Num', "Number not allowed", async (val) => { if (val) { return await !val.match(/[0-9]+/) } return false }).test('noSpecial', "Special characters not allowed", async (val) => { if (val) { return await val.match(/[a-z]/i) } return false }),
         price: yup.string().required('Required!'),
         productId: yup.string().required('Required!').max(50),
-        details: yup.string().required('Required!').max(250, 'Details Should be less than 350 characters')
     });
 
     const initialValues = {
@@ -33,13 +27,11 @@ export default function AddProduct() {
         productId: "",
     }
 
-    const addProduct = async (values) => {
-       values.secretId = values.productId;
+    async function addProduct(values) {
         try {
             // send transaction for adding a product....
             await provider.sendTransaction('addProduct', [values.productId, values.productId, values.price, values.name]);
-            setSubmitted(true);
-            setProductId(values.productId);
+            setProductId(values.productId)
             setPopup('Product added successfully');
 
         } catch (error) {
@@ -48,7 +40,7 @@ export default function AddProduct() {
         }
     }
 
-    if(submitted){
+    if(productId){
         return (
             <Redirect to={`/qrcode/${productId}`} />
         )

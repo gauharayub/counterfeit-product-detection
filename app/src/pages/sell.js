@@ -1,57 +1,52 @@
-import { useRecoilState, useSetRecoilState } from 'recoil'
+import { useSetRecoilState,useRecoilState } from 'recoil'
 import { Formik, Form as Fm, Field, ErrorMessage } from 'formik'
 import * as yup from 'yup'
 import React, { useState } from 'react';
 import { Form, Col, Button } from 'react-bootstrap'
 import { BiScan } from 'react-icons/bi'
-import Axios from '../store/axiosInstance'
-import '../static/css/login.scss'
 import { Link } from 'react-router-dom'
 import Loader from '../components/loader'
+import provider from '../store/web3Provider'
+import { popups,buyerAddress as ba, productId as pi } from '../store/atoms'
 
-import { popups, buyerAddress as ba, productId as pi } from '../store/atoms'
+import '../static/css/login.scss'
 
 export default function BuyProduct() {
     const setPopup = useSetRecoilState(popups)
     const [buyerAddress, setBuyerAddress] = useRecoilState(ba)
     const [productId, setProductId] = useRecoilState(pi)
+
     const [loading, setLoading] = useState(false)
 
     const schema = yup.object({
         productId: yup.string().required('Required!').max(30),
         address: yup.string().required('Required!').max(50, 'Enter 50 character long public address of buyer').min(16, 'Enter 16 character long public address of buyer'),
-        type: yup.string().required('Required!').max(30),
     });
 
     const initialValues = {
         productId: productId,
         address: buyerAddress,
-        type:'seller',
     }
 
     async function sellProduct(values) {
         try {
             setLoading(true)
-
-            const response = await Axios.post('/seller/sellproduct', values)
-            if (response.status === 200) {
-                setProductId('')
+            const response = await provider.sendTransaction('sellProduct', [values.productId, values.address])
+            console.log(response);
+            if (response == "true") {
                 setBuyerAddress('')
-                setPopup(`Product Sold successfully to ${values.address}`)
+                setProductId('')
             }
+            setPopup(response)
+
         }
         catch (error) {
             setPopup(error.message)
-
             console.log(error.message)
         }
         finally {
             setLoading(false)
-
         }
-        setProductId('');
-        setBuyerAddress('');
-        setPopup('Product sold successfully');
     }
 
 
@@ -75,31 +70,10 @@ export default function BuyProduct() {
                             >
                                 <Fm className="form-signin" name="form">
 
-                                <Form.Row>
-                                        <Form.Group as={Col} controlId="2">
-                                            <Form.Label>Type</Form.Label>
-                                           
-
-                                                <Field
-                                                    tabIndex="3"
-                                                    type="text"
-                                                    placeholder="type"
-                                                    name="type"
-                                                    className="form-styling" />
-                                               
-
-                                           
-                                            <ErrorMessage name="type" />
-
-                                        </Form.Group>
-
-                                    </Form.Row>
-
                                     <Form.Row>
                                         <Form.Group as={Col} controlId="1">
-                                            <Form.Label>Address </Form.Label>
+                                            <Form.Label>Address of other seller</Form.Label>
                                             <div className="d-flex">
-
                                                 <Field
                                                     tabIndex="1"
                                                     type="text"
@@ -113,11 +87,9 @@ export default function BuyProduct() {
 
                                             </div>
                                             <ErrorMessage name="address" />
-
                                         </Form.Group>
-
                                     </Form.Row>
-                                    
+
                                     <Form.Row>
                                         <Form.Group as={Col} controlId="2">
                                             <Form.Label>Product ID</Form.Label>
@@ -135,9 +107,7 @@ export default function BuyProduct() {
 
                                             </div>
                                             <ErrorMessage name="productId" />
-
                                         </Form.Group>
-
                                     </Form.Row>
 
                                     <Button className="btn btn-signup" tabIndex="4" type="submit">Sell</Button>

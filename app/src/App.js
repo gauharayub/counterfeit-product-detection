@@ -3,25 +3,22 @@ import './static/css/app.scss'
 import { useEffect, useState } from 'react'
 import Loader from './components/loader'
 import provider from './store/web3Provider'
-
+import {useSetRecoilState} from 'recoil'
+import {login as ll} from './store/atoms'
 function App() {
-
+  const setLogin = useSetRecoilState(ll)
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
     async function setProvider() {
-      // set web3 provider for the object...
       await provider.setProvider()
-      // set account address for the object....
-      await provider.setAccount()
-      console.log( provider.getAccount())
-      setLoaded(true)
-
-      // set contract for the object..
       await provider.setContract();
-      
-      // await provider.callTransaction('getAllProducts');
-      // await provider.sendTransaction('registerOwnerAsSeller', ['wtaru', 'good']);
+
+      // const res = await provider.isLoggedIn()
+      // if (res.state) {
+      //   setLogin(true)
+      // }
+      setLoaded(true)
     }
     setProvider()
   }, [])

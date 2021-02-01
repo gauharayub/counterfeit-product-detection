@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@portis/web3": "^3.0.3",
+    "argon2": "^0.27.1",
     "axios": "^0.21.1",
     "bootstrap": "^4.5.3",
     "formik": "^2.2.5",

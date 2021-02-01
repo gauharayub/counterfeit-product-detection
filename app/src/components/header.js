@@ -1,8 +1,7 @@
 //libraries
 import { useState, useEffect } from "react"
 import { Link, useHistory } from 'react-router-dom'
-import { useRecoilState, useRecoilValue } from 'recoil'
-import Axios from '../store/axiosInstance'
+import { useSetRecoilState, useRecoilState } from 'recoil'
 
 //css
 import '../static/css/header.scss'
@@ -15,20 +14,21 @@ import homeIco from '../static/images/nav/home.svg'
 import locaIco from '../static/images/nav/location.png'
 import userIco from '../static/images/nav/user.svg'
 import vendorIco from '../static/images/nav/vendor.svg'
-
+import provider from '../store/web3Provider'
 //#endregion
 
 //global state store
-import { login as ll } from '../store/atoms'
+import { popups as pp, login as ll } from '../store/atoms'
 
 
 
 function Header() {
 
     const [open, setOpen] = useState(false)
+    const setPopup = useSetRecoilState(pp)
     const [login, setLogin] = useRecoilState(ll)
-    const history = useHistory()
 
+    const history = useHistory()
 
     //function to set ham menu open and close
     function hamOpener() {
@@ -46,20 +46,47 @@ function Header() {
         setOpen(!open)
     }
 
-    async function logout() {
+    async function Logout() {
         try {
-            const response = await Axios.get('/seller/logout')
-            console.log("logout resposne", response);
-            setLogin(false)
-            localStorage.removeItem('type')
-            if (response.status === 200) {
-                history.replace('/')
-            }
+            await provider.logout()
+            history.replace('/')
+            setPopup("Logged you out from portis");
 
         } catch (error) {
             console.log(error.message);
         }
+        finally {
+            isLoggedin()
+        }
     }
+    async function Login() {
+        try {
+            await provider.login()
+            setPopup("Logged in successfully")
+        }
+        catch (error) {
+            console.log(error.message);
+            setPopup("Failed to login")
+        }
+        finally {
+            isLoggedin()
+        }
+
+    }
+    async function isLoggedin() {
+        const response = await provider.isLoggedIn()
+        console.log("isLoggedIN ??", response);
+        if (response.result) {
+            setLogin(true)
+        }
+        else {
+            setLogin(false)
+        }
+    }
+
+    useEffect(() => {
+        isLoggedin()
+    }, [])
 
     return (
         <header>
@@ -94,21 +121,15 @@ function Header() {
                     </span>
                     <span>
                         {login
-                            ? <Link to='/profile'><span><img src={userIco} alt="user icon" /><h5 className="ml-2"> Profile</h5></span></Link>
-                            : <Link to='/login'><span><img src={userIco} alt="user icon" /><h5 className="ml-2"> Login/Signup </h5></span></Link>
+                            ? <a onClick={Logout}>
+                                <span>
+                                    <img src={vendorIco} alt="vendor icon" />
+                                    <h5 className="ml-2">Logout</h5>
+                                </span>
+                            </a>
+                            : <a onClick={Login}><span><img src={userIco} alt="user icon" /><h5 className="ml-2"> Login/Signup </h5></span></a>
                         }
                     </span>
-
-                    {login ? <span>
-                        <a onClick={logout}>
-                            <span>
-                                <img src={vendorIco} alt="vendor icon" />
-                                <h5 className="ml-2">Logout</h5>
-                            </span>
-
-                        </a>
-                    </span> : ''}
-
                 </div>
 
                 <div onClick={hamOpener} id="hamMenu">

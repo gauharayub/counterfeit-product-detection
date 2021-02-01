@@ -135,6 +135,7 @@ contract Counterfeit is Ownable {
         return true;
 
     }
+    
 
     // should be called by consumers
     function buyProduct(uint _secretId) external returns(bool) {

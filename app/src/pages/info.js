@@ -2,11 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Button } from 'react-bootstrap';
 import Loader from '../components/loader';
 import { Link } from 'react-router-dom'
-import Axios from '../store/axiosInstance'
-import { useRecoilState } from 'recoil'
+import { useSetRecoilState } from 'recoil'
 import { popups as pp } from '../store/atoms'
 import provider from '../store/web3Provider'
-import abi from '../store/abi'
 // import '../static/css/signup.css';
 import '../static/css/info.scss';
 
@@ -14,23 +12,23 @@ export default function ProductInfo() {
 
     const [productInfo, setProductInfo] = useState('');
     const [sellerInfo, setSellerInfo] = useState('');
-    const [popup, setPopup] = useRecoilState(pp);
+    const [loading, setLoading] = useState(true);
+    const setPopup = useSetRecoilState(pp);
     const productId = window.location.pathname.split('/')[2];
-    const w3 = provider.getProvider()
 
     async function reportSeller() {
         try {
-            const response = await Axios.post(
-                '/user/reportseller',
-                { productId: productId }
-            );
-            if (response.status === 200) {
-                setPopup("Seller reported successfully")
-            }
-            if(response.status === 202){
-                setPopup("This key is already reported")
+            // const response = await Axios.post(
+            //     '/user/reportseller',
+            //     { productId: productId }
+            // );
+            // if (response.status === 200) {
+            //     setPopup("Seller reported successfully")
+            // }
+            // if(response.status === 202){
+            //     setPopup("This key is already reported")
 
-            }
+            // }
 
         }
         catch (error) {
@@ -44,44 +42,38 @@ export default function ProductInfo() {
 
         async function fetchProductInfo() {
             try {
-                const response = await Axios.post(
-                    '/user/productdetails',
-                    { productId: productId }
-                );
-                if (response.data && response.status === 200) {
-                    setProductInfo(response.data.productDetails);
+                const response = await provider.callTransaction('productDetails',[productId])
+                if (response) {
+                    setProductInfo(response);
                 }
-                console.log(response);
             }
             catch (e) {
+                setPopup("Failed to fetch product info")
                 console.error(e);
             }
         }
 
         async function fetchSellerInfo() {
             try {
-                const response = await Axios.post(
-                    '/user/productseller',
-                    { productId: productId }
-                );
-                if (response.data && response.status === 200) {
-                    setSellerInfo(response.data.seller);
+                const response = await provider.callTransaction('productSeller', [productId])
+                if (response) {
+                    setSellerInfo(response);
                 }
-                console.log(response);
             }
             catch (e) {
+                setPopup("Failed to fetch seller info")
                 console.error(e);
             }
+            finally {
+                setLoading(false)
+            }
         }
-
         fetchProductInfo();
         fetchSellerInfo();
-        // setProductInfo({name:'Aspirin', price:'$2', details: 'Pharmaceutical product'})
-        // setSellerInfo({name: 'GenoHealth', id:345, details:'One of the largest pharmacy'})
     }, [])
 
 
-    if (!productInfo || !sellerInfo) {
+    if (loading) {
         return (<Loader />)
     }
     return (

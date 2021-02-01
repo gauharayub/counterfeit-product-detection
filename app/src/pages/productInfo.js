@@ -1,19 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import Loader from '../components/loader';
-import Axios from '../store/axiosInstance';
 import QRCode from "react-qr-code";
-import { useRecoilState, useSetRecoilState } from 'recoil';
-import { type as ti, popups } from '../store/atoms';
+import { useSetRecoilState } from 'recoil';
+import { popups } from '../store/atoms';
 
 // css....
 import '../static/css/signup.css';
 import '../static/css/info.scss';
+import provider from '../store/web3Provider';
 
 export default function ProductInfo() {
     const setPopup = useSetRecoilState(popups)
 
     const [productInfo, setProductInfo] = useState(' ');
-    const [type, setType] = useRecoilState(ti);
     const productId = window.location.pathname.split('/')[2]
     const [loading, setLoading] = useState(false);
 
@@ -21,14 +20,11 @@ export default function ProductInfo() {
 
         try {
             setLoading(true)
-            const response = await Axios.post(
-                `/${type.toLowerCase()}/productdetails`,
-                { productId: productId }
-            );
-            if (response.data) {
-                setProductInfo(response.data.productDetails);
-            }
+            const response = await provider.callTransaction('productDetails',[productId])
             console.log(response);
+            if (response) {
+                setProductInfo(response);
+            }
         }
         catch (e) {
             console.error(e);
@@ -60,10 +56,6 @@ export default function ProductInfo() {
 
                                     <p>Product ID : <span>
                                         {productId}
-                                    </span></p>
-
-                                    <p>Product Details : <span>
-                                        {productInfo.details}
                                     </span></p>
 
                                 </div>

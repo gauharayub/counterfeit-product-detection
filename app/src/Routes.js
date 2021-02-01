@@ -1,11 +1,12 @@
 import { lazy } from 'react';
 import {
-  BrowserRouter as Router, Switch, Route
+  BrowserRouter as Router, Switch, Route, Redirect
 } from "react-router-dom";
 import Header from './components/header';
 import Footer from './components/footer';
 import Toast from './Toast.js'
-
+import { login as ll } from './store/atoms'
+import { useRecoilValue } from 'recoil'
 const Home = lazy(() => import(/* webpackChunkName: "HOME" */ './pages/home'))
 const Login = lazy(() => import(/*webpackChunkName: "LOGIN" */ './pages/login'))
 const Info = lazy(() => import(/*webpackChunkName: "INFO" */ './pages/info'))
@@ -28,15 +29,29 @@ function Routes() {
         <Switch>
           <Route path="/" exact component={Home} />
           <Route path="/scan" exact component={Scan} />
-          <Route path="/product/:id" component={Info} />
-          <Route path='/login' component={Login} />
-          <Route path='/buy' exact component={BuyProduct} />
-          <Route path='/productinfo/:id' component={ProductInfo} />
-          <Route path='/add' component={AddProduct} />
-          <Route path='/sell' component={Sell} />
-          <Route path='/products' component={Products} />
           <Route path='/qrcode' component={QRCode} />
-          <Route path='/addowner' component={AddOwner} />
+          <Route path='/login' component={Login} />
+          <PrivateRoute path="/product/:id" >
+            <Info />
+          </PrivateRoute>
+          <PrivateRoute path='/buy' exact >
+            <BuyProduct />
+          </PrivateRoute>
+          <PrivateRoute path='/productinfo/:id' >
+            <ProductInfo />
+          </PrivateRoute>
+          <PrivateRoute path='/add' >
+            <AddProduct />
+          </PrivateRoute>
+          <PrivateRoute path='/sell' >
+            <Sell />
+          </PrivateRoute>
+          <PrivateRoute path='/products' >
+            <Products />
+          </PrivateRoute>
+          <PrivateRoute path='/addowner'>
+            <AddOwner />
+          </PrivateRoute>
         </Switch>
         <Route component={Footer} />
       </Router>
@@ -44,5 +59,18 @@ function Routes() {
     </>
   );
 }
+function PrivateRoute({ children, ...rest }) {
+  const login = useRecoilValue(ll)
+  return (
+    <Route
+      {...rest}
+      render={({ location }) =>
+        login
+          ? children
+          : <Redirect to={{ pathname: '/login', state: { from: location } }} />
 
+      }
+    />
+  );
+}
 export default Routes;
