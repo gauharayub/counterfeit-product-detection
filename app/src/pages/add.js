@@ -30,7 +30,8 @@ export default function AddProduct() {
     async function addProduct(values) {
         try {
             // send transaction for adding a product....
-            await provider.sendTransaction('addProduct', [values.productId, values.productId, values.price, values.name]);
+            const hash = provider.keccakHash(values.productId)
+            await provider.sendTransaction('addProduct', [values.productId, hash, values.price, values.name]);
             setProductId(values.productId)
             setPopup('Product added successfully');
 
