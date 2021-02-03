@@ -1,33 +1,37 @@
-import { useSetRecoilState } from 'recoil'
+import { useSetRecoilState, useRecoilState } from 'recoil'
 import { Formik, Form as Fm, Field, ErrorMessage } from 'formik'
 import * as yup from 'yup'
 import React, { useState } from 'react';
 import { Form, Col, Button } from 'react-bootstrap'
-import Axios from '../store/axiosInstance'
+import { BiScan } from 'react-icons/bi'
 import '../static/css/login.scss'
 import Loader from '../components/loader'
+import provider from '../store/web3Provider'
+import { Link } from 'react-router-dom'
 
-import { popups } from '../store/atoms'
+import { popups, newOwner as no } from '../store/atoms'
 
-export default function AddOwner() {
+export default function TransferOwner() {
     const setPopup = useSetRecoilState(popups)
+    const [newOwner, setNewOwner] = useRecoilState(no)
     const [loading, setLoading] = useState(false)
 
     const schema = yup.object({
-        email: yup.string().email().required('Required!').max(250),
+        address: yup.string().required('Required!').max(40),
     });
 
     const initialValues = {
-        email: ''
+        address: newOwner
     }
-    
-    async function addOwner(values) {
+
+    async function transferOwner(values) {
         try {
             setLoading(true)
-            const response = await Axios.post('/owner/addowner', values)
-            if (response.status === 200) {
+            const response = await provider.sendTransaction('transferOwnership', [values.address])
+            if (response) {
                 setPopup(`Owner Added successfully`)
             }
+            setNewOwner('')
         }
         catch (error) {
             setPopup(error.message)
@@ -47,31 +51,35 @@ export default function AddOwner() {
                     <div>
                         <div className="nav">
                             <ul className="links">
-                                <li className="signin-active"><a className="btn">Add Another Owner</a></li>
+                                <li className="signin-active"><a className="btn">Transfer Ownership</a></li>
                             </ul>
                         </div>
                         <div className="formParent">
 
                             <Formik
                                 validationSchema={schema}
-                                onSubmit={addOwner}
+                                onSubmit={transferOwner}
                                 initialValues={initialValues}
                             >
                                 <Fm className="form-signin" name="form">
 
                                     <Form.Row>
                                         <Form.Group as={Col} controlId="1">
-                                            <Form.Label>Email </Form.Label>
+                                            <Form.Label>New Owner's address </Form.Label>
+                                            <div className="d-flex">
 
-                                            <Field
-                                                tabIndex="1"
-                                                type="text"
-                                                placeholder="Email"
-                                                name="email"
-                                                className="form-styling" />
+                                                <Field
+                                                    tabIndex="1"
+                                                    type="text"
+                                                    placeholder="New Owner's address"
+                                                    name="address"
+                                                    className="form-styling" />
 
-
-                                            <ErrorMessage name="email" />
+                                                <Link to={{ pathname: '/scan', query: { returnAddress: '/addowner', value: 'newOwner' } }}>
+                                                    <BiScan size={35} color="white" />
+                                                </Link>
+                                            </div>
+                                            <ErrorMessage name="address" />
 
                                         </Form.Group>
 
