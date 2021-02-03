@@ -1,5 +1,5 @@
 export default {
-    abi: [
+    "counterfeitAbi": [
         {
             "inputs": [],
             "stateMutability": "nonpayable",
@@ -68,6 +68,7 @@ export default {
             "inputs": [
                 {
                     "indexed": false,
+                    "internalType": "address",
                     "name": "sellerAddress",
                     "type": "address"
                 }
@@ -82,7 +83,6 @@ export default {
                     "indexed": false,
                     "internalType": "address",
                     "name": "sellerAddress",
-                    "internalType": "address",
                     "type": "address"
                 }
             ],
@@ -117,13 +117,6 @@ export default {
             "constant": true
         },
         {
-            "inputs": [],
-            "name": "renounceOwnership",
-            "outputs": [],
-            "stateMutability": "nonpayable",
-            "type": "function"
-        },
-        {
             "inputs": [
                 {
                     "internalType": "address",
@@ -140,18 +133,12 @@ export default {
             "inputs": [
                 {
                     "internalType": "address",
-                    "name": "_sellerAddress",
+                    "name": "_sideContract",
                     "type": "address"
                 }
             ],
-            "name": "unblockSeller",
-            "outputs": [
-                {
-                    "internalType": "bool",
-                    "name": "",
-                    "type": "bool"
-                }
-            ],
+            "name": "setSideContract",
+            "outputs": [],
             "stateMutability": "nonpayable",
             "type": "function"
         },
@@ -182,28 +169,9 @@ export default {
         {
             "inputs": [
                 {
-                    "internalType": "uint256",
-                    "name": "_productId",
-                    "type": "uint256"
-                }
-            ],
-            "name": "registerReport",
-            "outputs": [
-                {
-                    "internalType": "bool",
-                    "name": "",
-                    "type": "bool"
-                }
-            ],
-            "stateMutability": "nonpayable",
-            "type": "function"
-        },
-        {
-            "inputs": [
-                {
-                    "internalType": "uint256",
+                    "internalType": "bytes32",
                     "name": "_secretId",
-                    "type": "uint256"
+                    "type": "bytes32"
                 }
             ],
             "name": "buyProduct",
@@ -285,9 +253,9 @@ export default {
                     "type": "uint256"
                 },
                 {
-                    "internalType": "uint256",
+                    "internalType": "bytes32",
                     "name": "_secretId",
-                    "type": "uint256"
+                    "type": "bytes32"
                 },
                 {
                     "internalType": "uint256",
@@ -415,6 +383,52 @@ export default {
                     "type": "string"
                 }
             ],
+            "stateMutability": "nonpayable",
+            "type": "function"
+        }
+    ],
+    "buyAbi": [
+        {
+            "inputs": [],
+            "stateMutability": "nonpayable",
+            "type": "constructor"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "address",
+                    "name": "_address",
+                    "type": "address"
+                }
+            ],
+            "name": "setMainContract",
+            "outputs": [],
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "address",
+                    "name": "_newOwner",
+                    "type": "address"
+                }
+            ],
+            "name": "changeOwner",
+            "outputs": [],
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "_secretId",
+                    "type": "uint256"
+                }
+            ],
+            "name": "buyProduct",
+            "outputs": [],
             "stateMutability": "nonpayable",
             "type": "function"
         }

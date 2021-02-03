@@ -1,7 +1,7 @@
 import Portis from '@portis/web3';
 import Web3 from 'web3';
 import Abi from './abi'
-
+import keccak256 from 'keccak256'
 // private ganache node...
 const myPrivateEthereumNode = {
     nodeUrl: 'http://127.0.0.1:8545', // node url
@@ -9,20 +9,29 @@ const myPrivateEthereumNode = {
 };
 
 const provider = {
-    contractAddress: '0xe982e462b094850f12af94d21d470e21be9d0e9c',
-    w3: undefined,
+    contractAddress: '0x5017A545b09ab9a30499DE7F431DF0855bCb7275',
+    buyAddress: '0x86072CbFF48dA3C1F01824a6761A03F105BCC697',
+    w3: null,
     account: null,
     contract: null,
-    portis: '',
-    logout: async function () {
+    buyContract: null,
+    portis: null,
+    logout:async function () {
         await this.portis.logout()
+    },
+    keccakHash: function (secretId) {
+        const encoding = this.w3.eth.abi.encodeParameter('uint256', secretId)
+        const hash = keccak256(encoding)
+        return hash
     },
     login: async function () {
         await this.portis.showPortis()
         await provider.setAccount()
     },
     isLoggedIn: async function () {
-        return await this.portis.isLoggedIn()
+        if (this.portis) {
+            return await this.portis.isLoggedIn()
+        }
     },
     setAccount: async function () {
         const account = await this.w3.eth.getAccounts()
@@ -44,11 +53,11 @@ const provider = {
     },
 
     setContract: async function () {
-        const contract = await new this.w3.eth.Contract(Abi.abi, this.contractAddress);
+        const contract = await new this.w3.eth.Contract(Abi.counterfeitAbi, this.contractAddress);
+        const side = await new this.w3.eth.Contract(Abi.buyAbi, this.buyAddress)
+        this.buyContract = side
         this.contract = contract;
-        return contract;
     },
-
     // for non-transaction methods ex- view pure
     callTransaction: async function (method, parameters = []) {
         try {
@@ -60,38 +69,37 @@ const provider = {
             return result;
         } catch (error) {
             console.log(error);
-            return "Failed to call";
+            return { message:error.message, code:204};
         }
     },
 
     // method for transaction that require fee....
-    sendTransaction: async function (method, parameters = []) {
+    sendTransaction: async function (method, parameters = [], toBuy = false) {
         try {
-            const transaction = {
-                from: this.account,
-                to: this.contractAddress,
-                gas: 500000,
+            if (toBuy) { 
+                const transaction = {
+                    from: this.account,
+                    to: this.buyAddress,
+                    gas: 500000,
+                }
+                const receipt = await this.buyContract.methods[method](...parameters).send(transaction);
+                console.log(receipt);
+                return receipt
             }
-            const receipt = await this.contract.methods[method](...parameters).send(transaction);
-            console.log(receipt);
-            return receipt
+            else {
+                const transaction = {
+                    from: this.account,
+                    to: this.contractAddress,
+                    gas: 500000,
+                }
+                const receipt = await this.contract.methods[method](...parameters).send(transaction);
+                console.log(receipt);
+                return receipt
+            }
         } catch (error) {
             console.log(error);
-            return error.message
+            return new Error(error.message)
         }
     }
 }
-
-const common = {
-    getBalance: async function () {
-        try {
-            const balance = await this.w3.eth.getBalance(this.account.address);
-            return balance;
-        } catch (error) {
-            console.log(error.message);
-            return 'Failed to get balance'
-        }
-    }
-};
-
 export default provider
