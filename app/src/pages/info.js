@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Button } from 'react-bootstrap';
 import Loader from '../components/loader';
 import { Link } from 'react-router-dom'
 import { useSetRecoilState } from 'recoil'
 import { popups as pp } from '../store/atoms'
 import provider from '../store/web3Provider'
-// import '../static/css/signup.css';
 import '../static/css/info.scss';
 
 export default function ProductInfo() {
@@ -16,33 +14,11 @@ export default function ProductInfo() {
     const setPopup = useSetRecoilState(pp);
     const productId = window.location.pathname.split('/')[2];
 
-    async function reportSeller() {
-        try {
-            // const response = await Axios.post(
-            //     '/user/reportseller',
-            //     { productId: productId }
-            // );
-            // if (response.status === 200) {
-            //     setPopup("Seller reported successfully")
-            // }
-            // if(response.status === 202){
-            //     setPopup("This key is already reported")
-
-            // }
-
-        }
-        catch (error) {
-            console.log(error);
-            setPopup(error.message)
-
-        }
-    }
-
     useEffect(() => {
 
         async function fetchProductInfo() {
             try {
-                const response = await provider.callTransaction('productDetails',[productId])
+                const response = await provider.callTransaction('productDetails', [productId])
                 if (response) {
                     setProductInfo(response);
                 }
@@ -127,10 +103,9 @@ export default function ProductInfo() {
             </div>
             <div className="fullWidth">
 
-            <div className="buttons">
-                <Link to="/buy" className="btn btn-primary btn-lg ">BUY</Link>
-                <Button className="btn-warning btn btn-lg" onClick={reportSeller}>Report {sellerInfo.name}</Button>
-            </div>
+                <div className="buttons">
+                    <Link to="/buy" className="btn btn-primary btn-lg ">BUY</Link>
+                </div>
             </div>
         </div>
 

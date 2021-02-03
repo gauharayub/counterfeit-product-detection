@@ -5,11 +5,6 @@ const login = atom({
     default: false,
 })
 
-// const type = atom({
-//     key: 'type',
-//     default: 'Seller'
-// })
-
 const popups = atom({
     key: 'popups',
     default: ''
@@ -40,5 +35,10 @@ const fall = atom({
     default: ''
 })
 
+const newOwner = atom({
+    key: 'newOwner',
+    default: ''
+})
 
-export { login,popups, buyerAddress, productId, fall,secretId,productIdHome }
+
+export { newOwner, login, popups, buyerAddress, productId, fall, secretId, productIdHome }
