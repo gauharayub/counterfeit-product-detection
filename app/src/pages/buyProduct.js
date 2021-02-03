@@ -1,13 +1,13 @@
-import { useRecoilValue, useSetRecoilState, useRecoilState } from 'recoil'
+import { useSetRecoilState, useRecoilState } from 'recoil'
 import { Formik, Form as Fm, Field, ErrorMessage } from 'formik'
 import * as yup from 'yup'
 import React, { useState } from 'react';
 import { Form, Col, Button } from 'react-bootstrap'
 import { BiScan } from 'react-icons/bi'
-import Axios from '../store/axiosInstance'
 import '../static/css/login.scss'
 import { Link } from 'react-router-dom'
 import Loader from '../components/loader'
+import provider from '../store/web3Provider'
 
 import { popups, secretId as si } from '../store/atoms'
 
@@ -28,8 +28,8 @@ export default function BuyProduct() {
         try {
             setLoading(true)
 
-            const response = await Axios.post('/user/buyproduct', values)
-            if (response.success) {
+            const response = await provider.sendTransaction('buyProduct',[values.secretId],true)
+            if (response) {
                 setSecretId('')
                 setPopup(`Product bought successfully`)
             }
@@ -41,9 +41,6 @@ export default function BuyProduct() {
         finally{
             setLoading(false)
         }
-
-        // setSecretId('')
-        // setPopup(`Product bought successfully`)
     }
 
 

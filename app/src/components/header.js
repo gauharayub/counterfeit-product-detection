@@ -49,14 +49,13 @@ function Header() {
     async function Logout() {
         try {
             await provider.logout()
-            history.replace('/')
             setPopup("Logged you out from portis");
-
+            history.replace('/')
         } catch (error) {
             console.log(error.message);
         }
         finally {
-            isLoggedin()
+            await isLoggedin()
         }
     }
     async function Login() {
@@ -69,7 +68,7 @@ function Header() {
             setPopup("Failed to login")
         }
         finally {
-            isLoggedin()
+            await isLoggedin()
         }
 
     }
@@ -78,6 +77,7 @@ function Header() {
         console.log("isLoggedIN ??", response);
         if (response.result) {
             setLogin(true)
+            await provider.setAccount()
         }
         else {
             setLogin(false)
@@ -85,7 +85,10 @@ function Header() {
     }
 
     useEffect(() => {
-        isLoggedin()
+        async function checkLogin() {
+            await isLoggedin()
+        }
+        checkLogin()
     }, [])
 
     return (
