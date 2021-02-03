@@ -7,7 +7,10 @@
 .productList{
     min-height: 100vh;
     text-align: center;
-    background-color:#f8f5f2;
+    background: linear-gradient(
+    rgba(246, 247, 249, 0.8),
+    rgba(246, 247, 249, 0.8)
+  );
 }
 
 .list-group{
