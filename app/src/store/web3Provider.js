@@ -2,14 +2,17 @@ import Portis from '@portis/web3';
 import Web3 from 'web3';
 import Abi from './abi'
 import keccak256 from 'keccak256'
+
 // private ganache node...
 const myPrivateEthereumNode = {
-    nodeUrl: 'http://127.0.0.1:8545', // node url
-    chainId: 4444, // chainid
+    nodeUrl: 'http://127.0.0.1:7545', // node url
+    chainId: 5777, // chainid
+    gasRelayHubAddress: '0xd216153c06e857cd7f72665e0af1d7d82172f494', // contract address of relayHub....
 };
 
 const provider = {
-    contractAddress: '0x5017A545b09ab9a30499DE7F431DF0855bCb7275',
+    // anas-contract - 0x5017A545b09ab9a30499DE7F431DF0855bCb7275
+    contractAddress: '0x0d7763D94007D56f6a926DCed46bfEB09a679bFe',
     buyAddress: '0x86072CbFF48dA3C1F01824a6761A03F105BCC697',
     w3: null,
     account: null,
@@ -48,7 +51,7 @@ const provider = {
     },
 
     setProvider: async function () {
-        this.portis = await new Portis('42dca739-f49f-4002-a181-82cdaadc7dd5', myPrivateEthereumNode);
+        this.portis = await new Portis('42dca739-f49f-4002-a181-82cdaadc7dd5', myPrivateEthereumNode, {gasRelay:true});
         this.w3 = await new Web3(this.portis.provider)
     },
 

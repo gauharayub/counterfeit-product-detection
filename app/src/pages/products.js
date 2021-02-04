@@ -14,29 +14,32 @@ export default function Products() {
     const [productList, setProducts] = useState('');
     const [failMessage, setFailMessage] = useState('')
 
-    useEffect(async () => {
-
-        try {
-            setLoading(true)
-            const response = await provider.callTransaction('getAllProducts')
-            console.log(response);
-            if (response.code) {
-                console.log(response.message);
-                setFailMessage(response.message);
+    useEffect(() => {
+        
+        async function getProductList(){
+            try {
+                setLoading(true)
+                const response = await provider.callTransaction('getAllProducts')
+                console.log(response);
+                if (response.code) {
+                    console.log(response.message);
+                    setFailMessage(response.message);
+                }
+                else {
+                    setProducts(response);
+                }
             }
-            else {
-                setProducts(response);
+            catch (e) {
+                console.error(e);
+                setPopup(e.message)
+            }
+            finally {
+                setLoading(false)
             }
         }
-        catch (e) {
-            console.error(e);
-            setPopup(e.message)
-        }
-        finally {
-            setLoading(false)
-        }
 
-        // setProducts([[4356, "this is medicine", "Aspirin"], [5556, "this is branded shoe", "Adidas Neo"]])
+        getProductList();
+
     }, [])
 
     const productInfo = (productId) => {

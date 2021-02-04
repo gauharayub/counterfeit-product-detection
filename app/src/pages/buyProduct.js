@@ -43,9 +43,7 @@ export default function BuyProduct() {
         }
     }
 
-
     return (<section>
-
         <div className="containerS">
             <div className="frame">
                 {loading ? <Loader size="normal" /> :
