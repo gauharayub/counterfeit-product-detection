@@ -122,8 +122,8 @@ contract Counterfeit is Ownable {
         //assingning index for future search
         sellerAddressToSellerIndex[msg.sender] = sellers.length - 1;
 
+        emit sellerRegistered(msg.sender);
         return "Seller registered successfully";
-        // emit sellerRegistered(msg.sender);
     }
 
     // function registerReport(uint _productId) external returns(bool) {
@@ -247,7 +247,7 @@ contract Counterfeit is Ownable {
     function productSeller(uint _productId) external view returns (string memory name,string memory details) {
         address sellerAddress = productToOwner[_productId];
         uint sellerIndex = sellerAddressToSellerIndex[sellerAddress];
-        
+        require(sellerIndex != 0,"Seller might not be registered");
         // require(sellers[sellerIndex].reportCount < reportThreshold,"seller is blocked");
 
         sellerDetails memory seller = sellers[sellerIndex];
@@ -271,19 +271,19 @@ contract Counterfeit is Ownable {
         return sellers.length;
     }
 
-    function registerOwnerAsSeller (string memory _name, string memory _details) onlyOwner external returns(string memory status ) {
+    // function registerOwnerAsSeller (string memory _name, string memory _details) onlyOwner external returns(string memory status ) {
 
-        //checking seller is not registered before
-        require(sellerAddressToSellerIndex[msg.sender] == 0,"You are already registered");
+    //     //checking seller is not registered before
+    //     require(sellerAddressToSellerIndex[msg.sender] == 0,"You are already registered");
 
-        //creating new instance and storing in array
-        sellers.push(sellerDetails(0,_name,_details));
+    //     //creating new instance and storing in array
+    //     sellers.push(sellerDetails(0,_name,_details));
 
-        //assingning index for future search
-        sellerAddressToSellerIndex[msg.sender] = sellers.length - 1;
+    //     //assingning index for future search
+    //     sellerAddressToSellerIndex[msg.sender] = sellers.length - 1;
 
-        return "Seller registered successfully";
-        // emit sellerRegistered(msg.sender);
-    }
+    //     emit sellerRegistered(msg.sender);
+    //     return "Seller registered successfully";
+    // }
     //--------Dev Only Owner End----------//
 }
