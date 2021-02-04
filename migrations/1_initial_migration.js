@@ -1,5 +1,12 @@
-const Migrations = artifacts.require('Migrations');
+const Counterfeit = artifacts.require('Counterfeit');
+const Buy = artifacts.require('Buy');
 
-module.exports = function (deployer) {
-  deployer.deploy(Migrations);
+module.exports = async function (deployer) {
+  await deployer.deploy(Counterfeit);
+  await deployer.deploy(Buy);
+  const buy = await Buy.deployed();
+  const counterfeit = await Counterfeit.deployed();
+
+  await buy.setMainContract(counterfeit.address);
+  await counterfeit.setSideContract(buy.address);
 };

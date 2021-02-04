@@ -9,8 +9,8 @@ const myPrivateEthereumNode = {
 };
 
 const provider = {
-    contractAddress: '0x5017A545b09ab9a30499DE7F431DF0855bCb7275',
-    buyAddress: '0x86072CbFF48dA3C1F01824a6761A03F105BCC697',
+    contractAddress: '0xb9284AD590AE46032b20517BA9Adf592A61aad45',
+    buyAddress: '0x01Fc7d7F9a52ED42964d8eEf1FaAC70f7399e38F',
     w3: null,
     account: null,
     contract: null,
@@ -48,7 +48,7 @@ const provider = {
     },
 
     setProvider: async function () {
-        this.portis = await new Portis('42dca739-f49f-4002-a181-82cdaadc7dd5', myPrivateEthereumNode);
+        this.portis = await new Portis('42dca739-f49f-4002-a181-82cdaadc7dd5', 'rinkeby');
         this.w3 = await new Web3(this.portis.provider)
     },
 

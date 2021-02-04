@@ -6,6 +6,8 @@ contract Counterfeit{
 }
 
 contract Buy{
+    
+    event productPurchased(address buyerAddress);
 
     address private owner;
     Counterfeit C;
@@ -27,6 +29,8 @@ contract Buy{
     function buyProduct(uint256 _secretId) external {
         bytes32 hash = keccak256(abi.encodePacked(_secretId));
         C.buyProduct(hash);
+        emit productPurchased(msg.sender);
+
     }
 
 }
