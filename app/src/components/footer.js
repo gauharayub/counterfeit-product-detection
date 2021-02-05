@@ -61,6 +61,11 @@ function Footer() {
                                     Products
                                 </Link>
                             </li>
+                            <li>
+                                <Link to="/registerSeller">
+                                    Register Seller
+                                </Link>
+                            </li>
                         </ul>
                     </div>
                 </div>

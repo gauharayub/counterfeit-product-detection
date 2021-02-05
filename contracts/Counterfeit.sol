@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
-pragma solidity >=0.7.0;
+// pragma solidity >=0.7.0;
+pragma solidity >=0.5.5 < 0.7.5;
 pragma experimental ABIEncoderV2;
 import "./Ownable.sol";
 
@@ -9,7 +10,7 @@ contract Counterfeit is Ownable {
 
     address private sideContract = address(0);
 
-    constructor(){
+    constructor() public {
         products.push(Product(0, 0, 'dummyProduct', true));
         sellers.push(sellerDetails(0,"dummySeller","dummySeller"));
     }
@@ -111,7 +112,7 @@ contract Counterfeit is Ownable {
         sideContract = _sideContract;
     }
 
-    function registerSeller (string memory _name, string memory _details) external returns(string memory status ) {
+    function registerSeller (string calldata _name, string calldata _details) external returns(string memory status ) {
 
         //checking seller is not registered before
         require(sellerAddressToSellerIndex[msg.sender] == 0,"You are already registered");
@@ -122,8 +123,9 @@ contract Counterfeit is Ownable {
         //assingning index for future search
         sellerAddressToSellerIndex[msg.sender] = sellers.length - 1;
 
-        return "Seller registered successfully";
-        // emit sellerRegistered(msg.sender);
+        emit sellerRegistered(msg.sender);
+        string memory response = "Seller registered successfully";
+        return response;
     }
 
     // function registerReport(uint _productId) external returns(bool) {
@@ -220,7 +222,7 @@ contract Counterfeit is Ownable {
     }
 
 
-    function addProduct(uint _productId, bytes32 _secretId, uint _price, string memory _name) onlyOwner external returns(bool) {
+    function addProduct(uint _productId, bytes32 _secretId, uint _price, string calldata _name) onlyOwner external returns(bool) {
 
         // checking that both product and secret ids are not used before
         require(productIdToProductIndex[_productId] == 0,"Product id is used before");
@@ -247,7 +249,7 @@ contract Counterfeit is Ownable {
     function productSeller(uint _productId) external view returns (string memory name,string memory details) {
         address sellerAddress = productToOwner[_productId];
         uint sellerIndex = sellerAddressToSellerIndex[sellerAddress];
-        
+        require(sellerIndex != 0,"Seller might not be registered");
         // require(sellers[sellerIndex].reportCount < reportThreshold,"seller is blocked");
 
         sellerDetails memory seller = sellers[sellerIndex];
@@ -271,19 +273,19 @@ contract Counterfeit is Ownable {
         return sellers.length;
     }
 
-    function registerOwnerAsSeller (string memory _name, string memory _details) onlyOwner external returns(string memory status ) {
+    // function registerOwnerAsSeller (string memory _name, string memory _details) onlyOwner external returns(string memory status ) {
 
-        //checking seller is not registered before
-        require(sellerAddressToSellerIndex[msg.sender] == 0,"You are already registered");
+    //     //checking seller is not registered before
+    //     require(sellerAddressToSellerIndex[msg.sender] == 0,"You are already registered");
 
-        //creating new instance and storing in array
-        sellers.push(sellerDetails(0,_name,_details));
+    //     //creating new instance and storing in array
+    //     sellers.push(sellerDetails(0,_name,_details));
 
-        //assingning index for future search
-        sellerAddressToSellerIndex[msg.sender] = sellers.length - 1;
+    //     //assingning index for future search
+    //     sellerAddressToSellerIndex[msg.sender] = sellers.length - 1;
 
-        return "Seller registered successfully";
-        // emit sellerRegistered(msg.sender);
-    }
+    //     emit sellerRegistered(msg.sender);
+    //     return "Seller registered successfully";
+    // }
     //--------Dev Only Owner End----------//
 }

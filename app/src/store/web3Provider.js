@@ -12,8 +12,8 @@ const myPrivateEthereumNode = {
 
 const provider = {
     // anas-contract - 0x5017A545b09ab9a30499DE7F431DF0855bCb7275
-    contractAddress: '0x0d7763D94007D56f6a926DCed46bfEB09a679bFe',
-    buyAddress: '0x86072CbFF48dA3C1F01824a6761A03F105BCC697',
+    contractAddress: '0xC8906CA76bd137732A9Cf6835Fe8CE6892Bc0a7D',
+    buyAddress: '0xE2911492251ea3e02Fd2865F56bD11c1d5F166B3',
     w3: null,
     account: null,
     contract: null,
@@ -51,7 +51,7 @@ const provider = {
     },
 
     setProvider: async function () {
-        this.portis = await new Portis('42dca739-f49f-4002-a181-82cdaadc7dd5', myPrivateEthereumNode, {gasRelay:true});
+        this.portis = await new Portis('42dca739-f49f-4002-a181-82cdaadc7dd5', 'rinkeby', { gasRelay: true });
         this.w3 = await new Web3(this.portis.provider)
     },
 

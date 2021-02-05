@@ -73,10 +73,6 @@ export default function ProductInfo() {
                                     {productId}
                                 </span></p>
 
-                                <p>Details :  <span>
-                                    {productInfo.details}
-                                </span></p>
-
                             </div>
                         </div>
                     </div>
@@ -89,9 +85,6 @@ export default function ProductInfo() {
                                 {sellerInfo.name}
                             </span></p>
 
-                            <p>ID : <span>
-                                {sellerInfo.id}
-                            </span></p>
 
                             <p>Details : <span>
                                 {sellerInfo.details}

@@ -18,6 +18,8 @@ const ProductInfo = lazy(() => import('./pages/productInfo'))
 const Scan = lazy(() => import('./pages/scan'))
 const QRCode = lazy(() => import('./pages/qrcode'))
 const AddOwner = lazy(() => import('./pages/addOwner'))
+const RegisterSeller = lazy(() => import('./pages/registerSeller'))
+
 
 
 function Routes() {
@@ -51,6 +53,9 @@ function Routes() {
           </PrivateRoute>
           <PrivateRoute path='/addowner'>
             <AddOwner />
+          </PrivateRoute>
+          <PrivateRoute path='/registerSeller'>
+            <RegisterSeller />
           </PrivateRoute>
         </Switch>
         <Route component={Footer} />

@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 
-pragma solidity ^0.7.0;
+// pragma solidity ^0.7.0;
+pragma solidity >=0.5.5 < 0.7.5;
 
 /*
  * @dev Provides information about the current execution context, including the
@@ -12,12 +13,15 @@ pragma solidity ^0.7.0;
  *
  * This contract is only required for intermediate, library-like contracts.
  */
-abstract contract Context {
-    function _msgSender() internal view virtual returns (address payable) {
+ // abstract
+    contract Context {
+        //virtual
+    function _msgSender() internal view returns (address payable) {
         return msg.sender;
     }
 
-    function _msgData() internal view virtual returns (bytes memory) {
+    function _msgData() internal view returns (bytes memory) {
+        //virtual
         this; // silence state mutability warning without generating bytecode - see https://github.com/ethereum/solidity/issues/2691
         return msg.data;
     }
