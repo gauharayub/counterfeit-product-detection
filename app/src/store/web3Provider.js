@@ -69,7 +69,7 @@ const provider = {
             return result;
         } catch (error) {
             console.log(error);
-            return new Error({ message:error.message, code:204});
+            throw new Error({ message:error.message, code:204});
         }
     },
 
@@ -100,7 +100,7 @@ const provider = {
             }
         } catch (error) {
             console.log(error);
-            return new Error(error.message)
+            throw new Error(error.message)
         }
     }
 }

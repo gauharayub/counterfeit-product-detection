@@ -19,9 +19,7 @@ export default function ProductInfo() {
         async function fetchProductInfo() {
             try {
                 const response = await provider.callTransaction('productDetails', [productId])
-                if (response) {
-                    setProductInfo(response);
-                }
+                setProductInfo(response);
             }
             catch (e) {
                 setPopup("Failed to fetch product info")
@@ -32,12 +30,12 @@ export default function ProductInfo() {
         async function fetchSellerInfo() {
             try {
                 const response = await provider.callTransaction('productSeller', [productId])
-                if (response) {
-                    setSellerInfo(response);
-                }
+
+                setSellerInfo(response);
+
             }
             catch (e) {
-                setPopup("Failed to fetch seller info")
+                setPopup("Product Already Sold")
                 console.error(e);
             }
             finally {

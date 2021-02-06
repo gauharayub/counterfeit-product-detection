@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react"
 import { Link, useHistory } from 'react-router-dom'
 import { useSetRecoilState, useRecoilState } from 'recoil'
+import Loader from './loader'
 
 //css
 import '../static/css/header.scss'
@@ -27,7 +28,7 @@ function Header() {
     const [open, setOpen] = useState(false)
     const setPopup = useSetRecoilState(pp)
     const [login, setLogin] = useRecoilState(ll)
-
+    const [isFetching, setIsFetching] = useState(true)
     const history = useHistory()
 
     //function to set ham menu open and close
@@ -87,6 +88,7 @@ function Header() {
         async function checkLogin() {
             await provider.setAccount()
             await isLoggedin()
+            setIsFetching(false)
         }
         checkLogin()
     }, [])
@@ -123,14 +125,16 @@ function Header() {
                         </Link>
                     </span>
                     <span>
-                        {login
-                            ? <a onClick={Logout}>
-                                <span>
-                                    <img src={vendorIco} alt="vendor icon" />
-                                    <h5 className="ml-2">Logout</h5>
-                                </span>
-                            </a>
-                            : <a onClick={Login}><span><img src={userIco} alt="user icon" /><h5 className="ml-2"> Login/Signup </h5></span></a>
+                        {isFetching
+                            ? <Loader size="fix" />
+                            : (login
+                                ? <a onClick={Logout}>
+                                    <span>
+                                        <img src={vendorIco} alt="vendor icon" />
+                                        <h5 className="ml-2">Logout</h5>
+                                    </span>
+                                </a>
+                                : <a onClick={Login}><span><img src={userIco} alt="user icon" /><h5 className="ml-2"> Login/Signup </h5></span></a>)
                         }
                     </span>
                 </div>
