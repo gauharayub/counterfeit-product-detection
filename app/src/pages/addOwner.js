@@ -17,7 +17,7 @@ export default function TransferOwner() {
     const [loading, setLoading] = useState(false)
 
     const schema = yup.object({
-        address: yup.string().required('Required!').max(40),
+        address: yup.string().required('Required!').max(60),
     });
 
     const initialValues = {

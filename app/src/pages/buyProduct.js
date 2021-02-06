@@ -35,7 +35,7 @@ export default function BuyProduct() {
             }
         }
         catch (error) {
-            setPopup(error.message)
+            setPopup("Product is Fake")
             console.log(error.message)
         }
         finally{
