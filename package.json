@@ -4,6 +4,7 @@
   "description": "Forge is a blockchain based web application to fight product counterfeiting (currently implemented as a centralized application to make it more accessible).",
   "main": "truffle-config.js",
   "dependencies": {
+    "@openzeppelin/contracts": "^3.4.0",
     "@openzeppelin/gsn-helpers": "^0.2.4",
     "dotenv": "^8.2.0",
     "eslint": "^7.14.0",
