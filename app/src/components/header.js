@@ -77,7 +77,6 @@ function Header() {
         console.log("isLoggedIN ??", response);
         if (response.result) {
             setLogin(true)
-            await provider.setAccount()
         }
         else {
             setLogin(false)
@@ -86,6 +85,7 @@ function Header() {
 
     useEffect(() => {
         async function checkLogin() {
+            await provider.setAccount()
             await isLoggedin()
         }
         checkLogin()
