@@ -19,6 +19,8 @@ const Scan = lazy(() => import('./pages/scan'))
 const QRCode = lazy(() => import('./pages/qrcode'))
 const AddOwner = lazy(() => import('./pages/addOwner'))
 const RegisterSeller = lazy(() => import('./pages/registerSeller'))
+const SideContract = lazy(() => import('./pages/makeSideContract'))
+
 
 
 
@@ -44,6 +46,9 @@ function Routes() {
           </PrivateRoute>
           <PrivateRoute path='/add' >
             <AddProduct />
+          </PrivateRoute>
+          <PrivateRoute path='/side' >
+            <SideContract />
           </PrivateRoute>
           <PrivateRoute path='/sell' >
             <Sell />

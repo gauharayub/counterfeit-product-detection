@@ -4,13 +4,13 @@ import Abi from './abi'
 import keccak256 from 'keccak256'
 // private ganache node...
 const myPrivateEthereumNode = {
-    nodeUrl: 'http://127.0.0.1:8545', // node url
-    chainId: 4444, // chainid
+    nodeUrl: 'https://rpc-mumbai.matic.today', // node url
+    chainId: 80001, // chainid
 };
 
 const provider = {
-    contractAddress: '0xb9284AD590AE46032b20517BA9Adf592A61aad45',
-    buyAddress: '0x01Fc7d7F9a52ED42964d8eEf1FaAC70f7399e38F',
+    contractAddress: '0xac9c38118f05792Bf379479E3912F35d17F65819',
+    buyAddress: '0x63a8656265d04Fe4c11F4b81e3d1E061b582177d',
     w3: null,
     account: null,
     contract: null,
@@ -48,7 +48,7 @@ const provider = {
     },
 
     setProvider: async function () {
-        this.portis = await new Portis('42dca739-f49f-4002-a181-82cdaadc7dd5', 'rinkeby');
+        this.portis = await new Portis('42dca739-f49f-4002-a181-82cdaadc7dd5', myPrivateEthereumNode);
         this.w3 = await new Web3(this.portis.provider)
     },
 
@@ -69,7 +69,7 @@ const provider = {
             return result;
         } catch (error) {
             console.log(error);
-            return { message:error.message, code:204};
+            return new Error({ message:error.message, code:204});
         }
     },
 
@@ -81,6 +81,7 @@ const provider = {
                     from: this.account,
                     to: this.buyAddress,
                     gas: 500000,
+                    gasPrice:0
                 }
                 const receipt = await this.buyContract.methods[method](...parameters).send(transaction);
                 console.log(receipt);
@@ -91,6 +92,7 @@ const provider = {
                     from: this.account,
                     to: this.contractAddress,
                     gas: 500000,
+                    gasPrice:0
                 }
                 const receipt = await this.contract.methods[method](...parameters).send(transaction);
                 console.log(receipt);

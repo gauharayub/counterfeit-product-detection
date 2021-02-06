@@ -44,7 +44,7 @@ function Footer() {
                             </li>
                             <li>
                                 <Link to="/addowner">
-                                    Add Owner
+                                    Transfer Owner
                                 </Link>
                             </li>
                         </ul>
@@ -66,12 +66,17 @@ function Footer() {
                                     Register Seller
                                 </Link>
                             </li>
+                            <li>
+                                <Link to="/side">
+                                   Side
+                                </Link>
+                            </li>
                         </ul>
                     </div>
                 </div>
             </div>
             <div className="copyrights">
-                <Link to="/">@2020 Copyright Forge</Link>
+                <Link to="/">@2021 Copyright Forge</Link>
             </div>
         </footer>
     )
