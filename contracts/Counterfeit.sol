@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
-pragma solidity >=0.7.0;
+// pragma solidity >=0.7.0;
+pragma solidity >=0.5.5 < 0.7.5;
 pragma experimental ABIEncoderV2;
 import "./Ownable.sol";
 
@@ -8,9 +9,10 @@ import "./Ownable.sol";
 contract Counterfeit is Ownable {
     address private sideContract = address(0);
 
-    constructor() {
-        products.push(Product(0, 0, "dummyProduct", true));
-        sellers.push(sellerDetails(0, "dummySeller", "dummySeller"));
+  
+    constructor() public {
+        products.push(Product(0, 0, 'dummyProduct', true));
+        sellers.push(sellerDetails(0,"dummySeller","dummySeller"));
         emit constructorSet(msg.sender);
     }
 

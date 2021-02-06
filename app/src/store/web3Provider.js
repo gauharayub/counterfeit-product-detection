@@ -2,6 +2,7 @@ import Portis from '@portis/web3';
 import Web3 from 'web3';
 import Abi from './abi'
 import keccak256 from 'keccak256'
+
 // private ganache node...
 const myPrivateEthereumNode = {
     nodeUrl: 'https://rpc-mumbai.matic.today', // node url
@@ -48,7 +49,7 @@ const provider = {
     },
 
     setProvider: async function () {
-        this.portis = await new Portis('42dca739-f49f-4002-a181-82cdaadc7dd5', myPrivateEthereumNode);
+        this.portis = await new Portis('42dca739-f49f-4002-a181-82cdaadc7dd5', 'rinkeby', { gasRelay: true });
         this.w3 = await new Web3(this.portis.provider)
     },
 
