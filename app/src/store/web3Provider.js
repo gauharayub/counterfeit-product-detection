@@ -7,11 +7,12 @@ import keccak256 from 'keccak256'
 const myPrivateEthereumNode = {
     nodeUrl: 'https://rpc-mumbai.matic.today', // node url
     chainId: 80001, // chainid
+    gasRelayHubAddress: '0xD216153c06E857cD7f72665E0aF1d7D82172F494',
 };
 
 const provider = {
-    contractAddress: '0xac9c38118f05792Bf379479E3912F35d17F65819',
-    buyAddress: '0x63a8656265d04Fe4c11F4b81e3d1E061b582177d',
+    contractAddress: '0xB23F71B8C8bc34ED4eEc6cc12c07a08A0Af4564F',
+    buyAddress: '0xa0c922d5DB73ea7560eD1481634afBd00c0844a7',
     w3: null,
     account: null,
     contract: null,
@@ -49,7 +50,7 @@ const provider = {
     },
 
     setProvider: async function () {
-        this.portis = await new Portis('42dca739-f49f-4002-a181-82cdaadc7dd5', 'rinkeby', { gasRelay: true });
+        this.portis = await new Portis('42dca739-f49f-4002-a181-82cdaadc7dd5', myPrivateEthereumNode, { gasRelay: true });
         this.w3 = await new Web3(this.portis.provider)
     },
 
