@@ -49,7 +49,7 @@ const provider = {
     },
 
     setProvider: async function () {
-        this.portis = await new Portis('42dca739-f49f-4002-a181-82cdaadc7dd5', myPrivateEthereumNode, {gasRelay:true});
+        this.portis = await new Portis('42dca739-f49f-4002-a181-82cdaadc7dd5', 'rinkeby', { gasRelay: true });
         this.w3 = await new Web3(this.portis.provider)
     },
 

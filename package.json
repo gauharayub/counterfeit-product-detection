@@ -1,0 +1,26 @@
+{
+  "name": "fake-product-detection-app",
+  "version": "1.0.0",
+  "description": "Forge is a blockchain based web application to fight product counterfeiting (currently implemented as a centralized application to make it more accessible).",
+  "main": "truffle-config.js",
+  "dependencies": {
+    "@openzeppelin/gsn-helpers": "^0.2.4",
+    "dotenv": "^8.2.0",
+    "eslint": "^7.14.0",
+    "tabookey-gasless": "^0.4.5",
+    "truffle-hdwallet-provider": "^1.0.17"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gauharayub/fake_product_detection.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gauharayub/fake_product_detection/issues"
+  },
+  "homepage": "https://github.com/gauharayub/fake_product_detection#readme"
+}
