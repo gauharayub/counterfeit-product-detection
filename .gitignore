@@ -4,3 +4,4 @@ node_modules
 mobileApp
 truffle-config.js
 .env
+server

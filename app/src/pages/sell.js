@@ -33,7 +33,7 @@ export default function BuyProduct() {
             setLoading(true)
             const response = await provider.sendTransaction('sellProduct', [values.productId, values.address])
             console.log(response);
-            if (response == "true") {
+            if (response === "true") {
                 setBuyerAddress('')
                 setProductId('')
             }

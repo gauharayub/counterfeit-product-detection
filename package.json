@@ -1,7 +1,7 @@
 {
   "name": "fake-product-detection-app",
   "version": "1.0.0",
-  "description": "Forge is a blockchain based web application to fight product counterfeiting (currently implemented as a centralized application to make it more accessible).",
+  "description": "Forge is a blockchain based web application to fight product counterfeiting",
   "main": "truffle-config.js",
   "dependencies": {
     "@openzeppelin/contracts": "^3.4.0",
